@@ -21,11 +21,14 @@
   --color-glass: rgba(13, 13, 14, 0.5); /* fundalul header-ului */
   --color-glass-border: rgba(198, 198, 198, 0.15); /* linia de sub header */
   --color-glow: rgba(255, 255, 255, 0.07); /* glow-ul radial din hero */
+  --color-logo-outline: rgba(255, 255, 255, 0.09); /* conturul mare al logo-ului din „Despre" */
+  --color-danger: #ff8080; /* mesaje de eroare din formular */
 
   /* Raze de colț */
   --radius-card: 34px;
   --radius-pill: 9999px;
   --radius-inner: 22px; /* imagini în interiorul cardurilor (raza cardului − padding) */
+  --radius-field: 16px; /* câmpurile din formular */
 
   /* Umbre (glow-ul se calculează din accent, se schimbă odată cu el) */
   --shadow-glow: 0 0 32px -4px color-mix(in oklab, var(--color-accent) 60%, transparent);
@@ -47,6 +50,12 @@
   --text-lead--line-height: 1.25;
   --text-lead-mobile: 1.25rem; /* 20px */
   --text-lead-mobile--line-height: 1.4;
+  --text-stat: 3.75rem; /* 60px, valorile din secțiunea Cifre */
+  --text-stat--line-height: 1.05;
+  --text-stat--letter-spacing: -0.04em;
+  --text-stat-mobile: 2.5rem; /* 40px */
+  --text-stat-mobile--line-height: 1.05;
+  --text-stat-mobile--letter-spacing: -0.04em;
 
   /* Layout */
   --container-site: 75rem; /* 1200px, lățimea maximă a conținutului */
@@ -65,6 +74,22 @@
   --transition-duration-fade: 800ms; /* fade-in la scroll și apariția CTA-ului plutitor */
   --ease-fade: ease-in-out; /* easing-ul fade-in-ului */
   --animate-marquee: marquee 45s linear infinite; /* viteza logo loop-ului */
+  --animate-step-next: step-in-next 450ms var(--ease-smooth) both; /* formular: pasul următor */
+  --animate-step-back: step-in-back 450ms var(--ease-smooth) both; /* formular: înapoi */
+
+  @keyframes step-in-next {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+  }
+
+  @keyframes step-in-back {
+    from {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+  }
 
   @keyframes marquee {
     from {
@@ -208,6 +233,12 @@ html.lenis body {
     gap: var(--spacing-marquee);
     padding-right: var(--spacing-marquee);
   }
+}
+
+/* Contur de text (logo-ul decorativ din „Despre") */
+@utility logo-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-logo-outline);
 }
 
 /* Glow radial moale (în spatele vizualului din hero) */

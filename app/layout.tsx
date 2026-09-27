@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { Footer } from "@/components/sections/Footer";
 import { Header } from "@/components/sections/Header";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { seo, ui } from "@/content/site";
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SmoothScroll>
           <Header />
           <main id="continut">{children}</main>
+          <Footer />
         </SmoothScroll>
         <Analytics />
       </body>

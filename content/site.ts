@@ -477,6 +477,8 @@ export const floatingCta = {
 export const ui = {
   skipToContent: "Sari la conținut",
   mainNav: "Navigare principală",
+  footerNav: "Informații legale",
+  socialLinks: "Rețele sociale",
   externalLink: "(se deschide într-un tab nou)",
   form: {
     back: "Înapoi",
@@ -497,5 +499,15 @@ export const ui = {
       message: "Cererea nu a putut fi trimisă. Încearcă din nou sau scrie-ne direct pe WhatsApp.",
       whatsapp: "Scrie-ne pe WhatsApp",
     },
+  },
+  /** Emailul cu lead-ul, trimis prin Resend. Etichetele câmpurilor vin din offer.form. */
+  leadEmail: {
+    /** Din spec: „Lead nou: [firmă]". */
+    subject: "Lead nou: {company}",
+    heading: "Lead nou de pe site",
+    consent: "Acord prelucrare date",
+    consentYes: "Da",
+    sentAt: "Trimis la",
+    empty: "—",
   },
 };

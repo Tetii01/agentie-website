@@ -49,13 +49,25 @@ Tot conținutul provizoriu are `placeholder: true` în `content/site.ts`. Caută
 2. Pentru imagini, pui fișierul în `public/` (ex. `public/proiecte/site-x.jpg`) și setezi câmpul de imagine (`image`, `avatar` sau `photo`) la `{ src: "/proiecte/site-x.jpg", alt: "Descriere scurtă" }`. Cât timp câmpul e `null`, se afișează blocul `Placeholder`.
 3. Ștergi `placeholder: true`.
 
+## Formularul de analiză
+
+- Interfața: `components/sections/LeadForm.tsx`. Textele sunt în `content/site.ts` (`offer.form`, plus `ui.form` pentru erori).
+- Validarea: `lib/lead.ts`, aceeași schemă în browser și pe server.
+- Trimiterea: `app/api/lead/route.ts`. Trimite email prin Resend și, opțional, un POST JSON către un webhook (n8n, CRM).
+- Anti-spam: un câmp capcană invizibil, plus respingerea trimiterilor făcute în mai puțin de 3 secunde de la încărcarea paginii.
+
 ## Variabile de mediu
 
-Se folosesc de formularul de contact (Faza 3). Se setează în `.env.local` local și în setările proiectului pe Vercel.
+Copiezi `.env.example` în `.env.local` și completezi valorile. Pe Vercel le setezi în Project → Settings → Environment Variables.
 
 | Variabilă | Ce e |
 | --- | --- |
 | `RESEND_API_KEY` | Cheia API Resend, pentru trimiterea emailului |
-| `LEAD_TO_EMAIL` | Adresa care primește lead-urile |
-| `LEAD_FROM_EMAIL` | Adresa expeditorului (de pe un domeniu verificat în Resend) |
-| `LEAD_WEBHOOK_URL` | Opțional: webhook care primește lead-ul ca JSON (n8n, CRM) |
+| `LEAD_TO_EMAIL` | Adresa care primește lead-urile (mai multe: separate prin virgulă) |
+| `LEAD_FROM_EMAIL` | Adresa expeditorului, de pe un domeniu verificat în Resend (ex. `Site <lead@domeniu.ro>`) |
+| `LEAD_WEBHOOK_URL` | Opțional: webhook care primește lead-ul ca JSON |
+
+Fără variabile, formularul nu crapă:
+
+- **În development** (`npm run dev`): în terminal apar emailul și JSON-ul care s-ar fi trimis, iar formularul afișează mesajul de succes.
+- **În producție:** dacă lead-ul nu ajunge nicăieri (nici email, nici webhook), formularul afișează mesajul de eroare cu linkul de WhatsApp, iar în logurile Vercel apare ce variabilă lipsește. Dacă emailul pleacă, o eroare a webhook-ului nu blochează mesajul de succes.

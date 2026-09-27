@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/Card";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { Media } from "@/components/ui/Media";
+import { ScrollRow } from "@/components/ui/ScrollRow";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Tag } from "@/components/ui/Tag";
@@ -13,9 +14,15 @@ export function Projects() {
     <Section id={projects.id} aria-labelledby="proiecte-titlu">
       <SectionHeading title={projects.title} titleId="proiecte-titlu" />
 
-      <ul className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2 lg:grid-cols-3">
+      {/* Mobil: rând cu derulare orizontală + bară de progres. Tabletă: 2 coloane. Desktop: 3 coloane. */}
+      <ScrollRow className="mt-12 md:mt-16" gridClassName="md:grid-cols-2 lg:grid-cols-3">
         {projects.items.map((project, index) => (
-          <FadeIn as="li" key={`${index}-${project.title}`} delay={stagger(index, 3)}>
+          <FadeIn
+            as="li"
+            key={`${index}-${project.title}`}
+            delay={stagger(index, 3)}
+            className="w-[85%] shrink-0 snap-start md:w-auto"
+          >
             <Card as="article" padding="sm" className="group flex h-full flex-col">
               {/* Imaginea: zoom ușor la hover (duration-base = 300ms, ease-smooth). */}
               <div className="overflow-hidden rounded-inner border border-border">
@@ -39,7 +46,7 @@ export function Projects() {
             </Card>
           </FadeIn>
         ))}
-      </ul>
+      </ScrollRow>
     </Section>
   );
 }

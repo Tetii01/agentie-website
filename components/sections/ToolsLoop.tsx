@@ -1,3 +1,4 @@
+import { BrandIcon } from "@/components/ui/BrandIcon";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { LogoLoop } from "@/components/ui/LogoLoop";
 import { Section } from "@/components/ui/Section";
@@ -25,14 +26,10 @@ export function ToolsLoop() {
 
 function ToolLogo({ tool }: { tool: Tool }) {
   return (
-    <svg
-      role="img"
-      aria-label={tool.name}
-      viewBox="0 0 24 24"
-      className="size-7 fill-current text-foreground opacity-60 transition-opacity duration-base hover:opacity-100 md:size-8"
-    >
-      <title>{tool.name}</title>
-      <path d={tool.icon.path} />
-    </svg>
+    <BrandIcon
+      icon={tool.icon}
+      title={tool.name}
+      className="size-7 text-foreground opacity-60 transition-opacity duration-base hover:opacity-100 md:size-8"
+    />
   );
 }

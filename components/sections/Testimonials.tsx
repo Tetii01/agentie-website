@@ -25,6 +25,7 @@ export function Testimonials() {
 
       <ul
         data-lenis-prevent-horizontal
+        data-fade-group
         className="-mx-gutter mt-8 flex snap-x snap-mandatory scroll-px-gutter gap-4 overflow-x-auto px-gutter pb-2 md:mx-0 md:mt-10 md:grid md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4"
       >
         {testimonials.items.map((item, index) => (
