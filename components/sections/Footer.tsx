@@ -60,7 +60,7 @@ export function Footer() {
           </ul>
         </div>
 
-        <p className="text-xs text-muted">{footer.company.text}</p>
+        <p className="text-xs text-muted">{footer.companyLine}</p>
       </Container>
     </footer>
   );

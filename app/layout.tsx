@@ -1,10 +1,11 @@
 import { Analytics } from "@vercel/analytics/next";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { Footer } from "@/components/sections/Footer";
 import { Header } from "@/components/sections/Header";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
-import { seo, ui } from "@/content/site";
+import { ui } from "@/content/site";
+import { rootMetadata } from "@/lib/seo";
 import "./globals.css";
 
 // latin-ext conține ș, ț, ă, î, â.
@@ -13,10 +14,12 @@ const geistSans = Geist({
   subsets: ["latin", "latin-ext"],
 });
 
-// Metadata de bază; OG, Twitter card și restul se completează în Faza 4.
-export const metadata: Metadata = {
-  title: seo.title,
-  description: seo.description,
+// Title, description, Open Graph, Twitter card: lib/seo.ts. Imaginea OG: app/opengraph-image.tsx.
+export const metadata: Metadata = rootMetadata;
+
+export const viewport: Viewport = {
+  themeColor: "#0d0d0d", // = --color-background (bara browserului pe mobil)
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -38,7 +41,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <main id="continut">{children}</main>
           <Footer />
         </SmoothScroll>
-        <Analytics />
+        {/* Vercel Web Analytics (fără cookie-uri). Doar pe Vercel: local, scriptul nu există și ar da eroare în consolă. */}
+        {process.env.VERCEL && <Analytics />}
       </body>
     </html>
   );

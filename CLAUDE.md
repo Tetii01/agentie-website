@@ -31,6 +31,9 @@ Spec-ul complet e în [docs/SPEC.md](docs/SPEC.md). Citește-l înainte de orice
 - Textele cu `**bold**` din content se afișează cu `RichText`.
 - Rândurile cu derulare orizontală pe mobil folosesc `ScrollRow` (sau `data-fade-group` pe listă), ca toate cardurile să apară odată cu rândul.
 - Formularul: schema în `lib/lead.ts` (cu `zod/mini`, ca să rămână mic în browser), interfața în `LeadForm.tsx`, trimiterea în `app/api/lead/route.ts`. Mesajele și opțiunile se dau schemei prin parametri, din `content/site.ts`.
+- Paginile legale: textul e în `content/site.ts` (`legal`), randat de `LegalDocument`; fiecare `page.tsx` are sus comentariul `{/* DE VERIFICAT înainte de lansare */}`.
+- SEO: `lib/seo.ts` (`rootMetadata`, `pageMetadata`, `siteUrl`). O pagină nouă își ia metadata cu `pageMetadata(...)`, care include explicit imaginea OG.
+- CSS care trebuie să bată o utilitate Tailwind (ex. pauza marquee-ului peste `animate-marquee`) stă în afara `@layer`.
 - CTA-ul plutitor apare după ce marcajul `data-floating-cta-trigger` de sub butoanele din hero trece de header.
 - `cn()` doar concatenează clase (fără tailwind-merge). Un `className` care contrazice o clasă de bază a componentei (ex. `hidden` peste `inline-flex` din Button) nu câștigă sigur: pune vizibilitatea / display-ul pe un element părinte.
 - Fără GSAP sau Framer Motion. Animațiile sunt din CSS + IntersectionObserver (`FadeIn`, `LogoLoop`).

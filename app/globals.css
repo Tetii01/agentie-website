@@ -53,13 +53,14 @@
   --text-stat: 3.75rem; /* 60px, valorile din secțiunea Cifre */
   --text-stat--line-height: 1.05;
   --text-stat--letter-spacing: -0.04em;
-  --text-stat-mobile: 2.5rem; /* 40px */
+  --text-stat-mobile: 2rem; /* 32px */
   --text-stat-mobile--line-height: 1.05;
   --text-stat-mobile--letter-spacing: -0.04em;
 
   /* Layout */
   --container-site: 75rem; /* 1200px, lățimea maximă a conținutului */
   --container-narrow: 43.75rem; /* 700px, subtitluri */
+  --container-legal: 45rem; /* 720px, textul paginilor legale */
   --spacing-gutter: 1rem; /* marginea laterală pe mobil */
   --spacing-gutter-lg: 2rem; /* marginea laterală de la tabletă în sus */
   --spacing-section: 5rem; /* padding sus/jos per secțiune: între două secțiuni ies 160px */
@@ -221,11 +222,6 @@ html.lenis body {
     width: max-content;
   }
 
-  .marquee:hover .marquee-track,
-  .marquee:focus-within .marquee-track {
-    animation-play-state: paused;
-  }
-
   .marquee-group {
     display: flex;
     flex-shrink: 0;
@@ -233,6 +229,13 @@ html.lenis body {
     gap: var(--spacing-marquee);
     padding-right: var(--spacing-marquee);
   }
+}
+
+/* Pauză la hover pe marquee. În afara @layer: altfel clasa animate-marquee (stratul utilities,
+   prioritate mai mare) o anulează, pentru că shorthand-ul `animation` resetează play-state. */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
 }
 
 /* Contur de text (logo-ul decorativ din „Despre") */

@@ -378,6 +378,18 @@ export const offer = {
   alternative: "sau",
 };
 
+/* ───────────────────────── Datele firmei ───────────────────────── */
+
+/** Folosite în footer și în paginile legale. */
+export const company = {
+  placeholder: true,
+  legalName: "[DENUMIRE FIRMĂ] S.R.L.",
+  cui: "[ ]",
+  regCom: "[ ]",
+  address: "[ADRESA SEDIULUI], Sibiu, România",
+  city: "Sibiu, România",
+};
+
 /* ───────────────────────── Date de contact ───────────────────────── */
 
 export const contact = {
@@ -454,10 +466,8 @@ export const footer = {
     { placeholder: true, name: "Instagram", href: "[URL INSTAGRAM]", icon: siInstagram },
     { placeholder: true, name: "TikTok", href: "[URL TIKTOK]", icon: siTiktok },
   ] satisfies { placeholder?: boolean; name: string; href: string; icon: SimpleIcon }[],
-  company: {
-    placeholder: true,
-    text: "[DENUMIRE FIRMĂ] S.R.L. · CUI [ ] · Nr. Reg. Com. [ ] · Sibiu, România",
-  },
+  /** „[DENUMIRE FIRMĂ] S.R.L. · CUI [ ] · Nr. Reg. Com. [ ] · Sibiu, România" (din `company`). */
+  companyLine: `${company.legalName} · CUI ${company.cui} · Nr. Reg. Com. ${company.regCom} · ${company.city}`,
 };
 
 /* ───────────────────────── 5.13 CTA plutitor ───────────────────────── */
@@ -466,6 +476,269 @@ export const floatingCta = {
   line1: "Află unde pierzi timp și clienți.",
   line2: "Primești o analiză gratuită.",
   href: toSection(anchors.offer),
+};
+
+/* ═══════════════════════════════════════════════════════════════════════
+   6. PAGINI LEGALE · DE VERIFICAT înainte de lansare
+   Draft scris de Claude conform GDPR, pentru un site de prezentare cu
+   formular de contact. NU este consultanță juridică: verifică-l (ideal cu
+   un avocat sau un consultant GDPR) și completează placeholder-ele [ ].
+   Blocuri: un string = paragraf, un array = listă cu buline.
+   În text: **îngroșat** și [text link](adresă).
+   ═══════════════════════════════════════════════════════════════════════ */
+
+export type LegalBlock = string | string[];
+export type LegalDocument = {
+  route: string;
+  title: string;
+  description: string;
+  updated: string;
+  intro: LegalBlock[];
+  sections: { title: string; body: LegalBlock[] }[];
+};
+
+const operator = `${company.legalName}, cu sediul în ${company.address}, CUI ${company.cui}, Nr. Reg. Com. ${company.regCom}`;
+const privacyLink = `[Politica de confidențialitate](${routes.privacy})`;
+const cookiesLink = `[Politica de cookies](${routes.cookies})`;
+
+const privacy: LegalDocument = {
+  route: routes.privacy,
+  title: "Politica de confidențialitate",
+  description: `Ce date personale colectăm prin site-ul ${brand.name}, de ce, cât timp le păstrăm și ce drepturi ai.`,
+  updated: "[DATA]",
+  intro: [
+    `Această politică explică ce date personale colectăm prin site-ul ${brand.name}, de ce le colectăm, cum le folosim și ce drepturi ai. Prelucrăm datele conform Regulamentului (UE) 2016/679 (GDPR) și legislației române privind protecția datelor.`,
+  ],
+  sections: [
+    {
+      title: "Cine este operatorul datelor",
+      body: [
+        `Operatorul datelor tale personale este ${operator} („noi”).`,
+        `Pentru orice întrebare despre datele tale ne poți scrie la ${contact.email.label} sau ne poți suna la ${contact.phone.label}.`,
+      ],
+    },
+    {
+      title: "Ce date colectăm",
+      body: [
+        "Prin formularul „Analiză gratuită” colectăm doar datele pe care ni le dai tu:",
+        [
+          "numele firmei și, opțional, website-ul sau pagina de social media a firmei;",
+          "serviciile care te interesează;",
+          "numele tău, adresa de email și numărul de telefon;",
+          "mesajul pe care ni-l scrii, dacă alegi să ne scrii unul;",
+          "confirmarea acordului tău pentru prelucrarea datelor.",
+        ],
+        "Când vizitezi site-ul, furnizorul de hosting prelucrează automat date tehnice necesare funcționării și securității, de exemplu adresa IP, tipul de browser și data accesării.",
+        "Pentru statistici de trafic folosim Vercel Web Analytics, care funcționează fără cookie-uri și ne arată doar date agregate (de exemplu numărul de vizite pe pagină), fără să te identifice.",
+        "Nu îți cerem categorii speciale de date (de exemplu date despre sănătate) și te rugăm să nu le incluzi în mesaj.",
+      ],
+    },
+    {
+      title: "De ce folosim datele și pe ce temei legal",
+      body: [
+        [
+          "**Ca să răspundem cererii tale** de analiză gratuită, să te contactăm și să pregătim discuția. Temeiul este efectuarea demersurilor pe care ni le ceri înainte de o eventuală colaborare (art. 6 alin. (1) lit. b) GDPR) și acordul tău, exprimat prin bifarea căsuței din formular (art. 6 alin. (1) lit. a) GDPR).",
+          "**Ca să protejăm site-ul** și formularul împotriva abuzurilor și a mesajelor automate (spam). Temeiul este interesul nostru legitim de a asigura securitatea site-ului (art. 6 alin. (1) lit. f) GDPR).",
+          "**Ca să înțelegem, la nivel agregat, cum este folosit site-ul**, pentru a-l îmbunătăți. Temeiul este interesul nostru legitim (art. 6 alin. (1) lit. f) GDPR); aceste statistici nu te identifică.",
+        ],
+        "Nu folosim datele tale pentru marketing fără acordul tău separat și nu luăm decizii bazate exclusiv pe prelucrarea automată care să producă efecte juridice asupra ta.",
+      ],
+    },
+    {
+      title: "Cât timp păstrăm datele",
+      body: [
+        "Păstrăm datele trimise prin formular cât timp este nevoie ca să răspundem cererii tale. Dacă nu începem o colaborare, le ștergem după cel mult [12 luni] de la ultima noastră comunicare.",
+        "Dacă lucrăm împreună, datele devin parte din relația contractuală și le păstrăm pe durata contractului, apoi pe perioadele cerute de lege (de exemplu pentru documentele financiar-contabile).",
+        "Datele tehnice prelucrate de furnizorul de hosting se păstrează pe perioade scurte, conform politicilor acestuia.",
+      ],
+    },
+    {
+      title: "Cui transmitem datele",
+      body: [
+        "Nu vindem și nu închiriem datele tale. Le transmitem doar furnizorilor care ne ajută să operăm site-ul, în calitate de persoane împuternicite, pe bază de contract și numai în măsura necesară:",
+        [
+          "**Vercel Inc.** (SUA): găzduirea site-ului și statisticile de trafic Vercel Web Analytics, fără cookie-uri;",
+          "**Resend** (SUA): transmiterea pe email a cererilor trimise prin formular;",
+          "[alte instrumente folosite pentru gestionarea cererilor, de exemplu un CRM sau n8n, dacă e cazul].",
+        ],
+        "Putem transmite date autorităților publice doar atunci când legea ne obligă.",
+      ],
+    },
+    {
+      title: "Transferuri în afara Spațiului Economic European",
+      body: [
+        "Unii furnizori (Vercel și Resend) au sediul în SUA, așa că datele pot fi transferate în afara Spațiului Economic European. În aceste cazuri, transferul se face pe baza garanțiilor prevăzute de GDPR: decizia de adecvare a Comisiei Europene privind cadrul UE-SUA pentru protecția datelor (EU-U.S. Data Privacy Framework), pentru furnizorii certificați, sau clauzele contractuale standard aprobate de Comisia Europeană.",
+      ],
+    },
+    {
+      title: "Cum protejăm datele",
+      body: [
+        "Folosim conexiuni criptate (HTTPS), dăm acces la date doar persoanelor din echipă care au nevoie de ele și lucrăm cu furnizori care aplică măsuri de securitate adecvate.",
+      ],
+    },
+    {
+      title: "Drepturile tale",
+      body: [
+        "În legătură cu datele tale personale ai următoarele drepturi:",
+        [
+          "**dreptul de acces**: să afli ce date avem despre tine;",
+          "**dreptul la rectificare**: să corectezi datele inexacte;",
+          "**dreptul la ștergere**: să ceri ștergerea datelor;",
+          "**dreptul la restricționarea prelucrării**;",
+          "**dreptul la portabilitatea datelor**;",
+          "**dreptul de opoziție** la prelucrarea bazată pe interesul nostru legitim;",
+          "**dreptul de a-ți retrage acordul** oricând, fără să fie afectată legalitatea prelucrării de până atunci;",
+          "**dreptul de a depune o plângere** la Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal (ANSPDCP), [www.dataprotection.ro](https://www.dataprotection.ro).",
+        ],
+        `Ca să îți exerciți drepturile, scrie-ne la ${contact.email.label}. Îți răspundem fără întârzieri nejustificate și în cel mult o lună de la primirea cererii.`,
+      ],
+    },
+    {
+      title: "Minori",
+      body: ["Site-ul se adresează firmelor. Nu colectăm cu bună știință date despre persoane sub 16 ani."],
+    },
+    {
+      title: "Modificări ale acestei politici",
+      body: [
+        "Putem actualiza această politică atunci când se schimbă modul în care prelucrăm datele. Versiunea în vigoare este mereu cea publicată pe această pagină, cu data ultimei actualizări afișată sus.",
+        `Despre cookie-uri găsești detalii în ${cookiesLink}.`,
+      ],
+    },
+  ],
+};
+
+const cookies: LegalDocument = {
+  route: routes.cookies,
+  title: "Politica de cookies",
+  description: `Ce cookie-uri folosește (și nu folosește) site-ul ${brand.name}.`,
+  updated: "[DATA]",
+  intro: [
+    `Această politică explică dacă și cum folosește site-ul ${brand.name}, operat de ${company.legalName}, cookie-uri și tehnologii similare.`,
+  ],
+  sections: [
+    {
+      title: "Ce sunt cookie-urile",
+      body: [
+        "Cookie-urile sunt fișiere mici de text pe care un site le salvează în browserul tău. Unele sunt strict necesare ca site-ul să funcționeze; altele sunt folosite pentru statistici, personalizare sau publicitate.",
+      ],
+    },
+    {
+      title: "Ce cookie-uri folosim",
+      body: [
+        "Site-ul nostru **nu folosește cookie-uri de statistică, de marketing sau de urmărire**. De aceea nu îți afișăm un banner de cookies.",
+        "Pentru statistici de trafic folosim Vercel Web Analytics, un serviciu care funcționează fără cookie-uri: nu salvează nimic în browserul tău și nu te urmărește de la un site la altul. Datele sunt agregate și nu te identifică.",
+        "Furnizorul de hosting (Vercel) poate folosi, în situații excepționale, cookie-uri strict necesare pentru securitate, de exemplu ca să blocheze traficul automat abuziv. Acestea nu necesită acordul tău, potrivit legii.",
+      ],
+    },
+    {
+      title: "Site-uri externe",
+      body: [
+        "Site-ul conține linkuri către alte site-uri și servicii, de exemplu WhatsApp, Instagram, TikTok sau ANPC. Când le accesezi, acestea pot folosi propriile cookie-uri, conform politicilor lor, pe care nu le controlăm.",
+      ],
+    },
+    {
+      title: "Cum poți controla cookie-urile",
+      body: [
+        "Poți vedea, bloca sau șterge cookie-urile din setările browserului tău. Blocarea cookie-urilor strict necesare poate afecta funcționarea unor site-uri.",
+      ],
+    },
+    {
+      title: "Modificări",
+      body: [
+        "Dacă vom începe să folosim și alte cookie-uri, vom actualiza această politică și, acolo unde legea o cere, îți vom cere acordul înainte.",
+      ],
+    },
+    {
+      title: "Contact",
+      body: [
+        `Pentru întrebări despre această politică ne poți scrie la ${contact.email.label}. Modul în care prelucrăm datele personale este descris în ${privacyLink}.`,
+      ],
+    },
+  ],
+};
+
+const terms: LegalDocument = {
+  route: routes.terms,
+  title: "Termeni și condiții",
+  description: `Condițiile de folosire a site-ului ${brand.name}.`,
+  updated: "[DATA]",
+  intro: [
+    `Acești termeni se aplică folosirii site-ului ${brand.name}. Folosind site-ul, ești de acord cu ei; dacă nu ești de acord, te rugăm să nu folosești site-ul.`,
+  ],
+  sections: [
+    {
+      title: "Cine suntem",
+      body: [
+        `Site-ul este operat de ${operator}. Ne poți contacta la ${contact.email.label} sau la ${contact.phone.label}.`,
+      ],
+    },
+    {
+      title: "Ce găsești pe site",
+      body: [
+        "Site-ul prezintă serviciile noastre de implementare a soluțiilor bazate pe inteligență artificială: chatboți, automatizări, conținut, aplicații și website-uri. Informațiile au caracter general și nu reprezintă o ofertă fermă.",
+        "Condițiile concrete ale fiecărui proiect (livrabile, termene, preț) se stabilesc printr-o ofertă sau un contract separat.",
+      ],
+    },
+    {
+      title: "Analiza gratuită",
+      body: [
+        "Prin formularul de pe site poți cere o analiză gratuită. Cererea și discuția nu creează nicio obligație, nici pentru tine, nici pentru noi. Putem refuza cererile incomplete, evident false sau abuzive.",
+      ],
+    },
+    {
+      title: "Folosirea site-ului",
+      body: [
+        "Te rugăm să folosești site-ul cu bună-credință. Nu este permis:",
+        [
+          "să trimiți prin formular date false sau datele altor persoane fără acordul lor;",
+          "să trimiți mesaje nesolicitate (spam) sau conținut ilegal;",
+          "să încerci să accesezi fără drept sistemele site-ului sau să îi afectezi funcționarea.",
+        ],
+      ],
+    },
+    {
+      title: "Proprietate intelectuală",
+      body: [
+        `Conținutul site-ului (texte, design, elemente grafice, logo) aparține ${company.legalName} sau partenerilor săi și este protejat de legislația privind drepturile de autor. Nu îl poți copia sau folosi în scop comercial fără acordul nostru scris.`,
+        "Numele și logo-urile altor companii afișate pe site (de exemplu ale tool-urilor cu care lucrăm) aparțin proprietarilor lor și sunt folosite doar ca să arate cu ce servicii se pot integra soluțiile noastre.",
+      ],
+    },
+    {
+      title: "Limitarea răspunderii",
+      body: [
+        "Ne străduim ca informațiile de pe site să fie corecte și actuale, dar nu garantăm că sunt complete sau lipsite de erori. Rezultatele prezentate (de exemplu cifrele sau proiectele) sunt orientative și depind de fiecare afacere.",
+        "Nu răspundem pentru pagubele indirecte rezultate din folosirea informațiilor de pe site sau din imposibilitatea temporară de a-l accesa.",
+      ],
+    },
+    {
+      title: "Linkuri către alte site-uri",
+      body: ["Site-ul conține linkuri către site-uri externe. Nu răspundem pentru conținutul sau politicile acestora."],
+    },
+    {
+      title: "Date personale și cookie-uri",
+      body: [`Modul în care prelucrăm datele personale este descris în ${privacyLink}, iar folosirea cookie-urilor în ${cookiesLink}.`],
+    },
+    {
+      title: "Legea aplicabilă și litigii",
+      body: [
+        "Acești termeni sunt guvernați de legea română. Orice neînțelegere o vom rezolva mai întâi pe cale amiabilă; dacă nu reușim, litigiul va fi soluționat de instanțele competente din România.",
+        "Dacă ai calitatea de consumator, te poți adresa Autorității Naționale pentru Protecția Consumatorilor ([ANPC](https://anpc.ro/)) sau poți folosi procedurile de soluționare alternativă a litigiilor ([SAL](https://anpc.ro/ce-este-sal/)).",
+      ],
+    },
+    {
+      title: "Modificări",
+      body: [
+        "Putem actualiza acești termeni. Versiunea în vigoare este cea publicată pe această pagină, cu data ultimei actualizări afișată sus.",
+      ],
+    },
+  ],
+};
+
+export const legal = {
+  updatedLabel: "Ultima actualizare:",
+  privacy,
+  cookies,
+  terms,
 };
 
 /* ═══════════════════════════════════════════════════════════════════════
