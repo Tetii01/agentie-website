@@ -14,6 +14,13 @@ export const siteUrl = (
     : "http://localhost:3000")
 ).replace(/\/$/, "");
 
+/**
+ * Indexarea de către motoarele de căutare e permisă doar când NEXT_PUBLIC_ALLOW_INDEXING=true.
+ * Altfel (până la lansare): robots.txt blochează tot și fiecare pagină are meta robots noindex, nofollow.
+ * Se citește la build: după ce schimbi variabila pe Vercel, refă deploy-ul.
+ */
+export const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
+
 const openGraphBase = {
   type: "website",
   locale: "ro_RO",
@@ -29,7 +36,8 @@ export const rootMetadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: { ...openGraphBase, url: "/", title: seo.title, description: seo.description },
   twitter: { card: "summary_large_image", title: seo.title, description: seo.description },
-  robots: { index: true, follow: true },
+  // Moștenit de toate paginile.
+  robots: { index: allowIndexing, follow: allowIndexing },
 };
 
 /**

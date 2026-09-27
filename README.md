@@ -127,6 +127,7 @@ Copiezi `.env.example` în `.env.local` și completezi valorile. Pe Vercel le se
 | `LEAD_FROM_EMAIL` | Adresa expeditorului, de pe un domeniu verificat în Resend (ex. `Site <lead@domeniu.ro>`) |
 | `LEAD_WEBHOOK_URL` | Opțional: webhook care primește lead-ul ca JSON |
 | `NEXT_PUBLIC_SITE_URL` | Opțional: adresa publică (ex. `https://domeniu.ro`), pentru sitemap, robots și linkurile de share. Fără ea, pe Vercel se folosește automat domeniul de producție |
+| `NEXT_PUBLIC_ALLOW_INDEXING` | Indexarea în Google. Cât timp nu e `true`, `robots.txt` blochează tot (`Disallow: /`) și fiecare pagină are `noindex, nofollow`. Se setează `true` doar la lansare |
 
 Fără variabile, formularul nu crapă:
 
@@ -148,6 +149,16 @@ Fără variabile, formularul nu crapă:
 7. **Verificare.** Trimiți o dată formularul de pe site și verifici emailul. Dacă nu vine, te uiți în Project → Logs după mesajele care încep cu `[lead]`.
 
 De reținut: o variabilă de mediu schimbată se aplică doar deploy-urilor noi. După orice modificare: Deployments → ultimul deploy → Redeploy.
+
+## Lansarea
+
+Până la lansare, site-ul e online, dar nu apare în Google: `robots.txt` blochează tot, iar paginile au `noindex, nofollow`. În ziua lansării:
+
+1. Completezi placeholder-ele rămase (vezi „Ce a rămas de completat") și verifici textele legale.
+2. Pe Vercel, verifici variabilele pentru formular (`RESEND_API_KEY`, `LEAD_TO_EMAIL`, `LEAD_FROM_EMAIL`) și `NEXT_PUBLIC_SITE_URL=https://domeniu.ro`.
+3. Setezi `NEXT_PUBLIC_ALLOW_INDEXING=true` (doar pe mediul **Production**, ca linkurile de preview să rămână neindexate).
+4. Redeploy. Verifici `https://domeniu.ro/robots.txt`: trebuie să apară `Allow: /` și linia `Sitemap:`. În sursa paginii nu mai trebuie să existe `noindex`.
+5. Opțional: adaugi site-ul în [Google Search Console](https://search.google.com/search-console) și trimiți `https://domeniu.ro/sitemap.xml`.
 
 ## Resend: configurarea cu domeniul vostru
 
