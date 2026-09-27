@@ -1,4 +1,4 @@
-import { Container } from "@/components/ui/Container";
+import { Section } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
 
 /**
@@ -7,17 +7,15 @@ import { cn } from "@/lib/cn";
  */
 export function SectionStub({ id, label, tall = false }: { id?: string; label: string; tall?: boolean }) {
   return (
-    <section id={id} className="py-section-mobile md:py-section">
-      <Container>
-        <div
-          className={cn(
-            "grid place-items-center rounded-card border border-dashed border-border text-sm text-muted",
-            tall ? "min-h-[90vh]" : "min-h-[60vh]",
-          )}
-        >
-          {label}
-        </div>
-      </Container>
-    </section>
+    <Section id={id}>
+      <div
+        className={cn(
+          "grid place-items-center rounded-card border border-dashed border-border text-sm text-muted",
+          tall ? "min-h-[90vh]" : "min-h-[60vh]",
+        )}
+      >
+        {label}
+      </div>
+    </Section>
   );
 }

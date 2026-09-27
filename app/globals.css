@@ -25,6 +25,7 @@
   /* Raze de colț */
   --radius-card: 34px;
   --radius-pill: 9999px;
+  --radius-inner: 22px; /* imagini în interiorul cardurilor (raza cardului − padding) */
 
   /* Umbre (glow-ul se calculează din accent, se schimbă odată cu el) */
   --shadow-glow: 0 0 32px -4px color-mix(in oklab, var(--color-accent) 60%, transparent);
@@ -61,7 +62,8 @@
   /* Animații */
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --transition-duration-base: 300ms;
-  --transition-duration-fade: 800ms; /* fade-in la scroll */
+  --transition-duration-fade: 800ms; /* fade-in la scroll și apariția CTA-ului plutitor */
+  --ease-fade: ease-in-out; /* easing-ul fade-in-ului */
   --animate-marquee: marquee 45s linear infinite; /* viteza logo loop-ului */
 
   @keyframes marquee {
@@ -158,8 +160,8 @@ html.lenis body {
     transform: translateY(20px);
     will-change: opacity, transform;
     transition:
-      opacity var(--transition-duration-fade) ease-in-out,
-      transform var(--transition-duration-fade) ease-in-out;
+      opacity var(--transition-duration-fade) var(--ease-fade),
+      transform var(--transition-duration-fade) var(--ease-fade);
     transition-delay: var(--fade-delay, 0ms);
   }
 
@@ -172,7 +174,7 @@ html.lenis body {
      JavaScript-ul, ca titlul să nu întârzie LCP. După încărcare, toggle-ul
      la scroll funcționează la fel ca la restul. */
   .fade-in-section.fade-in-eager {
-    animation: fade-in-up var(--transition-duration-fade) ease-in-out backwards;
+    animation: fade-in-up var(--transition-duration-fade) var(--ease-fade) backwards;
     animation-delay: var(--fade-delay, 0ms);
   }
 

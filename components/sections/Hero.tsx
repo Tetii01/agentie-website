@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { Placeholder } from "@/components/ui/Placeholder";
+import { Media } from "@/components/ui/Media";
 import { hero } from "@/content/site";
 
 export function Hero() {
@@ -30,14 +30,19 @@ export function Hero() {
             {hero.secondaryCta.label}
           </Button>
         </FadeIn>
+        {/* Marcaj pentru CTA-ul plutitor: apare după ce linia de sub butoane trece de header.
+            Stă în afara FadeIn, ca animația (care coboară butoanele 20px) să nu-l miște. */}
+        <div data-floating-cta-trigger aria-hidden className="h-px w-full" />
 
         <FadeIn eager delay={240} className="relative mt-16 w-full max-w-md md:mt-24 md:max-w-xl">
           <div aria-hidden className="bg-glow pointer-events-none absolute -inset-1/3 blur-2xl" />
-          {/* TODO conținut real: când avem imaginea, `visual.image` → next/image în locul Placeholder-ului. */}
-          <Placeholder
+          <Media
+            image={visual.image}
             label={visual.label}
             shape={visual.shape}
             aspect="square"
+            sizes="(min-width: 768px) 576px, 448px"
+            eager
             className="relative w-full"
           />
         </FadeIn>

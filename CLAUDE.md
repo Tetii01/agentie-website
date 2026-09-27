@@ -26,5 +26,9 @@ Spec-ul complet e în [docs/SPEC.md](docs/SPEC.md). Citește-l înainte de orice
 - Componentele client (`"use client"`) nu importă `content/site.ts`: primesc textul prin props de la o componentă server. Așa conținutul și iconițele nu ajung în JavaScript-ul trimis în browser.
 - Linkurile către secțiuni se scriu ca `"#id"` și trec prin `SmartLink` / `Button`: pe prima pagină fac scroll cu Lenis, de pe alte pagini navighează la `/#id`.
 - Offset-ul pentru header se aplică în `lib/scroll.ts`. Nu pune `scroll-margin-top` (`scroll-mt-*`) pe secțiuni: Lenis îl adună la offset și secțiunea ajunge prea jos.
+- Secțiunile folosesc `Section` (spațiere + Container). Cardurile din grid-uri stau în `FadeIn` cu `delay={stagger(index)}` din `lib/stagger.ts` (0, 80, 160, 240 ms).
+- Imaginile trec prin `Media`: `next/image` când câmpul din content are `{ src, alt }`, altfel `Placeholder`.
+- Textele cu `**bold**` din content se afișează cu `RichText`.
+- CTA-ul plutitor apare după ce marcajul `data-floating-cta-trigger` de sub butoanele din hero trece de header.
 - `cn()` doar concatenează clase (fără tailwind-merge). Un `className` care contrazice o clasă de bază a componentei (ex. `hidden` peste `inline-flex` din Button) nu câștigă sigur: pune vizibilitatea / display-ul pe un element părinte.
 - Fără GSAP sau Framer Motion. Animațiile sunt din CSS + IntersectionObserver (`FadeIn`, `LogoLoop`).

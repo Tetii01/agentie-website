@@ -1,27 +1,35 @@
 import { ImageIcon } from "lucide-react";
 import { cn } from "@/lib/cn";
 
-const aspects = {
+export const aspects = {
   square: "aspect-square",
   video: "aspect-video",
   landscape: "aspect-[4/3]",
   portrait: "aspect-[3/4]",
 };
 
-type PlaceholderProps = {
+export const shapes = {
+  /** Colțuri rotunjite (rounded-card). */
+  rounded: "rounded-card",
+  /** Rotund. */
+  circle: "rounded-full",
+  /** Fără colțuri: umple un container care are deja forma lui (ex. imaginea din cardul de proiect). */
+  none: "",
+};
+
+export type PlaceholderProps = {
   /** Eticheta mică afișată în bloc, ex. „Imagine proiect". */
   label: string;
-  /** "rounded" = colțuri rotunjite (rounded-card), "circle" = rotund. */
-  shape?: "rounded" | "circle";
+  shape?: keyof typeof shapes;
   aspect?: keyof typeof aspects;
-  /** Ascunde eticheta vizibilă (pentru blocuri mici, ex. avatare). Rămâne pentru cititoarele de ecran. */
+  /** Ascunde eticheta și iconița (pentru blocuri mici, ex. avatare). Eticheta rămâne pentru cititoarele de ecran. */
   compact?: boolean;
   className?: string;
 };
 
 /**
  * Bloc provizoriu în locul unei imagini: gradient neutru, colțuri rotunjite, etichetă mică.
- * Se înlocuiește cu next/image când avem conținutul real (vezi README).
+ * Folosit prin `Media`, care îl înlocuiește automat cu imaginea reală când există (vezi README).
  */
 export function Placeholder({ label, shape = "rounded", aspect = "landscape", compact = false, className }: PlaceholderProps) {
   return (
@@ -29,18 +37,21 @@ export function Placeholder({ label, shape = "rounded", aspect = "landscape", co
       role="img"
       aria-label={label}
       className={cn(
-        "flex flex-col items-center justify-center gap-3 overflow-hidden border border-border",
+        "flex flex-col items-center justify-center gap-3 overflow-hidden",
         "bg-linear-to-br from-surface-2 via-surface to-background",
-        shape === "circle" ? "rounded-full" : "rounded-card",
+        shape !== "none" && "border border-border",
+        shapes[shape],
         aspects[aspect],
         className,
       )}
     >
-      <ImageIcon aria-hidden className="size-7 text-muted/50" strokeWidth={1.25} />
       {!compact && (
-        <span className="rounded-pill border border-border bg-background/60 px-3 py-1 text-xs text-muted">
-          {label}
-        </span>
+        <>
+          <ImageIcon aria-hidden className="size-7 text-muted/50" strokeWidth={1.25} />
+          <span className="rounded-pill border border-border bg-background/60 px-3 py-1 text-xs text-muted">
+            {label}
+          </span>
+        </>
       )}
     </div>
   );
