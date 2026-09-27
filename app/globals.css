@@ -1,0 +1,252 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   TOKENS
+   Toate valorile vizuale ale site-ului stau aici. Componentele folosesc doar
+   clasele generate din ele (bg-background, text-accent, rounded-card,
+   shadow-glow, duration-fade...), niciodată valori directe.
+   Schimbi o valoare aici și se schimbă peste tot.
+   ========================================================================== */
+
+@theme {
+  /* Culori */
+  --color-background: #0d0d0d;
+  --color-surface: #141414; /* carduri */
+  --color-surface-2: #1a1a1a;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-foreground: #ffffff;
+  --color-muted: #909099; /* text secundar */
+  --color-accent: #8b9cff; /* PROVIZORIU, va fi înlocuit de brand */
+  --color-accent-foreground: #0d0d0d;
+  --color-glass: rgba(13, 13, 14, 0.5); /* fundalul header-ului */
+  --color-glass-border: rgba(198, 198, 198, 0.15); /* linia de sub header */
+  --color-glow: rgba(255, 255, 255, 0.07); /* glow-ul radial din hero */
+
+  /* Raze de colț */
+  --radius-card: 34px;
+  --radius-pill: 9999px;
+
+  /* Umbre (glow-ul se calculează din accent, se schimbă odată cu el) */
+  --shadow-glow: 0 0 32px -4px color-mix(in oklab, var(--color-accent) 60%, transparent);
+
+  /* Tipografie: text-h1, text-h2, text-lead (+ variantele -mobile) */
+  --text-h1: 5rem; /* 80px */
+  --text-h1--line-height: 1.01;
+  --text-h1--letter-spacing: -0.3rem;
+  --text-h1-mobile: 2.625rem; /* 42px */
+  --text-h1-mobile--line-height: 1.01;
+  --text-h1-mobile--letter-spacing: -2.4px;
+  --text-h2: 3.5rem; /* 56px */
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.15rem;
+  --text-h2-mobile: 2.125rem; /* 34px */
+  --text-h2-mobile--line-height: 1.08;
+  --text-h2-mobile--letter-spacing: -1.2px;
+  --text-lead: 2.0625rem; /* 33px, subtitlul din hero */
+  --text-lead--line-height: 1.25;
+  --text-lead-mobile: 1.25rem; /* 20px */
+  --text-lead-mobile--line-height: 1.4;
+
+  /* Layout */
+  --container-site: 75rem; /* 1200px, lățimea maximă a conținutului */
+  --container-narrow: 43.75rem; /* 700px, subtitluri */
+  --spacing-gutter: 1rem; /* marginea laterală pe mobil */
+  --spacing-gutter-lg: 2rem; /* marginea laterală de la tabletă în sus */
+  --spacing-section: 5rem; /* padding sus/jos per secțiune: între două secțiuni ies 160px */
+  --spacing-section-mobile: 3rem; /* idem pe mobil: 96px între secțiuni */
+  --spacing-header: 4.5rem; /* înălțimea header-ului */
+  --spacing-header-mobile: 4rem;
+  --spacing-marquee: 3.5rem; /* distanța dintre elementele din logo loop */
+
+  /* Animații */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-duration-base: 300ms;
+  --transition-duration-fade: 800ms; /* fade-in la scroll */
+  --animate-marquee: marquee 45s linear infinite; /* viteza logo loop-ului */
+
+  @keyframes marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+}
+
+/* Fontul vine din next/font (app/layout.tsx). */
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ==========================================================================
+   BAZĂ
+   ========================================================================== */
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: dark;
+    background-color: var(--color-background);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-accent) 35%, transparent);
+    color: var(--color-foreground);
+  }
+}
+
+/* ==========================================================================
+   LENIS (CSS-ul recomandat de lenis)
+   ========================================================================== */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.lenis.lenis-autoToggle {
+  transition-property: overflow;
+  transition-duration: 1ms;
+  transition-behavior: allow-discrete;
+}
+
+/* ==========================================================================
+   COMPONENTE
+   ========================================================================== */
+
+@layer components {
+  /* Fade-in la scroll (components/ui/FadeIn.tsx) */
+  .fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: opacity, transform;
+    transition:
+      opacity var(--transition-duration-fade) ease-in-out,
+      transform var(--transition-duration-fade) ease-in-out;
+    transition-delay: var(--fade-delay, 0ms);
+  }
+
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Varianta pentru hero: pornește din CSS la încărcare, fără să aștepte
+     JavaScript-ul, ca titlul să nu întârzie LCP. După încărcare, toggle-ul
+     la scroll funcționează la fel ca la restul. */
+  .fade-in-section.fade-in-eager {
+    animation: fade-in-up var(--transition-duration-fade) ease-in-out backwards;
+    animation-delay: var(--fade-delay, 0ms);
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  /* Bandă infinită (components/ui/LogoLoop.tsx) */
+  .marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee-group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--spacing-marquee);
+    padding-right: var(--spacing-marquee);
+  }
+}
+
+/* Glow radial moale (în spatele vizualului din hero) */
+@utility bg-glow {
+  background-image: radial-gradient(closest-side, var(--color-glow), transparent);
+}
+
+/* ==========================================================================
+   PREFERS-REDUCED-MOTION: fără fade-in (elemente vizibile direct),
+   marquee oprit. Lenis nu pornește deloc (components/ui/SmoothScroll.tsx).
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-section,
+  .fade-in-section.is-visible,
+  .fade-in-section.fade-in-eager {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+    will-change: auto;
+  }
+
+  .marquee {
+    mask-image: none;
+  }
+
+  .marquee-track {
+    width: auto;
+    justify-content: center;
+    animation: none;
+  }
+
+  .marquee-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 1.5rem;
+    padding-right: 0;
+  }
+
+  .marquee-group[aria-hidden="true"] {
+    display: none;
+  }
+}

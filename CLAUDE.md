@@ -1,0 +1,30 @@
+@AGENTS.md
+
+# Site-ul agenției
+
+Spec-ul complet e în [docs/SPEC.md](docs/SPEC.md). Citește-l înainte de orice modificare.
+
+## Cum lucrăm
+
+- Lucrăm pe faze (SPEC §8). Faci doar faza cerută, apoi te oprești și aștepți.
+- La final de fază: `npm run build` fără erori, serverul local pornit, rezumat scurt.
+- Nu inventa texte. Ce lipsește devine placeholder vizibil `[TEXT]`.
+- Textele funcționale (aria-label, validare, erori) stau în blocul `ui` din `content/site.ts`, marcate „DE VERIFICAT".
+
+## Reguli de arhitectură (SPEC §2)
+
+1. **Tot textul** stă în `content/site.ts`. Nicio componentă nu are text hardcodat.
+2. **Toate valorile vizuale** sunt tokens în `app/globals.css`, în `@theme`. Componentele folosesc doar clasele generate (`bg-background`, `text-accent`, `rounded-card`, `duration-fade`…), niciodată hex sau rgba direct.
+3. **Numele brandului** e `brand.name` din `content/site.ts`, folosit peste tot.
+4. **Logo-ul** e `components/brand/Logo.tsx` (acum text; David îl înlocuiește cu SVG).
+5. **Placeholder-ele** folosesc componenta `Placeholder`, iar obiectele lor din `content/site.ts` au `placeholder: true`.
+6. O componentă per secțiune în `components/sections/`, primitivele în `components/ui/`.
+7. `README.md` explică unde e textul, tokens, logo-ul, placeholder-ele și variabilele de mediu.
+
+## Note tehnice
+
+- Componentele client (`"use client"`) nu importă `content/site.ts`: primesc textul prin props de la o componentă server. Așa conținutul și iconițele nu ajung în JavaScript-ul trimis în browser.
+- Linkurile către secțiuni se scriu ca `"#id"` și trec prin `SmartLink` / `Button`: pe prima pagină fac scroll cu Lenis, de pe alte pagini navighează la `/#id`.
+- Offset-ul pentru header se aplică în `lib/scroll.ts`. Nu pune `scroll-margin-top` (`scroll-mt-*`) pe secțiuni: Lenis îl adună la offset și secțiunea ajunge prea jos.
+- `cn()` doar concatenează clase (fără tailwind-merge). Un `className` care contrazice o clasă de bază a componentei (ex. `hidden` peste `inline-flex` din Button) nu câștigă sigur: pune vizibilitatea / display-ul pe un element părinte.
+- Fără GSAP sau Framer Motion. Animațiile sunt din CSS + IntersectionObserver (`FadeIn`, `LogoLoop`).
