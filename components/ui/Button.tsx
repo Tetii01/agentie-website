@@ -5,6 +5,8 @@ import { SmartLink } from "./SmartLink";
 const variants = {
   /** Pilulă lucioasă în culoarea de accent (utilitatea button-glossy); glow mai puternic la hover. */
   primary: "button-glossy hover:brightness-110",
+  /** Pilulă albă cu text închis (butonul din hero). */
+  light: "bg-foreground text-background hover:bg-foreground/90",
   /** Pilulă închisă, cu contur fin. */
   secondary: "border border-border bg-surface-2 text-foreground hover:border-foreground/30",
   /** Link discret, fără fundal. */

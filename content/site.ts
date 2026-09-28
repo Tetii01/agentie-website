@@ -78,17 +78,17 @@ export const nav = {
 /* ───────────────────────── 5.2 Hero ───────────────────────── */
 
 export const hero = {
-  /** Primul rând al titlului (alb). */
+  /** Eticheta mică de deasupra titlului, cu un punct care pulsează. */
+  eyebrow: "Implementare AI pentru firme",
+  /** Primul rând al titlului. */
   title: "Tu conduci firma.",
-  /** Al doilea rând, în culoarea de accent. */
+  /** Titlul complet din rândul 2: îl citesc cititoarele de ecran, Google și imaginea de share. */
   highlight: "AI-ul face restul.",
+  /** Rândul 2 pe ecran: „AI-ul" + o acțiune care se schimbă singură (în accent). */
+  subject: "AI-ul",
+  /** Ultima rămâne pe ecran pentru cine are animațiile oprite. Scurte: încap pe un rând pe telefon. */
+  actions: ["răspunde instant.", "aduce clienți.", "scrie conținutul.", "face rapoartele.", "face restul."],
   primaryCta: { label: "Cere analiza gratuită", href: toSection(anchors.offer) } satisfies LinkItem,
-  /** Vizualul din cercul din hero. `null` = cerc abstract, doar din CSS. */
-  visual: {
-    placeholder: true,
-    label: "Vizual brand",
-    image: null as ImageRef,
-  },
 };
 
 /** Titlul și descrierea paginii (tab-ul browserului, Google, share). */
