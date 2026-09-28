@@ -40,11 +40,13 @@ jobs:
       # Oprește devreme, cu un mesaj clar, dacă tokenul lipsește, e greșit sau a expirat.
       - name: Verifică tokenul Vercel
         run: |
-          code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $VERCEL_TOKEN" \
-            "https://api.vercel.com/v9/projects/$VERCEL_PROJECT_ID?teamId=$VERCEL_ORG_ID")
-          echo "Acces la proiect prin API Vercel: HTTP $code (lungimea tokenului: ${#VERCEL_TOKEN} caractere)"
-          if [ "$code" != "200" ]; then
-            echo "::error::Tokenul Vercel nu are acces la proiect (HTTP $code). Generează un token nou (vercel.com → Account Settings → Tokens, scope „Teti”) și actualizează secretul VERCEL_TOKEN."
+          check() { curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com$1"; }
+          project=$(check "/v9/projects/$VERCEL_PROJECT_ID?teamId=$VERCEL_ORG_ID")
+          team=$(check "/v2/teams/$VERCEL_ORG_ID")
+          user=$(check "/v2/user")
+          echo "Token (${#VERCEL_TOKEN} caractere) → proiect: HTTP $project | echipă: HTTP $team | utilizator: HTTP $user"
+          if [ "$project" != "200" ] || [ "$team" != "200" ] || [ "$user" != "200" ]; then
+            echo "::error::Tokenul Vercel nu are accesul de care are nevoie Vercel CLI. Generează un token nou (vercel.com → Account Settings → Tokens) și actualizează secretul VERCEL_TOKEN."
             exit 1
           fi
 
