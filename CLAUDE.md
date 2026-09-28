@@ -29,7 +29,7 @@ Spec-ul complet e în [docs/SPEC.md](docs/SPEC.md). Citește-l înainte de orice
 - Secțiunile folosesc `Section` (spațiere + Container). Cardurile din grid-uri stau în `FadeIn` cu `delay={stagger(index)}` din `lib/stagger.ts` (0, 80, 160, 240 ms).
 - Imaginile trec prin `Media`: `next/image` când câmpul din content are `{ src, alt }`, altfel `Placeholder`.
 - Textele cu `**bold**` din content se afișează cu `RichText`.
-- Rândurile cu derulare orizontală pe mobil folosesc `ScrollRow` (sau `data-fade-group` pe listă), ca toate cardurile să apară odată cu rândul.
+- Rândurile cu derulare orizontală (proiecte, testimoniale) folosesc `Carousel`: pagini, bulinele și săgețile de navigare, glisare nativă pe mobil. Tot rândul stă într-un singur `FadeIn`.
 - Formularul: schema în `lib/lead.ts` (cu `zod/mini`, ca să rămână mic în browser), interfața în `LeadForm.tsx`, trimiterea în `app/api/lead/route.ts`. Mesajele și opțiunile se dau schemei prin parametri, din `content/site.ts`.
 - Paginile legale: textul e în `content/site.ts` (`legal`), randat de `LegalDocument`; fiecare `page.tsx` are sus comentariul `{/* DE VERIFICAT înainte de lansare */}`.
 - SEO: `lib/seo.ts` (`rootMetadata`, `pageMetadata`, `siteUrl`). O pagină nouă își ia metadata cu `pageMetadata(...)`, care include explicit imaginea OG.

@@ -6,6 +6,8 @@ export const aspects = {
   video: "aspect-video",
   landscape: "aspect-[4/3]",
   portrait: "aspect-[3/4]",
+  /** Umple tot containerul părinte (care are dimensiunile lui, ex. cardurile de proiect). */
+  fill: "size-full",
 };
 
 export const shapes = {

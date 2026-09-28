@@ -4,61 +4,74 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { Media } from "@/components/ui/Media";
 import { RichText } from "@/components/ui/RichText";
 import { Section } from "@/components/ui/Section";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Tag } from "@/components/ui/Tag";
-import { about } from "@/content/site";
-import { stagger } from "@/lib/stagger";
+import { about, type Founder } from "@/content/site";
+import { FinalCtaCard } from "./FinalCta";
 
-/** Despre: conturul mare al logo-ului în fundal, fondatorii și un paragraf cu cuvinte evidențiate. */
+/**
+ * Despre, ca grid de 3 coloane:
+ * stânga și mijloc, fondatorii (carduri înalte, cu poză portret);
+ * dreapta, sus: „Cine suntem" + paragraful (cu conturul logo-ului în fundal); jos: CTA-ul final.
+ */
 export function About() {
+  const [first, second] = about.founders;
+
   return (
-    <Section id={about.id} aria-labelledby="despre-titlu" className="relative overflow-x-clip">
-      {/* Contur decorativ al logo-ului, în spatele titlului. */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-10 flex justify-center select-none md:top-16">
-        <Logo size="display" variant="outline" />
-      </div>
-
-      <div className="relative">
-        <SectionHeading title={about.title} titleId="despre-titlu" />
-
-        <ul className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2">
-          {about.founders.map((founder, index) => (
-            <FadeIn as="li" key={founder.name} delay={stagger(index)}>
-              <Card as="article" padding="sm" className="h-full">
-                <Media
-                  image={founder.photo}
-                  label={about.photoPlaceholderLabel}
-                  shape="none"
-                  aspect="landscape"
-                  sizes="(min-width: 768px) 576px, 100vw"
-                  className="rounded-inner border border-border"
-                />
-                <div className="px-3 pt-5 pb-3 md:px-4">
-                  <h3 className="text-2xl font-bold tracking-tight">{founder.name}</h3>
-                  <p className="mt-1 text-muted">{founder.role}</p>
-                  <ul className="mt-5 flex flex-wrap gap-2">
-                    {founder.highlights.map((highlight) => (
-                      <li key={highlight}>
-                        <Tag>
-                          <span>
-                            <RichText text={highlight} strongClassName="font-semibold text-foreground" />
-                          </span>
-                        </Tag>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Card>
-            </FadeIn>
-          ))}
-        </ul>
-
-        <FadeIn className="mt-16 md:mt-24">
-          <p className="mx-auto max-w-4xl text-center text-2xl font-medium tracking-tight text-balance text-muted md:text-4xl">
-            <RichText text={about.text.value} strongClassName="font-medium text-foreground" />
-          </p>
+    <Section id={about.id} aria-labelledby="despre-titlu">
+      <ul className="grid gap-grid-mobile md:grid-cols-2 md:gap-grid lg:grid-cols-3 lg:grid-rows-[auto_auto]">
+        <FadeIn as="li" className="md:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-start-1">
+          <Card className="relative isolate h-full overflow-hidden lg:p-10">
+            <div aria-hidden className="pointer-events-none absolute -right-6 -bottom-6 -z-10 select-none">
+              <Logo size="display" variant="outline" />
+            </div>
+            <h2 id="despre-titlu" className="text-h2-mobile font-bold text-balance md:text-h2">
+              {about.title}
+            </h2>
+            <p className="mt-6 text-lg font-medium tracking-tight text-pretty text-muted md:text-xl">
+              <RichText text={about.text.value} strongClassName="font-medium text-foreground" />
+            </p>
+          </Card>
         </FadeIn>
-      </div>
+
+        <FounderCard founder={first} delay={80} className="lg:col-start-1 lg:row-span-2 lg:row-start-1" />
+        <FounderCard founder={second} delay={160} className="lg:col-start-2 lg:row-span-2 lg:row-start-1" />
+
+        <FadeIn as="li" delay={80} className="md:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-start-2">
+          <FinalCtaCard className="h-full" />
+        </FadeIn>
+      </ul>
     </Section>
+  );
+}
+
+function FounderCard({ founder, delay, className }: { founder: Founder; delay: number; className: string }) {
+  return (
+    <FadeIn as="li" delay={delay} className={className}>
+      <Card as="article" padding="sm" className="flex h-full flex-col">
+        <Media
+          image={founder.photo}
+          label={about.photoPlaceholderLabel}
+          shape="none"
+          aspect="portrait"
+          sizes="(min-width: 1024px) 420px, (min-width: 768px) 50vw, 100vw"
+          className="rounded-inner border border-border"
+        />
+        <div className="flex flex-1 flex-col px-3 pt-5 pb-3 md:px-4">
+          <h3 className="text-h3-mobile font-bold md:text-h3">{founder.name}</h3>
+          <p className="mt-1 text-muted">{founder.role}</p>
+          <ul className="mt-auto flex flex-wrap gap-2 pt-5">
+            {founder.highlights.map((highlight) => (
+              <li key={highlight}>
+                <Tag>
+                  <span>
+                    <RichText text={highlight} strongClassName="font-semibold text-foreground" />
+                  </span>
+                </Tag>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Card>
+    </FadeIn>
   );
 }

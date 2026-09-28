@@ -2,10 +2,10 @@ import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/cn";
 
 const variants = {
-  /** Fundal surface cu un gradient foarte discret de sus în jos. */
-  default: "bg-surface bg-linear-to-b from-surface-2 to-surface",
+  /** Contur în gradient + fundal în gradient (utilitatea card-surface din app/globals.css). */
+  default: "card-surface",
   /** Mai discret: doar border, fără fundal plin. */
-  subtle: "bg-transparent",
+  subtle: "border border-border bg-transparent",
 };
 
 const paddings = {
@@ -16,6 +16,8 @@ const paddings = {
   tight: "p-4 md:p-10",
   /** Pentru carduri cu imagine sus (imaginea stă aproape de margine). */
   sm: "p-3",
+  /** Fără padding (ex. cardurile de proiect, unde imaginea umple tot cardul). */
+  none: "",
 };
 
 type CardProps = HTMLAttributes<HTMLElement> & {
@@ -24,11 +26,11 @@ type CardProps = HTMLAttributes<HTMLElement> & {
   padding?: keyof typeof paddings;
 };
 
-/** Card cu colțuri mari (rounded-card) și border subtil. */
+/** Card cu colțuri mari (rounded-card), contur și fundal în gradient. */
 export function Card({ as: Tag = "div", variant = "default", padding = "lg", className, ...props }: CardProps) {
   return (
     <Tag
-      className={cn("rounded-card border border-border", variants[variant], paddings[padding], className)}
+      className={cn("rounded-card", variants[variant], paddings[padding], className)}
       {...props}
     />
   );

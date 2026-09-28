@@ -1,52 +1,67 @@
-import { Card } from "@/components/ui/Card";
+import { Carousel } from "@/components/ui/Carousel";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { Media } from "@/components/ui/Media";
-import { ScrollRow } from "@/components/ui/ScrollRow";
 import { Section } from "@/components/ui/Section";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Tag } from "@/components/ui/Tag";
-import { projects, ui } from "@/content/site";
-import { stagger } from "@/lib/stagger";
+import { projects, ui, type Project } from "@/content/site";
 
+/**
+ * Proiecte: carusel pe pagini, imediat sub hero.
+ * Desktop: câte două carduri pe pagină, unul lat (2/3) și unul îngust (1/3), ca un grid de 3 coloane.
+ * Tabletă și mobil: un card pe pagină. Dedesubt: bulinele (paginile) și săgețile.
+ */
 export function Projects() {
   return (
     <Section id={projects.id} aria-labelledby="proiecte-titlu">
-      <SectionHeading title={projects.title} titleId="proiecte-titlu" />
+      <h2 id="proiecte-titlu" className="sr-only">
+        {projects.title}
+      </h2>
 
-      {/* Mobil: rând cu derulare orizontală + bară de progres. Tabletă: 2 coloane. Desktop: 3 coloane. */}
-      <ScrollRow className="mt-12 md:mt-16" gridClassName="md:grid-cols-2 lg:grid-cols-3">
-        {projects.items.map((project, index) => (
-          <FadeIn
-            as="li"
-            key={`${index}-${project.title}`}
-            delay={stagger(index, 3)}
-            className="w-[85%] shrink-0 snap-start md:w-auto"
-          >
-            <Card as="article" padding="sm" className="group flex h-full flex-col">
-              {/* Imaginea: zoom ușor la hover (duration-base = 300ms, ease-smooth). */}
-              <div className="overflow-hidden rounded-inner border border-border">
-                <div className="transition-transform duration-base ease-smooth group-hover:scale-105 motion-reduce:transition-none">
-                  <Media
-                    image={project.image}
-                    label={projects.imagePlaceholderLabel}
-                    shape="none"
-                    aspect="landscape"
-                    sizes="(min-width: 1024px) 384px, (min-width: 768px) 50vw, 100vw"
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-1 flex-col items-start gap-3 px-3 pt-5 pb-3 md:px-4">
-                <Tag>{project.category}</Tag>
-                <h3 className="text-xl font-semibold tracking-tight text-balance">{project.title}</h3>
-                <p className="text-base text-pretty text-muted">{project.description}</p>
-                <ExternalLink url={project.url} newTabLabel={ui.externalLink} className="mt-auto pt-2" />
-              </div>
-            </Card>
-          </FadeIn>
-        ))}
-      </ScrollRow>
+      <FadeIn>
+        <Carousel labels={ui.carousel} label={projects.title} listClassName="gap-grid-mobile md:gap-grid">
+          {projects.items.map((project, index) => (
+            <li
+              key={`${index}-${project.title}`}
+              className="w-full shrink-0 snap-start lg:odd:w-[calc((200%-var(--spacing-grid))/3)] lg:even:w-[calc((100%-2*var(--spacing-grid))/3)] lg:even:snap-align-none"
+            >
+              <ProjectCard project={project} />
+            </li>
+          ))}
+        </Carousel>
+      </FadeIn>
     </Section>
+  );
+}
+
+/** Card de proiect: imaginea umple tot cardul; sus numele și categoria, jos descrierea și linkul. */
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <article className="card-surface group relative isolate h-[27rem] overflow-hidden rounded-card md:h-[36rem]">
+      <div className="absolute inset-0 -z-10 transition-transform duration-base ease-smooth group-hover:scale-[1.03] motion-reduce:transition-none">
+        <Media
+          image={project.image}
+          label={projects.imagePlaceholderLabel}
+          shape="none"
+          aspect="fill"
+          sizes="(min-width: 1024px) 66vw, 100vw"
+        />
+      </div>
+      {/* Umbră sus și jos, ca textul să rămână lizibil peste orice imagine. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-background/70 via-transparent via-40% to-background/85"
+      />
+
+      <div className="flex h-full flex-col justify-between p-6 md:p-8">
+        <div>
+          <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
+          <p className="mt-1 text-label font-medium text-accent">{project.category}</p>
+        </div>
+        <div className="flex items-end justify-between gap-6">
+          <p className="max-w-xs text-sm text-pretty text-foreground/85 md:text-base">{project.description}</p>
+          <ExternalLink url={project.url} newTabLabel={ui.externalLink} className="shrink-0" />
+        </div>
+      </div>
+    </article>
   );
 }

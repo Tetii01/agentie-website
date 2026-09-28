@@ -78,18 +78,15 @@ export const nav = {
 /* ───────────────────────── 5.2 Hero ───────────────────────── */
 
 export const hero = {
-  title: "Mai mulți clienți, mai puțină muncă.",
-  /** Partea din titlu afișată în culoarea de accent. */
-  highlight: "Cu AI.",
-  subtitle:
-    "Implementăm chatboți, automatizări și conținut generat cu AI, construite pe procesele firmei tale. Tu te ocupi de clienți, restul merge singur.",
-  primaryCta: { label: "Vreau analiza gratuită", href: toSection(anchors.offer) } satisfies LinkItem,
-  secondaryCta: { label: "Vezi ce construim", href: toSection(anchors.services) } satisfies LinkItem,
+  /** Primul rând al titlului (alb). */
+  title: "Tu conduci firma.",
+  /** Al doilea rând, în culoarea de accent. */
+  highlight: "AI-ul face restul.",
+  primaryCta: { label: "Cere analiza gratuită", href: toSection(anchors.offer) } satisfies LinkItem,
+  /** Vizualul din cercul din hero. `null` = cerc abstract, doar din CSS. */
   visual: {
     placeholder: true,
     label: "Vizual brand",
-    /** "rounded" = pătrat cu colțuri rotunjite, "circle" = rotund. */
-    shape: "rounded" as "rounded" | "circle",
     image: null as ImageRef,
   },
 };
@@ -97,7 +94,8 @@ export const hero = {
 /** Titlul și descrierea paginii (tab-ul browserului, Google, share). */
 export const seo = {
   title: `${brand.name} · ${hero.title} ${hero.highlight}`,
-  description: hero.subtitle,
+  description:
+    "Implementăm chatboți, automatizări și conținut generat cu AI, construite pe procesele firmei tale. Tu te ocupi de clienți, restul merge singur.",
 };
 
 /* ───────────────────────── 5.3 Logo loop ───────────────────────── */
@@ -270,8 +268,12 @@ export type Testimonial = {
   role: string;
   /** Opțional: număr de urmăritori, afișat mic, în accent. */
   followers?: string;
+  /** Bifa de lângă nume: doar dacă persoana are cont verificat. */
+  verified?: boolean;
   /** Partea dintre ** ** apare îngroșată. */
   quote: string;
+  /** Opțional: contul de social media, afișat jos, în accent (ex. „@nume"). */
+  handle?: string;
   url: string;
   avatar: ImageRef;
 };
@@ -281,13 +283,21 @@ const testimonialPlaceholder: Testimonial = {
   name: "[NUME]",
   role: "[ROL]",
   followers: "[X] urmăritori",
+  verified: true,
   quote: "[CITAT] **[PARTE ÎNGROȘATĂ]** [CITAT]",
+  handle: "[@CONT]",
   url: "[URL PROFIL SAU SITE]",
   avatar: null,
 };
 
 export const testimonials = {
   label: "Au lucrat cu noi",
+  /** Cardul din stânga rândului: nota + un rând scurt; partea dintre ** ** apare în accent. */
+  rating: {
+    placeholder: true,
+    value: "[X.X]",
+    text: "**[X]+ clienți** [TEXT]",
+  },
   avatarPlaceholderLabel: "Avatar",
   items: [
     { ...testimonialPlaceholder },
@@ -330,7 +340,8 @@ export const stats = {
 export const offer = {
   id: anchors.offer,
   eyebrow: "Primul pas",
-  title: "Analiză gratuită",
+  /** Partea dintre ** ** apare în culoarea de accent. */
+  title: "Analiză **gratuită**",
   subtitle:
     "Află unde pierde firma ta timp și clienți. Într-o discuție de 20 de minute îți arătăm concret ce se poate automatiza și ce impact ar avea.",
   benefits: [
@@ -753,6 +764,11 @@ export const ui = {
   footerNav: "Informații legale",
   socialLinks: "Rețele sociale",
   externalLink: "(se deschide într-un tab nou)",
+  carousel: {
+    previous: "Înapoi",
+    next: "Înainte",
+    goTo: "Mergi la pagina {page}",
+  },
   form: {
     back: "Înapoi",
     step: "Pasul {current} din {total}",

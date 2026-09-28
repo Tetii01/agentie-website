@@ -1,14 +1,19 @@
-import { Check } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { LogoLoop } from "@/components/ui/LogoLoop";
+import { RichText } from "@/components/ui/RichText";
 import { Section } from "@/components/ui/Section";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { contact, offer, ui } from "@/content/site";
+import { contact, offer, stats, ui } from "@/content/site";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { LeadForm, type LeadFormTexts } from "./LeadForm";
+import { StatCard } from "./Stats";
 
-/** Analiză gratuită: card mare cu titlu, lista de beneficii și formularul în 2 pași. */
+/**
+ * Analiza gratuită, în mijlocul unui grid de 3 coloane, cu cifrele în jur:
+ * stânga și dreapta câte două carduri cu cifre, la mijloc cardul înalt cu titlul, beneficiile și formularul.
+ * Pe mobil: cifrele 2×2, cu cardul analizei între ele, pe toată lățimea.
+ */
 export function Offer() {
   const texts: LeadFormTexts = {
     form: offer.form,
@@ -16,64 +21,61 @@ export function Offer() {
     newTabLabel: ui.externalLink,
     whatsappUrl: whatsappUrl(contact.whatsapp),
   };
+  const [first, second, third, fourth] = stats.items;
 
   return (
     <Section id={offer.id} aria-labelledby="analiza-titlu">
-      <FadeIn>
-        <Card className="lg:p-14">
-          {/* minmax(0,…): coloanele nu se lărgesc după banda de beneficii (lățime max-content) de pe mobil. */}
-          <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-16">
-            <div>
-              <SectionHeading
-                eyebrow={offer.eyebrow}
-                title={offer.title}
-                subtitle={offer.subtitle}
-                titleId="analiza-titlu"
-                align="left"
-                animate={false}
-              />
-              <Benefits />
+      {/* minmax(0,…): coloanele nu se lărgesc după banda de beneficii (lățime max-content). */}
+      <ul className="grid grid-cols-2 gap-grid-mobile md:gap-grid lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,0.8fr)] lg:grid-rows-2">
+        <StatCard stat={first} className="lg:col-start-1 lg:row-start-1" />
+        <StatCard stat={second} delay={80} className="lg:col-start-1 lg:row-start-2" />
+
+        <FadeIn as="li" className="col-span-2 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+          <Card padding="none" className="flex h-full flex-col px-5 py-8 md:p-8 lg:px-8 lg:py-10">
+            <div className="flex flex-col items-center text-center">
+              <p className="inline-flex items-center gap-2 rounded-pill border border-border bg-surface-2 px-3.5 py-1.5 text-label font-medium text-foreground">
+                <Sparkles aria-hidden className="size-3.5 text-accent" />
+                {offer.eyebrow}
+              </p>
+              <h2 id="analiza-titlu" className="mt-5 text-h2-mobile font-bold text-balance md:text-h2">
+                <RichText text={offer.title} strongClassName="font-bold text-accent" />
+              </h2>
+              <p className="mt-4 max-w-md text-base text-pretty text-muted">{offer.subtitle}</p>
             </div>
-            <LeadForm texts={texts} />
-          </div>
-        </Card>
-      </FadeIn>
 
-      <FadeIn className="mt-8">
-        <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted md:text-base">
-          <span>{offer.alternative}</span>
-          <a href={contact.phone.href} className="text-foreground transition-colors duration-base hover:text-accent">
-            {contact.phone.label}
-          </a>
-          <span aria-hidden>·</span>
-          <a href={contact.email.href} className="text-foreground transition-colors duration-base hover:text-accent">
-            {contact.email.label}
-          </a>
-        </p>
-      </FadeIn>
-    </Section>
-  );
-}
+            <LogoLoop
+              className="mt-8"
+              items={offer.benefits.map((text) => ({
+                key: text,
+                node: (
+                  <span className="flex items-center gap-2 text-sm whitespace-nowrap text-foreground">
+                    <Check aria-hidden className="size-4 shrink-0 text-accent" strokeWidth={2.5} />
+                    {text}
+                  </span>
+                ),
+              }))}
+            />
 
-/** Beneficiile: bandă care se derulează lent pe mobil, listă de la tabletă în sus. */
-function Benefits() {
-  const item = (text: string) => (
-    <span className="flex items-center gap-2 text-sm whitespace-nowrap text-foreground md:text-base md:whitespace-normal">
-      <Check aria-hidden className="size-4 shrink-0 text-accent" strokeWidth={2.5} />
-      {text}
-    </span>
-  );
+            <div className="mt-8 rounded-inner border border-border bg-background/60 p-5 md:p-6">
+              <LeadForm texts={texts} />
+            </div>
 
-  return (
-    <>
-      <div className="mt-8 md:hidden">
-        <LogoLoop items={offer.benefits.map((text) => ({ key: text, node: item(text) }))} />
-      </div>
-      <ul className="mt-10 hidden flex-col gap-4 md:flex">
-        {offer.benefits.map((text) => (
-          <li key={text}>{item(text)}</li>
-        ))}
+            <p className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted">
+              <span>{offer.alternative}</span>
+              <a href={contact.phone.href} className="text-foreground transition-colors duration-base hover:text-accent">
+                {contact.phone.label}
+              </a>
+              <span aria-hidden>·</span>
+              <a href={contact.email.href} className="text-foreground transition-colors duration-base hover:text-accent">
+                {contact.email.label}
+              </a>
+            </p>
+          </Card>
+        </FadeIn>
+
+        <StatCard stat={third} delay={80} className="lg:col-start-3 lg:row-start-1" />
+        <StatCard stat={fourth} delay={160} className="lg:col-start-3 lg:row-start-2" />
       </ul>
-    </>
+    </Section>
   );
 }
