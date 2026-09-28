@@ -150,6 +150,18 @@ Fără variabile, formularul nu crapă:
 
 De reținut: o variabilă de mediu schimbată se aplică doar deploy-urilor noi. După orice modificare: Deployments → ultimul deploy → Redeploy.
 
+## Preview pentru branch-ul `design`
+
+Pe planul Hobby, într-un repo privat, Vercel blochează deploy-urile automate pentru commit-urile altor persoane decât proprietarul contului. Pentru branch-ul `design` deploy-ul îl face un GitHub Action:
+
+- `.github/workflows/preview-design.yml` rulează la fiecare push pe `design`: face build și un deploy de **preview** (niciodată producție) cu tokenul proprietarului, apoi mută adresa fixă **https://agentie-website-design.vercel.app** pe deploy-ul nou.
+- `vercel.json` oprește deploy-urile automate ale integrării Git doar pentru `design`, ca să nu mai apară deploy-uri blocate. `main` se publică în continuare automat.
+- Secretele din repo (GitHub → Settings → Secrets and variables → Actions): `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
+- Rezultatul fiecărei rulări: tab-ul **Actions** din repo.
+- Branch-ul `design` trebuie să conțină `vercel.json` și workflow-ul. Dacă e recreat din `main`, le are automat.
+
+Tokenul Vercel expiră. Când expiră, workflow-ul eșuează la pasul „Setările proiectului". Generezi atunci unul nou (vercel.com → Account Settings → Tokens) și îl actualizezi cu `gh secret set VERCEL_TOKEN -R Tetii01/agentie-website`.
+
 ## Lansarea
 
 Până la lansare, site-ul e online, dar nu apare în Google: `robots.txt` blochează tot, iar paginile au `noindex, nofollow`. În ziua lansării:
