@@ -152,6 +152,13 @@ export const problems = {
   closing: "Toate au rezolvare. Și nu înseamnă să mai angajezi un om.",
 };
 
+/* ───────────────────────── Banda dintre probleme și servicii ───────────────────────── */
+
+/** Cuvinte scurte cu ce construim, pe banda care trece între „Sună cunoscut?" și „Ce construim". */
+export const band = {
+  items: ["Chatboți", "Automatizări", "Conținut", "CRM-uri", "Integrări", "Website-uri"],
+};
+
 /* ───────────────────────── 5.5 Servicii ───────────────────────── */
 
 export const services = {

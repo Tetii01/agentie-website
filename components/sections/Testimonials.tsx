@@ -11,9 +11,10 @@ import { testimonials, tools, ui, type Testimonial } from "@/content/site";
 
 /**
  * Testimoniale, într-un singur container mare:
- * - sus: cardul cu nota (stânga) + rândul de testimoniale, cu săgeți peste marginea din dreapta;
+ * - sus: cardul cu nota (stânga, fix) + rândul de testimoniale;
+ * - sub ele: bulinele și săgețile, la fel ca la proiecte;
  * - jos: banda cu tool-urile pe care le integrăm.
- * Pe mobil, rândul se glisează cu degetul; săgețile apar de la tabletă în sus.
+ * Pe mobil, câte un testimonial pe pagină; rândul se glisează și cu degetul.
  */
 export function Testimonials() {
   return (
@@ -24,23 +25,18 @@ export function Testimonials() {
 
       <FadeIn>
         <div className="panel-surface flex flex-col gap-3 rounded-card p-3 md:gap-4 md:p-4">
-          <div className="flex flex-col gap-3 md:flex-row md:items-stretch md:gap-4">
-            <RatingCard />
-            <Carousel
-              labels={ui.carousel}
-              label={testimonials.label}
-              dots={false}
-              controls="overlay"
-              className="min-w-0 flex-auto"
-              listClassName="gap-3 md:gap-4 md:[mask-image:linear-gradient(to_right,black_93%,transparent)]"
-            >
-              {testimonials.items.map((item, index) => (
-                <li key={index} className="w-[min(20rem,calc(100vw-4rem))] shrink-0 snap-start md:w-85 lg:w-105">
-                  <TestimonialCard item={item} />
-                </li>
-              ))}
-            </Carousel>
-          </div>
+          <Carousel
+            labels={ui.carousel}
+            label={testimonials.label}
+            leading={<RatingCard />}
+            listClassName="gap-3 md:gap-4 md:[mask-image:linear-gradient(to_right,black_93%,transparent)]"
+          >
+            {testimonials.items.map((item, index) => (
+              <li key={index} className="w-full shrink-0 snap-start md:w-85 lg:w-105">
+                <TestimonialCard item={item} />
+              </li>
+            ))}
+          </Carousel>
 
           <div className="flex flex-col items-center gap-4 pt-3 pb-4 md:pt-4 md:pb-5">
             <p className="text-label text-muted">{tools.label}</p>

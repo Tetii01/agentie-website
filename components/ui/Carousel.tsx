@@ -12,15 +12,16 @@ export type CarouselLabels = {
 };
 
 type CarouselProps = {
-  /** Elementele <li>. Lățimea lor (câte încap pe o pagină) o dă `itemClassName` din componenta care îl folosește. */
+  /** Elementele <li>. Lățimea lor (câte încap pe o pagină) o dau clasele puse pe fiecare <li>. */
   children: ReactNode;
   labels: CarouselLabels;
   /** Eticheta listei pentru cititoarele de ecran. */
   label?: string;
-  /** Bulinele de sub rând (paginile). Fără ele rămân doar săgețile. */
-  dots?: boolean;
-  /** Unde stau săgețile: sub rând, lângă buline, sau peste rând, în dreapta. */
-  controls?: "below" | "overlay";
+  /**
+   * Un element fix în stânga rândului (ex. cardul cu nota din testimoniale): nu se derulează,
+   * iar bulinele și săgețile rămân centrate sub tot blocul. Pe mobil stă deasupra rândului.
+   */
+  leading?: ReactNode;
   listClassName?: string;
   className?: string;
 };
@@ -31,15 +32,7 @@ type CarouselProps = {
  * `data-lenis-prevent-horizontal`: gesturile orizontale rămân native, scroll-ul paginii rămâne lin.
  * Stilul controalelor: control-border + bg-control (app/globals.css), bulinele: bg-dot / bg-dot-active.
  */
-export function Carousel({
-  children,
-  labels,
-  label,
-  dots = true,
-  controls = "below",
-  listClassName,
-  className,
-}: CarouselProps) {
+export function Carousel({ children, labels, label, leading, listClassName, className }: CarouselProps) {
   const listRef = useRef<HTMLUListElement>(null);
   const [pages, setPages] = useState(1);
   const [active, setActive] = useState(0);
@@ -97,57 +90,59 @@ export function Carousel({
     m.list.scrollBy({ left: target - m.list.scrollLeft, behavior: reduce ? "auto" : "smooth" });
   };
 
-  const arrows = (
-    <div className="flex items-center gap-2 md:gap-3">
-      <ArrowButton label={labels.previous} disabled={active === 0} onClick={() => goTo(currentPage() - 1)}>
-        <ChevronLeft aria-hidden className="size-6 scale-120" strokeWidth={1.75} />
-      </ArrowButton>
-      <ArrowButton label={labels.next} disabled={active >= pages - 1} onClick={() => goTo(currentPage() + 1)}>
-        <ChevronRight aria-hidden className="size-6 scale-120" strokeWidth={1.75} />
-      </ArrowButton>
-    </div>
+  const list = (
+    <ul
+      ref={listRef}
+      aria-label={label}
+      data-lenis-prevent-horizontal
+      className={cn(
+        "flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        leading !== undefined && "min-w-0 flex-auto",
+        listClassName,
+      )}
+    >
+      {children}
+    </ul>
   );
 
   return (
-    <div className={cn("relative", className)}>
-      <ul
-        ref={listRef}
-        aria-label={label}
-        data-lenis-prevent-horizontal
-        className={cn(
-          "flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-          listClassName,
-        )}
-      >
-        {children}
-      </ul>
-
-      {controls === "overlay" ? (
-        pages > 1 && <div className="absolute top-1/2 right-4 hidden -translate-y-1/2 md:block">{arrows}</div>
-      ) : (
-        <div className={cn("mt-6 flex items-center justify-center gap-3", pages <= 1 && "invisible")}>
-          {dots && (
-            <div className="control-border rounded-pill p-px">
-              <div className="flex items-center gap-2 rounded-pill bg-control p-3.5">
-                {Array.from({ length: pages }, (_, page) => (
-                  <button
-                    key={page}
-                    type="button"
-                    aria-label={labels.goTo.replace("{page}", String(page + 1))}
-                    aria-current={page === active || undefined}
-                    onClick={() => goTo(page)}
-                    className={cn(
-                      "h-2.5 cursor-pointer rounded-pill transition-all duration-base ease-in-out motion-reduce:transition-none",
-                      page === active ? "w-5.5 bg-dot-active" : "w-2.5 bg-dot hover:bg-muted",
-                    )}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-          {arrows}
+    <div className={className}>
+      {leading !== undefined ? (
+        <div className="flex flex-col gap-3 md:flex-row md:items-stretch md:gap-4">
+          {leading}
+          {list}
         </div>
+      ) : (
+        list
       )}
+
+      <div className={cn("mt-6 flex items-center justify-center gap-3", pages <= 1 && "invisible")}>
+        <div className="control-border rounded-pill p-px">
+          <div className="flex items-center gap-2 rounded-pill bg-control p-3.5">
+            {Array.from({ length: pages }, (_, page) => (
+              <button
+                key={page}
+                type="button"
+                aria-label={labels.goTo.replace("{page}", String(page + 1))}
+                aria-current={page === active || undefined}
+                onClick={() => goTo(page)}
+                className={cn(
+                  "h-2.5 cursor-pointer rounded-pill transition-all duration-base ease-in-out motion-reduce:transition-none",
+                  page === active ? "w-5.5 bg-dot-active" : "w-2.5 bg-dot hover:bg-muted",
+                )}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="flex items-center gap-2 md:gap-3">
+          <ArrowButton label={labels.previous} disabled={active === 0} onClick={() => goTo(currentPage() - 1)}>
+            <ChevronLeft aria-hidden className="size-6 scale-120" strokeWidth={1.75} />
+          </ArrowButton>
+          <ArrowButton label={labels.next} disabled={active >= pages - 1} onClick={() => goTo(currentPage() + 1)}>
+            <ChevronRight aria-hidden className="size-6 scale-120" strokeWidth={1.75} />
+          </ArrowButton>
+        </div>
+      </div>
     </div>
   );
 }
