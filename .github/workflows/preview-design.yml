@@ -37,6 +37,17 @@ jobs:
         with:
           node-version: 24
 
+      # Oprește devreme, cu un mesaj clar, dacă tokenul lipsește, e greșit sau a expirat.
+      - name: Verifică tokenul Vercel
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v9/projects/$VERCEL_PROJECT_ID?teamId=$VERCEL_ORG_ID")
+          echo "Acces la proiect prin API Vercel: HTTP $code (lungimea tokenului: ${#VERCEL_TOKEN} caractere)"
+          if [ "$code" != "200" ]; then
+            echo "::error::Tokenul Vercel nu are acces la proiect (HTTP $code). Generează un token nou (vercel.com → Account Settings → Tokens, scope „Teti”) și actualizează secretul VERCEL_TOKEN."
+            exit 1
+          fi
+
       - name: Instalează Vercel CLI
         run: npm install --global vercel@latest
 
