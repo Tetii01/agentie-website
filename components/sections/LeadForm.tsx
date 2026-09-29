@@ -17,6 +17,8 @@ import {
 
 /** Textele vin prin props de la Offer.tsx (server), din content/site.ts. */
 export type LeadFormTexts = {
+  /** Limba paginii: serverul validează răspunsurile cu opțiunile din aceeași limbă. */
+  locale: string;
   form: typeof offer.form;
   ui: typeof ui.form;
   newTabLabel: string;
@@ -128,6 +130,7 @@ export function LeadForm({ texts }: { texts: LeadFormTexts }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...values,
+          locale: texts.locale,
           hp: honeypotRef.current?.value ?? "",
           elapsedMs: Math.round(performance.now()),
         }),

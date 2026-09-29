@@ -2,16 +2,19 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { LanguageSwitch } from "@/components/ui/LanguageSwitch";
 import { RotatingText, RotationProvider } from "@/components/ui/RotatingText";
-import { hero } from "@/content/site";
+import { getContent } from "@/content";
 
 /**
  * Hero: un card mare (mai scurt decât ecranul, ca să se vadă că pagina continuă). Sus, un „cer"
  * întunecat cu o rețea fină de puncte; jos, un orizont care se aprinde în accent.
- * Deasupra orizontului, în stânga: titlul pe două rânduri (acțiunea AI-ului se schimbă singură) și butonul.
+ * Deasupra orizontului, în stânga: titlul pe două rânduri (acțiunea AI-ului se schimbă singură), butonul
+ * principal și, lângă el, butonul discret de schimbare a limbii (RO / EN).
  * Stilurile: hero-frame, hero-dots, hero-horizon în app/globals.css.
  */
-export function Hero() {
+export async function Hero() {
+  const { hero, ui } = await getContent();
   const { primaryCta } = hero;
 
   return (
@@ -48,13 +51,14 @@ export function Hero() {
                   </h1>
                 </FadeIn>
 
-                <FadeIn eager delay={120} className="mt-6 md:mt-10">
+                <FadeIn eager delay={120} className="mt-6 flex flex-wrap items-center gap-2.5 md:mt-10 md:gap-3">
                   <Button href={primaryCta.href} variant="light" size="cta">
                     {primaryCta.label}
                     <span className="grid size-9 place-items-center rounded-full bg-accent text-accent-foreground md:size-12">
                       <ArrowRight aria-hidden className="size-4 md:size-5" />
                     </span>
                   </Button>
+                  <LanguageSwitch {...ui.languageSwitch} />
                 </FadeIn>
                 {/* Marcaj pentru CTA-ul plutitor: apare după ce linia de sub buton trece de header.
                     Stă în afara FadeIn, ca animația (care coboară butonul 20px) să nu-l miște. */}

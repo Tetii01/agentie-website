@@ -5,7 +5,8 @@ import { Media } from "@/components/ui/Media";
 import { RichText } from "@/components/ui/RichText";
 import { Section } from "@/components/ui/Section";
 import { Tag } from "@/components/ui/Tag";
-import { about, type Founder } from "@/content/site";
+import { getContent } from "@/content";
+import type { Founder } from "@/content/site";
 import { FinalCtaCard } from "./FinalCta";
 
 /**
@@ -13,7 +14,8 @@ import { FinalCtaCard } from "./FinalCta";
  * stânga și mijloc, fondatorii (carduri înalte, cu poză portret);
  * dreapta, sus: „Cine suntem" + paragraful (cu conturul logo-ului în fundal); jos: CTA-ul final.
  */
-export function About() {
+export async function About() {
+  const { about } = await getContent();
   const [first, second] = about.founders;
 
   return (
@@ -33,8 +35,8 @@ export function About() {
           </Card>
         </FadeIn>
 
-        <FounderCard founder={first} delay={80} className="lg:col-start-1 lg:row-span-2 lg:row-start-1" />
-        <FounderCard founder={second} delay={160} className="lg:col-start-2 lg:row-span-2 lg:row-start-1" />
+        <FounderCard founder={first} photoLabel={about.photoPlaceholderLabel} delay={80} className="lg:col-start-1 lg:row-span-2 lg:row-start-1" />
+        <FounderCard founder={second} photoLabel={about.photoPlaceholderLabel} delay={160} className="lg:col-start-2 lg:row-span-2 lg:row-start-1" />
 
         <FadeIn as="li" delay={80} className="col-span-2 lg:col-span-1 lg:col-start-3 lg:row-start-2">
           <FinalCtaCard className="h-full" />
@@ -44,13 +46,23 @@ export function About() {
   );
 }
 
-function FounderCard({ founder, delay, className }: { founder: Founder; delay: number; className: string }) {
+function FounderCard({
+  founder,
+  photoLabel,
+  delay,
+  className,
+}: {
+  founder: Founder;
+  photoLabel: string;
+  delay: number;
+  className: string;
+}) {
   return (
     <FadeIn as="li" delay={delay} className={className}>
       <Card as="article" padding="sm" className="flex h-full flex-col">
         <Media
           image={founder.photo}
-          label={about.photoPlaceholderLabel}
+          label={photoLabel}
           shape="none"
           aspect="portrait"
           sizes="(min-width: 1024px) 420px, (min-width: 768px) 50vw, 100vw"

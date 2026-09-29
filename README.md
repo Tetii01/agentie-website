@@ -16,12 +16,12 @@ npm start       # pornește build-ul de producție
 
 | Ce | Unde |
 | --- | --- |
-| Tot textul site-ului, inclusiv paginile legale | `content/site.ts` |
+| Tot textul site-ului, inclusiv paginile legale | `content/site.ts` (română), `content/en.ts` (engleză) |
 | Culori, font, raze de colț, umbre, durate, spațieri | `app/globals.css`, blocul `@theme` |
 | Logo | `components/brand/Logo.tsx` |
 | Secțiunile paginii | `components/sections/` |
 | Componente reutilizabile (Button, Card, Tag, FadeIn…) | `components/ui/` |
-| Paginile legale | `app/politica-de-confidentialitate/`, `app/politica-de-cookies/`, `app/termeni-si-conditii/` |
+| Paginile (prima pagină și cele legale) | `app/[lang]/` |
 | SEO: title, description, Open Graph, Twitter | `lib/seo.ts` |
 | Imaginea de share (OG) | `app/opengraph-image.tsx` (generată automat) |
 | Favicon și iconița iOS | `app/icon.svg`, `app/apple-icon.tsx` |
@@ -37,15 +37,25 @@ Tot textul e în `content/site.ts`, grupat pe secțiuni (`hero`, `services`, `pr
 - Blocul `ui` de la finalul fișierului conține texte funcționale (aria-label, mesaje de eroare), marcate „DE VERIFICAT".
 - Blocul `legal` conține drafturile paginilor legale, marcate „DE VERIFICAT înainte de lansare".
 
+## Versiunea în engleză
+
+Site-ul are două limbi: română la `/`, engleză la `/en`. Butonul de limbă stă lângă butonul principal din hero (`components/ui/LanguageSwitch.tsx`, textul lui e `ui.languageSwitch`).
+
+- Textele în engleză sunt în `content/en.ts`, cu aceeași structură ca în română. Ce nu depinde de limbă (numele brandului, imaginile, linkurile, iconițele, datele firmei) se ia din `content/site.ts`, deci se schimbă într-un singur loc. Când adaugi un text nou în română, TypeScript cere și varianta în engleză.
+- Paginile stau în `app/[lang]/`. `next.config.ts` servește varianta în română fără prefix (`/`, nu `/ro`) și redirecționează `/ro` spre `/`.
+- Componentele de server își iau textul cu `await getContent()` din `content/index.ts`, care alege limba după adresă.
+- Paginile legale există doar în română. În engleză, linkurile din footer duc tot la ele, marcate „(RO)".
+- Emailul cu lead-ul rămâne în română și are un rând cu limba site-ului din care a venit cererea.
+
 ## Culori, font, forme (tokens)
 
 Toate valorile vizuale sunt tokens în `app/globals.css`, în blocul `@theme`. Componentele folosesc doar clasele generate din ele: `--color-accent` devine `bg-accent` și `text-accent`, `--radius-card` devine `rounded-card` și așa mai departe. Schimbi valoarea tokenului și se schimbă peste tot, inclusiv în imaginea de share și în iconița iOS, care citesc culorile din `globals.css` la build.
 
 - **Culoarea de accent:** `--color-accent` (și `--color-accent-foreground` pentru textul de pe butoane). Glow-ul butonului se calculează automat din accent.
-- **Fontul:** Geist se încarcă în `app/layout.tsx` prin `next/font`. Pentru alt font, schimbi importul de acolo; `--font-sans` din `globals.css` îl preia. Imaginea de share folosește fișierele din `assets/fonts/`.
+- **Fontul:** Geist se încarcă în `app/[lang]/layout.tsx` prin `next/font`. Pentru alt font, schimbi importul de acolo; `--font-sans` din `globals.css` îl preia. Imaginea de share folosește fișierele din `assets/fonts/`.
 - **Tipografia:** `--text-h1`, `--text-h2`, `--text-lead`, `--text-stat` (plus variantele `-mobile`), fiecare cu line-height și letter-spacing proprii.
 
-Excepții, care nu pot citi tokens: `app/icon.svg` (favicon) și `themeColor` din `app/layout.tsx` au culorile scrise direct. Le schimbi manual odată cu brandul.
+Excepții, care nu pot citi tokens: `app/icon.svg` (favicon) și `themeColor` din `app/[lang]/layout.tsx` au culorile scrise direct. Le schimbi manual odată cu brandul.
 
 ## Logo-ul
 

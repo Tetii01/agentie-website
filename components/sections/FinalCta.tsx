@@ -3,14 +3,16 @@ import { Logo } from "@/components/brand/Logo";
 import { BrandIcon } from "@/components/ui/BrandIcon";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { contact, finalCta } from "@/content/site";
+import { getContent } from "@/content";
 import { whatsappUrl } from "@/lib/whatsapp";
 
 /**
  * CTA final, ca un card: logo, „Ai un proiect?", buton spre formular și buton WhatsApp.
  * Stă în grid-ul din „Despre" (components/sections/About.tsx).
  */
-export function FinalCtaCard({ className }: { className?: string }) {
+export async function FinalCtaCard({ className }: { className?: string }) {
+  const { contact, finalCta } = await getContent();
+
   return (
     <Card className={className}>
       <div className="flex h-full flex-col items-center justify-center gap-6 text-center">

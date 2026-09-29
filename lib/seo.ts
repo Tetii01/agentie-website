@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { brand, seo } from "@/content/site";
+import { contentFor, type Locale } from "@/content/locales";
+import { ro } from "@/content/site";
 
 /**
  * URL-ul public al site-ului, fără „/" la final. Ordinea:
@@ -21,38 +22,43 @@ export const siteUrl = (
  */
 export const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
 
-const openGraphBase = {
-  type: "website",
-  locale: "ro_RO",
-  siteName: brand.name,
-} as const;
+/** Adresa primei pagini pentru fiecare limbă. */
+export const homePath: Record<Locale, string> = { ro: "/", en: "/en" };
 
-/** Metadata pentru prima pagină (folosită în app/layout.tsx). */
-export const rootMetadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: { default: seo.title, template: `%s · ${brand.name}` },
-  description: seo.description,
-  applicationName: brand.name,
-  alternates: { canonical: "/" },
-  openGraph: { ...openGraphBase, url: "/", title: seo.title, description: seo.description },
-  twitter: { card: "summary_large_image", title: seo.title, description: seo.description },
-  // Moștenit de toate paginile.
-  robots: { index: allowIndexing, follow: allowIndexing },
-};
+const ogLocale: Record<Locale, string> = { ro: "ro_RO", en: "en_US" };
+
+/** Metadata pentru prima pagină, în limba dată (folosită în app/[lang]/layout.tsx). */
+export function rootMetadata(locale: Locale): Metadata {
+  const { brand, seo } = contentFor(locale);
+  const url = homePath[locale];
+  return {
+    metadataBase: new URL(siteUrl),
+    title: { default: seo.title, template: `%s · ${brand.name}` },
+    description: seo.description,
+    applicationName: brand.name,
+    // Google află că /  și /en sunt aceeași pagină, în limbi diferite.
+    alternates: { canonical: url, languages: { ro: homePath.ro, en: homePath.en, "x-default": homePath.ro } },
+    openGraph: { type: "website", locale: ogLocale[locale], siteName: brand.name, url, title: seo.title, description: seo.description },
+    twitter: { card: "summary_large_image", title: seo.title, description: seo.description },
+    // Moștenit de toate paginile.
+    robots: { index: allowIndexing, follow: allowIndexing },
+  };
+}
 
 /**
- * Metadata pentru o pagină separată (ex. paginile legale).
+ * Metadata pentru o pagină separată (ex. paginile legale, care există doar în română).
  * Imaginea de share se dă explicit: un `openGraph` propriu înlocuiește tot obiectul moștenit,
  * inclusiv imaginea generată de app/opengraph-image.tsx.
  */
 export function pageMetadata({ title, description, route }: { title: string; description: string; route: string }): Metadata {
+  const { brand, seo } = ro;
   const fullTitle = `${title} · ${brand.name}`;
   const image = { url: "/opengraph-image", width: 1200, height: 630, alt: seo.title };
   return {
     title,
     description,
     alternates: { canonical: route },
-    openGraph: { ...openGraphBase, url: route, title: fullTitle, description, images: [image] },
+    openGraph: { type: "website", locale: ogLocale.ro, siteName: brand.name, url: route, title: fullTitle, description, images: [image] },
     twitter: { card: "summary_large_image", title: fullTitle, description, images: [image] },
   };
 }

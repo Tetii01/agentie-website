@@ -6,7 +6,8 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { Media } from "@/components/ui/Media";
 import { Section } from "@/components/ui/Section";
 import { VisitLink } from "@/components/ui/VisitLink";
-import { projects, ui, type Project } from "@/content/site";
+import { getContent } from "@/content";
+import type { Project } from "@/content/site";
 import { cn } from "@/lib/cn";
 import { displayDomain } from "@/lib/url";
 
@@ -17,7 +18,9 @@ import { displayDomain } from "@/lib/url";
  * Tabletă și mobil: un card pe ecran. Dedesubt: bulinele și săgețile.
  * Click pe un card: fereastră cu detalii (câteva carduri scurte în grid).
  */
-export function Projects() {
+export async function Projects() {
+  const { projects, ui } = await getContent();
+
   return (
     <Section id={projects.id} aria-labelledby="proiecte-titlu">
       <h2 id="proiecte-titlu" className="sr-only">
@@ -57,7 +60,9 @@ export function Projects() {
  * Card de proiect: imaginea umple tot cardul; sus numele și categoria, jos descrierea și butonul spre site.
  * Tot cardul deschide detaliile (DetailsDialog); butonul spre site stă deasupra, cu z-20.
  */
-function ProjectCard({ project, id }: { project: Project; id: string }) {
+async function ProjectCard({ project, id }: { project: Project; id: string }) {
+  const { projects, ui } = await getContent();
+
   return (
     <article className="card-surface group relative isolate h-[22rem] overflow-hidden rounded-card md:h-[36rem]">
       <div className="absolute inset-0 -z-10 transition-transform duration-base ease-smooth group-hover:scale-[1.03] motion-reduce:transition-none">
@@ -106,7 +111,9 @@ function ProjectCard({ project, id }: { project: Project; id: string }) {
 }
 
 /** Conținutul ferestrei de detalii: imaginea, titlul, descrierea și cardurile cu detalii (2 pe rând). */
-function ProjectDetails({ project, titleId }: { project: Project; titleId: string }) {
+async function ProjectDetails({ project, titleId }: { project: Project; titleId: string }) {
+  const { projects, ui } = await getContent();
+
   return (
     <>
       <Media

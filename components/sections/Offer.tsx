@@ -4,7 +4,7 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { LogoLoop } from "@/components/ui/LogoLoop";
 import { RichText } from "@/components/ui/RichText";
 import { Section } from "@/components/ui/Section";
-import { contact, offer, stats, ui } from "@/content/site";
+import { getContent, getLocale } from "@/content";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { LeadForm, type LeadFormTexts } from "./LeadForm";
 import { StatCard } from "./Stats";
@@ -14,8 +14,10 @@ import { StatCard } from "./Stats";
  * stânga și dreapta câte două carduri cu cifre, la mijloc cardul înalt cu titlul, beneficiile și formularul.
  * Pe mobil: cifrele 2×2, cu cardul analizei între ele, pe toată lățimea.
  */
-export function Offer() {
+export async function Offer() {
+  const { contact, offer, stats, ui } = await getContent();
   const texts: LeadFormTexts = {
+    locale: await getLocale(),
     form: offer.form,
     ui: ui.form,
     newTabLabel: ui.externalLink,

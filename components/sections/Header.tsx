@@ -3,14 +3,16 @@ import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SmartLink } from "@/components/ui/SmartLink";
-import { brand, nav, ui } from "@/content/site";
+import { getContent } from "@/content";
 
 /**
  * Header fix, tip sticlă. Desktop: logo · meniu · buton „Analiză gratuită".
  * Mobil: logo + buton compact cu iconiță (meniul se ascunde).
  * `data-site-header` e folosit la calculul offset-ului pentru scroll (lib/scroll.ts).
  */
-export function Header() {
+export async function Header() {
+  const { brand, nav, ui } = await getContent();
+
   return (
     <header
       data-site-header

@@ -13,7 +13,7 @@ Spec-ul complet e în [docs/SPEC.md](docs/SPEC.md). Citește-l înainte de orice
 
 ## Reguli de arhitectură (SPEC §2)
 
-1. **Tot textul** stă în `content/site.ts`. Nicio componentă nu are text hardcodat.
+1. **Tot textul** stă în `content/site.ts` (română) și `content/en.ts` (engleză). Nicio componentă nu are text hardcodat.
 2. **Toate valorile vizuale** sunt tokens în `app/globals.css`, în `@theme`. Componentele folosesc doar clasele generate (`bg-background`, `text-accent`, `rounded-card`, `duration-fade`…), niciodată hex sau rgba direct.
 3. **Numele brandului** e `brand.name` din `content/site.ts`, folosit peste tot.
 4. **Logo-ul** e `components/brand/Logo.tsx` (acum text; David îl înlocuiește cu SVG).
@@ -23,8 +23,9 @@ Spec-ul complet e în [docs/SPEC.md](docs/SPEC.md). Citește-l înainte de orice
 
 ## Note tehnice
 
+- Două limbi: română la `/` (rewrite spre `app/[lang]` din `next.config.ts`), engleză la `/en`. Componentele de server iau textul cu `await getContent()` din `@/content` (limba vine din `next/root-params`); route handlers folosesc `contentFor(locale)` din `content/locales.ts`. Un text nou se adaugă în ambele fișiere. Paginile legale sunt doar în română (`notFound()` pe `/en/...`).
 - Componentele client (`"use client"`) nu importă `content/site.ts`: primesc textul prin props de la o componentă server. Așa conținutul și iconițele nu ajung în JavaScript-ul trimis în browser.
-- Linkurile către secțiuni se scriu ca `"#id"` și trec prin `SmartLink` / `Button`: pe prima pagină fac scroll cu Lenis, de pe alte pagini navighează la `/#id`.
+- Linkurile către secțiuni se scriu ca `"#id"` și trec prin `SmartLink` / `Button`: pe prima pagină fac scroll cu Lenis, de pe alte pagini navighează la `/#id` (sau `/en#id` în engleză).
 - Offset-ul pentru header se aplică în `lib/scroll.ts`. Nu pune `scroll-margin-top` (`scroll-mt-*`) pe secțiuni: Lenis îl adună la offset și secțiunea ajunge prea jos.
 - Secțiunile folosesc `Section` (spațiere + Container). Cardurile din grid-uri stau în `FadeIn` cu `delay={stagger(index)}` din `lib/stagger.ts` (0, 80, 160, 240 ms).
 - Imaginile trec prin `Media`: `next/image` când câmpul din content are `{ src, alt }`, altfel `Placeholder`.

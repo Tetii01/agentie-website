@@ -7,7 +7,8 @@ import { LogoLoop } from "@/components/ui/LogoLoop";
 import { Media } from "@/components/ui/Media";
 import { RichText } from "@/components/ui/RichText";
 import { Section } from "@/components/ui/Section";
-import { testimonials, tools, ui, type Testimonial } from "@/content/site";
+import { getContent } from "@/content";
+import type { Testimonial } from "@/content/site";
 
 /**
  * Testimoniale, într-un singur container mare:
@@ -16,7 +17,9 @@ import { testimonials, tools, ui, type Testimonial } from "@/content/site";
  * - jos: banda cu tool-urile pe care le integrăm.
  * Pe mobil, câte un testimonial pe pagină; rândul se glisează și cu degetul.
  */
-export function Testimonials() {
+export async function Testimonials() {
+  const { testimonials, tools, ui } = await getContent();
+
   return (
     <Section aria-labelledby="testimoniale-titlu">
       <h2 id="testimoniale-titlu" className="sr-only">
@@ -60,7 +63,8 @@ export function Testimonials() {
 }
 
 /** Cardul din stânga: nota mare, 5 stele și un rând scurt. Pe mobil stă pe orizontală, deasupra rândului. */
-function RatingCard() {
+async function RatingCard() {
+  const { testimonials } = await getContent();
   const { rating } = testimonials;
 
   return (
@@ -81,7 +85,9 @@ function RatingCard() {
 }
 
 /** Un testimonial: avatar, nume (+ bifă), urmăritori / rol, citatul, contul și linkul. */
-function TestimonialCard({ item }: { item: Testimonial }) {
+async function TestimonialCard({ item }: { item: Testimonial }) {
+  const { testimonials, ui } = await getContent();
+
   return (
     <article className="card-surface flex h-full flex-col gap-4 rounded-card-sm p-5 md:min-h-72 md:gap-5 md:px-6 md:py-6.5">
       <div className="flex items-center gap-4">

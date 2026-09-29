@@ -1,14 +1,16 @@
 import { Card } from "@/components/ui/Card";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { Section } from "@/components/ui/Section";
-import { problems } from "@/content/site";
+import { getContent } from "@/content";
 import { stagger } from "@/lib/stagger";
 
 /**
  * Probleme, ca grid de carduri: în stânga un card înalt cu titlul și concluzia,
  * în dreapta cele 4 probleme (2×2). Pe mobil, toate unul sub altul.
  */
-export function Problems() {
+export async function Problems() {
+  const { problems } = await getContent();
+
   return (
     <Section id={problems.id} aria-labelledby="probleme-titlu" spacing="wide">
       <div className="grid gap-grid-mobile md:gap-grid lg:grid-cols-3">

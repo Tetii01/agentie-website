@@ -293,7 +293,8 @@ export const projects = {
       image: null,
       details: projectDetailsPlaceholder,
     },
-  ] satisfies Project[],
+    // satisfies verifică fiecare proiect; `as` lasă tipul general, ca varianta în engleză să poată folosi alte texte.
+  ] satisfies Project[] as Project[],
 };
 
 /* ───────────────────────── 5.7 Testimoniale ───────────────────────── */
@@ -812,6 +813,8 @@ export const ui = {
   /** Click pe un card de proiect: „Detalii despre proiect: {nume}". */
   projectDetails: "Detalii despre proiect",
   close: "Închide",
+  /** Butonul de limbă din hero: duce la varianta în engleză. */
+  languageSwitch: { label: "EN", name: "English", href: "/en", lang: "en" },
   carousel: {
     previous: "Înapoi",
     next: "Înainte",
@@ -845,7 +848,40 @@ export const ui = {
     heading: "Lead nou de pe site",
     consent: "Acord prelucrare date",
     consentYes: "Da",
+    /** Limba paginii de pe care a venit cererea (RO / EN). */
+    language: "Limba site-ului",
     sentAt: "Trimis la",
     empty: "—",
   },
 };
+
+/* ───────────────────────── Tot conținutul, pe limbă ───────────────────────── */
+
+/**
+ * Conținutul în română, grupat. Varianta în engleză (content/en.ts) are exact aceeași formă.
+ * Componentele îl iau prin getContent() din content/index.ts, după limba paginii.
+ */
+export const ro = {
+  brand,
+  anchors,
+  nav,
+  hero,
+  seo,
+  tools,
+  problems,
+  services,
+  projects,
+  testimonials,
+  stats,
+  offer,
+  company,
+  contact,
+  finalCta,
+  about,
+  footer,
+  floatingCta,
+  legal,
+  ui,
+};
+
+export type SiteContent = typeof ro;

@@ -6,13 +6,15 @@ import { Problems } from "@/components/sections/Problems";
 import { Projects } from "@/components/sections/Projects";
 import { Services } from "@/components/sections/Services";
 import { Testimonials } from "@/components/sections/Testimonials";
-import { floatingCta } from "@/content/site";
+import { getContent } from "@/content";
 
 /**
  * Ordinea paginii: hero → proiecte (carusel) → testimoniale (cu tool-urile integrate) →
  * grid-uri de carduri: probleme, servicii, analiza gratuită (cu cifrele), despre (cu CTA-ul final).
  */
-export default function Home() {
+export default async function Home() {
+  const { floatingCta } = await getContent();
+
   return (
     <>
       <Hero />

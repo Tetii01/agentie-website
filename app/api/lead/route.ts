@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { contentFor, locales, type Locale } from "@/content/locales";
 import { offer, ui } from "@/content/site";
 import { createLeadSchema, formatPhone, MIN_FILL_MS, toFieldErrors, type Lead, type LeadErrors } from "@/lib/lead";
 
@@ -20,11 +21,13 @@ type LeadResponse = { ok: true } | { ok: false; error: "bad_request" | "validati
 
 const MAX_BODY_BYTES = 20_000;
 const isDev = process.env.NODE_ENV === "development";
-const schema = createLeadSchema(
-  ui.form.errors,
-  offer.form.step1.interests.options,
-  offer.form.step1.idea.option,
-).full;
+// O schemă pe limbă: opțiunile și mesajele de eroare sunt cele din pagina de pe care vine cererea.
+const schemas = Object.fromEntries(
+  locales.map((locale) => {
+    const { offer: o, ui: u } = contentFor(locale);
+    return [locale, createLeadSchema(u.form.errors, o.form.step1.interests.options, o.form.step1.idea.option).full];
+  }),
+) as Record<Locale, ReturnType<typeof createLeadSchema>["full"]>;
 
 const reply = (body: LeadResponse, status = 200) => Response.json(body, { status });
 
@@ -45,20 +48,24 @@ export async function POST(request: Request) {
     return reply({ ok: false, error: "bad_request" }, 400);
   }
 
-  const { hp, elapsedMs, ...fields } = body as Record<string, unknown>;
+  const { hp, elapsedMs, locale: rawLocale, ...fields } = body as Record<string, unknown>;
+  const locale: Locale = rawLocale === "en" ? "en" : "ro";
   if ((typeof hp === "string" && hp !== "") || typeof elapsedMs !== "number" || elapsedMs < MIN_FILL_MS) {
     if (isDev) console.info("[lead] Trimitere ignorată de filtrul anti-spam.", { hp, elapsedMs });
     return reply({ ok: true });
   }
 
-  const parsed = schema.safeParse(fields);
+  const parsed = schemas[locale].safeParse(fields);
   if (!parsed.success) {
     return reply({ ok: false, error: "validation", errors: toFieldErrors(parsed.error) }, 400);
   }
 
   const lead = parsed.data;
   const submittedAt = new Date();
-  const [email, webhook] = await Promise.all([sendEmail(lead, submittedAt), sendWebhook(lead, submittedAt)]);
+  const [email, webhook] = await Promise.all([
+    sendEmail(lead, submittedAt, locale),
+    sendWebhook(lead, submittedAt, locale),
+  ]);
 
   if (email === "sent" || webhook === "sent") return reply({ ok: true });
   if (isDev && email === "skipped") return reply({ ok: true });
@@ -67,9 +74,9 @@ export async function POST(request: Request) {
 
 /* ───────────────────────── Email (Resend) ───────────────────────── */
 
-async function sendEmail(lead: Lead, submittedAt: Date): Promise<Delivery> {
+async function sendEmail(lead: Lead, submittedAt: Date, locale: Locale): Promise<Delivery> {
   const { RESEND_API_KEY: apiKey, LEAD_TO_EMAIL: to, LEAD_FROM_EMAIL: from } = process.env;
-  const message = buildEmail(lead, submittedAt);
+  const message = buildEmail(lead, submittedAt, locale);
 
   if (!apiKey || !to || !from) {
     if (isDev) {
@@ -103,7 +110,8 @@ async function sendEmail(lead: Lead, submittedAt: Date): Promise<Delivery> {
   }
 }
 
-function buildEmail(lead: Lead, submittedAt: Date) {
+/** Emailul e mereu în română (e pentru noi); răspunsurile clientului rămân în limba în care le-a dat. */
+function buildEmail(lead: Lead, submittedAt: Date, locale: Locale) {
   const t = ui.leadEmail;
   const f = offer.form;
   const rows: [label: string, value: string][] = [
@@ -116,6 +124,7 @@ function buildEmail(lead: Lead, submittedAt: Date) {
     [f.step2.phone.label, formatPhone(lead.phone)],
     [f.step2.message, lead.message || t.empty],
     [t.consent, t.consentYes],
+    [t.language, locale.toUpperCase()],
     [t.sentAt, formatDate(submittedAt)],
   ];
 
@@ -157,9 +166,9 @@ function escapeHtml(value: string) {
 
 /* ───────────────────────── Webhook (n8n / CRM) ───────────────────────── */
 
-async function sendWebhook(lead: Lead, submittedAt: Date): Promise<Delivery> {
+async function sendWebhook(lead: Lead, submittedAt: Date, locale: Locale): Promise<Delivery> {
   const url = process.env.LEAD_WEBHOOK_URL;
-  const payload = { ...lead, phone: `+40${lead.phone}`, submittedAt: submittedAt.toISOString(), source: "site" };
+  const payload = { ...lead, phone: `+40${lead.phone}`, locale, submittedAt: submittedAt.toISOString(), source: "site" };
 
   if (!url) {
     if (isDev) console.info("[lead] LEAD_WEBHOOK_URL nu e setat: webhook sărit. Payload:\n" + JSON.stringify(payload, null, 2));

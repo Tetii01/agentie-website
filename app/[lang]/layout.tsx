@@ -4,9 +4,9 @@ import { Geist } from "next/font/google";
 import { Footer } from "@/components/sections/Footer";
 import { Header } from "@/components/sections/Header";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
-import { ui } from "@/content/site";
+import { getContent, getLocale, locales } from "@/content";
 import { rootMetadata } from "@/lib/seo";
-import "./globals.css";
+import "../globals.css";
 
 // latin-ext conține ș, ț, ă, î, â.
 const geistSans = Geist({
@@ -15,16 +15,28 @@ const geistSans = Geist({
 });
 
 // Title, description, Open Graph, Twitter card: lib/seo.ts. Imaginea OG: app/opengraph-image.tsx.
-export const metadata: Metadata = rootMetadata;
+export async function generateMetadata(): Promise<Metadata> {
+  return rootMetadata(await getLocale());
+}
+
+// Paginile se generează static pentru fiecare limbă: /ro (servită la „/") și /en. Alte valori → 404.
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
+export const dynamicParams = false;
 
 export const viewport: Viewport = {
   themeColor: "#0d0d0d", // = --color-background (bara browserului pe mobil)
   colorScheme: "dark",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
+  const locale = await getLocale();
+  const { ui } = await getContent();
+
   return (
-    <html lang="ro" className={geistSans.variable}>
+    <html lang={locale} className={geistSans.variable}>
       <body className="bg-background font-sans text-foreground">
         {/* Fără JavaScript, elementele cu fade-in rămân vizibile. */}
         <noscript>

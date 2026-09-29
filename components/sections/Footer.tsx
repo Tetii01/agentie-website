@@ -3,12 +3,14 @@ import { BrandIcon } from "@/components/ui/BrandIcon";
 import { Container } from "@/components/ui/Container";
 import { CurrentYear } from "@/components/ui/CurrentYear";
 import { SmartLink } from "@/components/ui/SmartLink";
-import { brand, footer, ui } from "@/content/site";
+import { getContent } from "@/content";
 
 const linkClasses = "text-sm text-foreground transition-colors duration-base hover:text-accent";
 
 /** Footer comun (prima pagină + paginile legale): totul pe centru, fără linii de separare. */
-export function Footer() {
+export async function Footer() {
+  const { brand, footer, ui } = await getContent();
+
   return (
     <footer className="mt-[calc(var(--spacing-section-gap-mobile)-var(--spacing-section-mobile))] md:mt-[calc(var(--spacing-section-gap)-var(--spacing-section))]">
       {/* pb mare: ultimul rând trebuie să poată urca deasupra CTA-ului plutitor (fix jos). */}

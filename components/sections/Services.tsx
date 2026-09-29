@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/Card";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { Section } from "@/components/ui/Section";
 import { Tag } from "@/components/ui/Tag";
-import { services } from "@/content/site";
+import { getContent } from "@/content";
 import { cn } from "@/lib/cn";
 import { stagger } from "@/lib/stagger";
 
@@ -15,7 +15,8 @@ import { stagger } from "@/lib/stagger";
 /** Serviciile 2 și 3 stau pe jumătate de lățime pe telefon (grid de 2 coloane). */
 const halfOnMobile = (index: number) => index === 1 || index === 2;
 
-export function Services() {
+export async function Services() {
+  const { services } = await getContent();
   const { custom } = services;
 
   return (
