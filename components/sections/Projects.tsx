@@ -7,11 +7,13 @@ import { Media } from "@/components/ui/Media";
 import { Section } from "@/components/ui/Section";
 import { VisitLink } from "@/components/ui/VisitLink";
 import { projects, ui, type Project } from "@/content/site";
+import { cn } from "@/lib/cn";
 import { displayDomain } from "@/lib/url";
 
 /**
- * Proiecte: carusel imediat sub hero, care se derulează card cu card.
+ * Proiecte: carusel imediat sub hero, care se derulează card cu card, în buclă (după ultimul vine primul).
  * Desktop: cardurile alternează lat (2/3) și îngust (1/3), ca un grid de 3 coloane.
+ * Cu un număr impar de proiecte, la trecerea din buclă apar două carduri late unul lângă altul.
  * Tabletă și mobil: un card pe ecran. Dedesubt: bulinele și săgețile.
  * Click pe un card: fereastră cu detalii (câteva carduri scurte în grid).
  */
@@ -23,15 +25,28 @@ export function Projects() {
       </h2>
 
       <FadeIn>
-        <Carousel labels={ui.carousel} label={projects.title} listClassName="gap-grid-mobile md:gap-grid">
-          {projects.items.map((project, index) => (
-            <li
-              key={`${index}-${project.title}`}
-              className="w-full shrink-0 snap-start lg:odd:w-[calc((200%-var(--spacing-grid))/3)] lg:even:w-[calc((100%-2*var(--spacing-grid))/3)]"
-            >
-              <ProjectCard project={project} id={`proiect-${index + 1}`} />
-            </li>
-          ))}
+        <Carousel labels={ui.carousel} label={projects.title} loop listClassName="gap-grid-mobile md:gap-grid">
+          {/* Lista de 3 ori, pentru buclă: copia din mijloc e cea reală, celelalte doar se văd la trecere. */}
+          {[0, 1, 2].flatMap((copy) =>
+            projects.items.map((project, index) => {
+              const isCopy = copy !== 1;
+              return (
+                <li
+                  key={`${copy}-${index}`}
+                  aria-hidden={isCopy || undefined}
+                  inert={isCopy}
+                  className={cn(
+                    "w-full shrink-0 snap-start",
+                    index % 2 === 0
+                      ? "lg:w-[calc((200%-var(--spacing-grid))/3)]"
+                      : "lg:w-[calc((100%-2*var(--spacing-grid))/3)]",
+                  )}
+                >
+                  <ProjectCard project={project} id={`proiect-${index + 1}${isCopy ? `-copie-${copy}` : ""}`} />
+                </li>
+              );
+            }),
+          )}
         </Carousel>
       </FadeIn>
     </Section>
