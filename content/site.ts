@@ -217,12 +217,11 @@ export const projects = {
   imagePlaceholderLabel: "Imagine proiect",
   items: [
     {
-      placeholder: true,
-      title: "[TITLU PROIECT 1]",
-      category: "Website",
-      description: "[DESCRIERE SCURTĂ]",
-      url: "[URL PROIECT]",
-      image: null,
+      title: "X Sweets and Coffee",
+      category: "Website + chatboți AI",
+      description: "Site nou pentru cafenea, cu chatboți AI integrați care răspund clienților pe loc.",
+      url: "https://xsweetsandcoffee.ro",
+      image: { src: "/proiecte/x-sweets-and-coffee.jpg", alt: "Site-ul X Sweets and Coffee pe un laptop" },
     },
     {
       placeholder: true,
@@ -771,6 +770,8 @@ export const ui = {
   footerNav: "Informații legale",
   socialLinks: "Rețele sociale",
   externalLink: "(se deschide într-un tab nou)",
+  /** Butonul rotund cu săgeată de pe cardurile de proiect; urmat de numele proiectului. */
+  visitSite: "Vezi site-ul",
   carousel: {
     previous: "Înapoi",
     next: "Înainte",

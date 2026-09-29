@@ -1,8 +1,8 @@
 import { Carousel } from "@/components/ui/Carousel";
-import { ExternalLink } from "@/components/ui/ExternalLink";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { Media } from "@/components/ui/Media";
 import { Section } from "@/components/ui/Section";
+import { VisitLink } from "@/components/ui/VisitLink";
 import { projects, ui, type Project } from "@/content/site";
 
 /**
@@ -33,7 +33,7 @@ export function Projects() {
   );
 }
 
-/** Card de proiect: imaginea umple tot cardul; sus numele și categoria, jos descrierea și linkul. */
+/** Card de proiect: imaginea umple tot cardul; sus numele și categoria, jos descrierea și butonul spre site. */
 function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="card-surface group relative isolate h-[27rem] overflow-hidden rounded-card md:h-[36rem]">
@@ -59,7 +59,12 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
         <div className="flex items-end justify-between gap-6">
           <p className="max-w-xs text-sm text-pretty text-foreground/85 md:text-base">{project.description}</p>
-          <ExternalLink url={project.url} newTabLabel={ui.externalLink} className="shrink-0" />
+          <VisitLink
+            url={project.url}
+            label={`${ui.visitSite} ${project.title}`}
+            newTabLabel={ui.externalLink}
+            className="shrink-0"
+          />
         </div>
       </div>
     </article>

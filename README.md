@@ -72,10 +72,10 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 - Culoarea de accent: `--color-accent` în `app/globals.css` e provizorie. Dacă o schimbi, actualizează și `app/icon.svg`.
 
 **Hero**
-- Vizualul: `hero.visual.image` (acum `null`, se afișează placeholder-ul).
+- Fără imagine: fundalul (orizontul și rețeaua de puncte) e din CSS (`hero-*` în `app/globals.css`). Acțiunile care se schimbă în titlu: `hero.actions`.
 
-**Proiecte** (6 carduri)
-- `[TITLU PROIECT 1]` … `[TITLU PROIECT 6]`, `[DESCRIERE SCURTĂ]`, `[URL PROIECT]`, `image`.
+**Proiecte** (6 carduri; primul, X Sweets and Coffee, e completat)
+- `[TITLU PROIECT 2]` … `[TITLU PROIECT 6]`, `[DESCRIERE SCURTĂ]`, `[URL PROIECT]`, `image`. Imaginile stau în `public/proiecte/`. Cât timp `url` e placeholder, butonul rotund spre site apare estompat, fără link.
 - Categoriile sunt cele date ca exemplu în spec. Le ajustezi după proiectele reale.
 
 **Testimoniale** (4 carduri)
