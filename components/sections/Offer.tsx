@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { LogoLoop } from "@/components/ui/LogoLoop";
@@ -24,7 +24,7 @@ export function Offer() {
   const [first, second, third, fourth] = stats.items;
 
   return (
-    <Section id={offer.id} aria-labelledby="analiza-titlu" label={offer.eyebrow}>
+    <Section id={offer.id} aria-labelledby="analiza-titlu" spacing="wide">
       {/* minmax(0,…): coloanele nu se lărgesc după banda de beneficii (lățime max-content). */}
       <ul className="grid grid-cols-2 gap-grid-mobile md:gap-grid lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,0.8fr)] lg:grid-rows-2">
         <StatCard stat={first} className="lg:col-start-1 lg:row-start-1" />
@@ -33,7 +33,11 @@ export function Offer() {
         <FadeIn as="li" className="col-span-2 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1">
           <Card padding="none" className="flex h-full flex-col px-5 py-8 md:p-8 lg:px-8 lg:py-10">
             <div className="flex flex-col items-center text-center">
-              <h2 id="analiza-titlu" className="text-h2-mobile font-bold text-balance md:text-h2">
+              <p className="inline-flex items-center gap-2 rounded-pill border border-border bg-surface-2 px-3.5 py-1.5 text-label font-medium text-foreground">
+                <Sparkles aria-hidden className="size-3.5 text-accent" />
+                {offer.eyebrow}
+              </p>
+              <h2 id="analiza-titlu" className="mt-5 text-h2-mobile font-bold text-balance md:text-h2">
                 <RichText text={offer.title} strongClassName="font-bold text-accent" />
               </h2>
               <p className="mt-4 max-w-md text-base text-pretty text-muted">{offer.subtitle}</p>

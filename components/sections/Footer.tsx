@@ -10,7 +10,7 @@ const linkClasses = "text-sm text-foreground transition-colors duration-base hov
 /** Footer comun (prima pagină + paginile legale): totul pe centru, fără linii de separare. */
 export function Footer() {
   return (
-    <footer className="mt-16 md:mt-24">
+    <footer className="mt-[calc(var(--spacing-section-gap-mobile)-var(--spacing-section-mobile))] md:mt-[calc(var(--spacing-section-gap)-var(--spacing-section))]">
       {/* pb mare: ultimul rând trebuie să poată urca deasupra CTA-ului plutitor (fix jos). */}
       <Container className="flex flex-col items-center gap-6 pb-32 text-center md:pb-44">
         <SmartLink href="#top" aria-label={brand.name} className="rounded-pill">

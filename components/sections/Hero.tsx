@@ -2,14 +2,13 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { RotatingText, RotationIndex, RotationProvider } from "@/components/ui/RotatingText";
+import { RotatingText, RotationProvider } from "@/components/ui/RotatingText";
 import { hero } from "@/content/site";
 
 /**
  * Hero: un card mare (mai scurt decât ecranul, ca să se vadă că pagina continuă). Sus, un „cer"
  * întunecat cu o rețea fină de puncte; jos, un orizont care se aprinde în accent.
- * Deasupra orizontului: în stânga titlul pe două rânduri (acțiunea AI-ului se schimbă singură) și butonul;
- * în dreapta (desktop), indexul acțiunilor, sincronizat cu titlul.
+ * Deasupra orizontului, în stânga: titlul pe două rânduri (acțiunea AI-ului se schimbă singură) și butonul.
  * Stilurile: hero-frame, hero-dots, hero-horizon în app/globals.css.
  */
 export function Hero() {
@@ -32,7 +31,7 @@ export function Hero() {
           />
 
           <RotationProvider items={hero.actions}>
-            <div className="flex items-end justify-between gap-10 px-5 pt-12 pb-[calc(7rem+2rem)] md:px-14 md:pb-[calc(10rem+2.5rem)]">
+            <div className="px-5 pt-12 pb-[calc(7rem+2rem)] md:px-14 md:pb-[calc(10rem+2.5rem)]">
               <div className="flex flex-col items-start">
                 <FadeIn eager>
                   <h1 className="text-h1 font-bold md:text-h1-lg">
@@ -61,10 +60,6 @@ export function Hero() {
                     Stă în afara FadeIn, ca animația (care coboară butonul 20px) să nu-l miște. */}
                 <div data-floating-cta-trigger aria-hidden className="h-px w-full" />
               </div>
-
-              <FadeIn eager delay={240} className="hidden shrink-0 pb-3 lg:block">
-                <RotationIndex />
-              </FadeIn>
             </div>
           </RotationProvider>
         </div>

@@ -24,8 +24,8 @@ type RotationProviderProps = {
 };
 
 /**
- * Ține minte care text e activ și îl schimbă la fiecare `interval`. Tot ce e în interior și
- * folosește RotatingText / RotationIndex merge sincron (ex. titlul din hero și indexul din dreapta).
+ * Ține minte care text e activ și îl schimbă la fiecare `interval`. Toate RotatingText-urile
+ * din interior merg sincron.
  * Primește textele prin props: componentele client nu importă content/site.ts.
  */
 export function RotationProvider({ items, interval = 2400, children }: RotationProviderProps) {
@@ -66,39 +66,5 @@ export function RotatingText({ className }: { className?: string }) {
         {items[index]}
       </span>
     </span>
-  );
-}
-
-/**
- * Lista tuturor textelor, numerotată, cu cel activ evidențiat (alb + linie în accent).
- * Doar decorativă (aria-hidden). Textele se afișează fără punctul de la final, cu prima literă mare.
- */
-export function RotationIndex({ className }: { className?: string }) {
-  const { items, index } = useContext(RotationContext);
-
-  return (
-    <ol aria-hidden className={cn("flex flex-col gap-3.5", className)}>
-      {items.map((item, position) => {
-        const active = position === index;
-        return (
-          <li
-            key={item}
-            className={cn(
-              "flex items-center justify-end gap-4 text-base transition-colors duration-500 ease-smooth",
-              active ? "text-foreground" : "text-muted/60",
-            )}
-          >
-            <span className="inline-block first-letter:uppercase">{item.replace(/\.$/, "")}</span>
-            <span
-              className={cn(
-                "h-px transition-[width,background-color] duration-500 ease-smooth",
-                active ? "w-8 bg-accent" : "w-4 bg-border",
-              )}
-            />
-            <span className="w-5 text-label tabular-nums">{String(position + 1).padStart(2, "0")}</span>
-          </li>
-        );
-      })}
-    </ol>
   );
 }

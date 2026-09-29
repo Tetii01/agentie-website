@@ -10,7 +10,7 @@ import { stagger } from "@/lib/stagger";
  */
 export function Problems() {
   return (
-    <Section id={problems.id} aria-labelledby="probleme-titlu" label={problems.label}>
+    <Section id={problems.id} aria-labelledby="probleme-titlu" spacing="wide">
       <div className="grid gap-grid-mobile md:gap-grid lg:grid-cols-3">
         <FadeIn className="lg:row-span-2">
           <Card className="flex h-full flex-col justify-between gap-10 lg:p-10">

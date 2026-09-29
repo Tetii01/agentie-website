@@ -80,6 +80,8 @@
   --spacing-gutter-lg: 2rem; /* marginea laterală de la tabletă în sus */
   --spacing-section: 2rem; /* padding sus/jos per secțiune: între două secțiuni ies 64px */
   --spacing-section-mobile: 1.25rem; /* idem pe mobil: 40px între secțiuni */
+  --spacing-section-gap: 8.5rem; /* distanța dintre secțiunile de la testimoniale în jos (Section spacing="wide"): 136px */
+  --spacing-section-gap-mobile: 6.5rem; /* idem pe mobil: 104px */
   --spacing-grid: 1.25rem; /* distanța dintre cardurile dintr-un grid */
   --spacing-grid-mobile: 0.75rem;
   --spacing-header: 4.5rem; /* înălțimea header-ului */
@@ -209,8 +211,8 @@
 /* ==========================================================================
    HERO (components/sections/Hero.tsx)
    Un card mare, curat: sus un cer întunecat cu o rețea fină de puncte, jos un
-   „orizont" (marginea unei planete) care se aprinde în accent. Deasupra orizontului:
-   titlul și butonul în stânga, indexul acțiunilor în dreapta.
+   „orizont" (marginea unei planete) care se aprinde în accent. Textul stă aliniat
+   la stânga, deasupra orizontului.
    ========================================================================== */
 
 @utility hero-frame {

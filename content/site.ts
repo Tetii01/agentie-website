@@ -13,18 +13,13 @@
 import type { LucideIcon } from "lucide-react";
 import {
   Clapperboard,
-  Database,
   Eye,
   FolderCheck,
-  Globe,
-  MessageCircle,
   MessageCircleWarning,
-  Plug,
   Repeat,
   Rocket,
   Shuffle,
   Timer,
-  Workflow,
 } from "lucide-react";
 import type { SimpleIcon } from "simple-icons";
 import {
@@ -128,8 +123,6 @@ export const tools = {
 /* ───────────────────────── 5.4 Probleme ───────────────────────── */
 
 export const problems = {
-  /** Eticheta mică de deasupra secțiunii. */
-  label: "Provocări",
   id: anchors.problems,
   title: "Sună cunoscut?",
   items: [
@@ -157,25 +150,9 @@ export const problems = {
   closing: "Toate au rezolvare. Și nu înseamnă să mai angajezi un om.",
 };
 
-/* ───────────────────────── Banda dintre probleme și servicii ───────────────────────── */
-
-/** Ce construim, pe banda discretă care trece între „Sună cunoscut?" și „Ce construim" (iconiță + cuvânt). */
-export const band = {
-  items: [
-    { label: "Chatboți", icon: MessageCircle },
-    { label: "Automatizări", icon: Workflow },
-    { label: "Conținut", icon: Clapperboard },
-    { label: "CRM-uri", icon: Database },
-    { label: "Integrări", icon: Plug },
-    { label: "Website-uri", icon: Globe },
-  ] satisfies { label: string; icon: LucideIcon }[],
-};
-
 /* ───────────────────────── 5.5 Servicii ───────────────────────── */
 
 export const services = {
-  /** Eticheta mică de deasupra secțiunii. */
-  label: "Servicii",
   id: anchors.services,
   title: "Ce construim",
   subtitle:
@@ -378,7 +355,6 @@ export const stats = {
 
 export const offer = {
   id: anchors.offer,
-  /** Eticheta mică de deasupra secțiunii. */
   eyebrow: "Primul pas",
   /** Partea dintre ** ** apare în culoarea de accent. */
   title: "Analiză **gratuită**",
@@ -473,8 +449,6 @@ export type Founder = {
 };
 
 export const about = {
-  /** Eticheta mică de deasupra secțiunii. */
-  label: "Despre noi",
   id: anchors.about,
   title: "Cine suntem",
   photoPlaceholderLabel: "Poză fondator",
