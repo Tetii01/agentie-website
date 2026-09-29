@@ -15,7 +15,7 @@ const variants = {
 
 const sizes = {
   /** Butonul mare din hero: text + săgeată într-un cerc, lipită de marginea din dreapta. */
-  cta: "h-14 gap-4 pr-2 pl-7 text-base md:h-16 md:gap-5 md:pl-8 md:text-lg",
+  cta: "h-12 gap-3 pr-1.5 pl-5 text-sm md:h-16 md:gap-5 md:pr-2 md:pl-8 md:text-lg",
   lg: "h-14 gap-2 px-8 text-base",
   md: "h-12 gap-2 px-6 text-base",
   sm: "h-10 gap-2 px-5 text-sm",

@@ -40,9 +40,9 @@
   --radius-field: 16px; /* câmpurile din formular */
 
   /* Tipografie. Titlurile: bold, litere strânse. Textul: 16–19px, rânduri aerisite. */
-  /* Titlul din hero crește cu ecranul, cât încape cel mai lung rând
-     („răspunde instant." pe mobil, „AI-ul răspunde instant." de la tabletă în sus). */
-  --text-h1: clamp(1.75rem, calc((100vw - 4.75rem) / 7.8), 2.5rem); /* mobil: ~38px la 375px */
+  /* Titlul din hero crește cu ecranul, cât încape cel mai lung rând („AI-ul răspunde instant."),
+     ca pe orice ecran să stea pe două rânduri, ca pe desktop. */
+  --text-h1: clamp(1.5rem, calc((100vw - 4.25rem) / 10.4), 2.75rem); /* mobil: ~30px la 375px */
   --text-h1--line-height: 1.02;
   --text-h1--letter-spacing: -0.05em;
   --text-h1-lg: clamp(3rem, calc((100vw - 11.25rem) / 10.4), 6rem); /* tabletă → desktop: până la 96px */
@@ -51,13 +51,13 @@
   --text-h2: 3rem; /* 48px, titlurile de secțiune / din carduri mari */
   --text-h2--line-height: 1.05;
   --text-h2--letter-spacing: -0.05em;
-  --text-h2-mobile: 2.125rem; /* 34px */
+  --text-h2-mobile: 1.75rem; /* 28px */
   --text-h2-mobile--line-height: 1.08;
   --text-h2-mobile--letter-spacing: -0.045em;
   --text-h3: 1.75rem; /* 28px, titlurile din carduri */
   --text-h3--line-height: 1.15;
   --text-h3--letter-spacing: -0.035em;
-  --text-h3-mobile: 1.375rem; /* 22px */
+  --text-h3-mobile: 1.1875rem; /* 19px */
   --text-h3-mobile--line-height: 1.2;
   --text-h3-mobile--letter-spacing: -0.03em;
   --text-lead: 1.1875rem; /* 19px, citatele și textele mai importante */
@@ -81,7 +81,7 @@
   --spacing-section: 2rem; /* padding sus/jos per secțiune: între două secțiuni ies 64px */
   --spacing-section-mobile: 1.25rem; /* idem pe mobil: 40px între secțiuni */
   --spacing-section-gap: 8.5rem; /* distanța dintre secțiunile de la testimoniale în jos (Section spacing="wide"): 136px */
-  --spacing-section-gap-mobile: 6.5rem; /* idem pe mobil: 104px */
+  --spacing-section-gap-mobile: 4.5rem; /* idem pe mobil: 72px */
   --spacing-grid: 1.25rem; /* distanța dintre cardurile dintr-un grid */
   --spacing-grid-mobile: 0.75rem;
   --spacing-header: 4.5rem; /* înălțimea header-ului */
@@ -151,6 +151,17 @@
 /* Fontul vine din next/font (app/layout.tsx). */
 @theme inline {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Pe telefon: colțuri mai mici, pe măsura cardurilor, și benzile cu logo-uri mai dese
+   (aceleași proporții ca pe desktop). */
+@media (width < 48rem) {
+  :root {
+    --radius-card: 24px;
+    --radius-card-sm: 20px;
+    --radius-inner: 16px;
+    --spacing-marquee: 2rem;
+  }
 }
 
 /* Contururile în gradient (lumină care cade din stânga-sus), folosite de utilitățile de mai jos. */

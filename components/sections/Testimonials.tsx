@@ -32,7 +32,7 @@ export function Testimonials() {
             listClassName="gap-3 md:gap-4 md:[mask-image:linear-gradient(to_right,black_93%,transparent)]"
           >
             {testimonials.items.map((item, index) => (
-              <li key={index} className="w-full shrink-0 snap-start md:w-85 lg:w-105">
+              <li key={index} className="w-[85%] shrink-0 snap-start md:w-85 lg:w-105">
                 <TestimonialCard item={item} />
               </li>
             ))}
@@ -47,7 +47,7 @@ export function Testimonials() {
                   <BrandIcon
                     icon={tool.icon}
                     title={tool.name}
-                    className="size-7 text-foreground opacity-45 transition-opacity duration-base hover:opacity-100"
+                    className="size-6 text-foreground opacity-45 transition-opacity duration-base hover:opacity-100 md:size-7"
                   />
                 ),
               }))}
@@ -64,7 +64,7 @@ function RatingCard() {
   const { rating } = testimonials;
 
   return (
-    <div className="card-surface flex flex-none items-center gap-5 rounded-card-sm px-6 py-5 md:w-50 md:flex-col md:justify-center md:gap-3 md:px-5 md:pt-10 md:pb-8 md:text-center">
+    <div className="card-surface flex flex-none items-center gap-5 rounded-card-sm px-5 py-4 md:w-50 md:flex-col md:justify-center md:gap-3 md:px-5 md:pt-10 md:pb-8 md:text-center">
       <span className="text-stat-mobile font-bold tabular-nums md:text-stat">{rating.value}</span>
       <div className="flex flex-col gap-2 md:items-center md:gap-3">
         <span aria-hidden className="flex gap-1 text-accent">
@@ -83,7 +83,7 @@ function RatingCard() {
 /** Un testimonial: avatar, nume (+ bifă), urmăritori / rol, citatul, contul și linkul. */
 function TestimonialCard({ item }: { item: Testimonial }) {
   return (
-    <article className="card-surface flex h-full flex-col gap-5 rounded-card-sm px-6 py-6.5 md:min-h-72">
+    <article className="card-surface flex h-full flex-col gap-4 rounded-card-sm p-5 md:min-h-72 md:gap-5 md:px-6 md:py-6.5">
       <div className="flex items-center gap-4">
         <Media
           image={item.avatar}
@@ -92,7 +92,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
           aspect="square"
           compact
           sizes="54px"
-          className="size-13.5 shrink-0"
+          className="size-11 shrink-0 md:size-13.5"
         />
         <div className="min-w-0 text-sm">
           <p className="flex items-center gap-1.5 text-base font-medium">
@@ -113,7 +113,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
         </div>
       </div>
 
-      <blockquote className="text-lead font-medium text-pretty text-muted">
+      <blockquote className="text-base font-medium text-pretty text-muted md:text-lead">
         <p>
           <RichText text={item.quote} strongClassName="font-medium text-dot-active" />
         </p>

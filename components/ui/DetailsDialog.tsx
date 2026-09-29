@@ -20,7 +20,7 @@ function Circle({ children, className }: { children: ReactNode; className?: stri
   return (
     <span
       className={cn(
-        "grid size-10.5 place-items-center rounded-full bg-control text-dot-active",
+        "grid size-9 place-items-center rounded-full bg-control text-dot-active md:size-10.5",
         "transition-[background-color,color,rotate,scale] duration-base ease-in-out motion-reduce:transition-none",
         className,
       )}
@@ -60,9 +60,9 @@ export function DetailsDialog({ openLabel, closeLabel, titleId, children }: Deta
         onClick={open}
         className="group/open absolute inset-0 z-10 cursor-pointer rounded-card focus-visible:outline-offset-[-4px]"
       >
-        <span aria-hidden className="control-border absolute top-5 right-5 block rounded-pill p-px md:top-7 md:right-7">
+        <span aria-hidden className="control-border absolute top-4 right-4 block rounded-pill p-px md:top-7 md:right-7">
           <Circle className="group-hover/open:rotate-90 group-hover/open:bg-dot-active group-hover/open:text-control">
-            <Plus className="size-5" />
+            <Plus className="size-4 md:size-5" />
           </Circle>
         </span>
       </button>
@@ -90,7 +90,7 @@ export function DetailsDialog({ openLabel, closeLabel, titleId, children }: Deta
             className="group control-border absolute top-6 right-6 z-10 block cursor-pointer rounded-pill p-px md:top-8 md:right-8"
           >
             <Circle className="group-hover:bg-dot-active group-hover:text-control group-active:scale-[0.94]">
-              <X aria-hidden className="size-5" />
+              <X aria-hidden className="size-4 md:size-5" />
             </Circle>
           </button>
           {children}

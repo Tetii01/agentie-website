@@ -20,14 +20,14 @@ export function VisitLink({ url, label, newTabLabel, className }: VisitLinkProps
   const circle = (
     <span
       className={cn(
-        "grid size-10.5 place-items-center rounded-full bg-control text-dot-active",
+        "grid size-9 place-items-center rounded-full bg-control text-dot-active md:size-10.5",
         "transition-[background-color,color,scale] duration-base ease-in-out motion-reduce:transition-none",
         "group-hover:bg-dot-active group-hover:text-control group-active:scale-[0.94]",
       )}
     >
       <ArrowUpRight
         aria-hidden
-        className="size-5 transition-transform duration-base ease-in-out group-hover:translate-x-px group-hover:-translate-y-px motion-reduce:transition-none"
+        className="size-4 transition-transform duration-base ease-in-out group-hover:translate-x-px group-hover:-translate-y-px motion-reduce:transition-none md:size-5"
       />
     </span>
   );

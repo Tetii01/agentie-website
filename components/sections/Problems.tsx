@@ -13,7 +13,7 @@ export function Problems() {
     <Section id={problems.id} aria-labelledby="probleme-titlu" spacing="wide">
       <div className="grid gap-grid-mobile md:gap-grid lg:grid-cols-3">
         <FadeIn className="lg:row-span-2">
-          <Card className="flex h-full flex-col justify-between gap-10 lg:p-10">
+          <Card className="flex h-full flex-col justify-between gap-6 md:gap-10 lg:p-10">
             <h2 id="probleme-titlu" className="text-h2-mobile font-bold text-balance md:text-h2">
               {problems.title}
             </h2>
@@ -21,16 +21,16 @@ export function Problems() {
           </Card>
         </FadeIn>
 
-        <ul className="grid gap-grid-mobile sm:grid-cols-2 md:gap-grid lg:col-span-2 lg:row-span-2">
+        <ul className="grid grid-cols-2 gap-grid-mobile md:gap-grid lg:col-span-2 lg:row-span-2">
           {problems.items.map(({ icon: Icon, title, text }, index) => (
             <FadeIn as="li" key={title} delay={stagger(index, 2)}>
-              <Card padding="md" className="flex h-full flex-col gap-6">
-                <span className="grid size-11 place-items-center rounded-full border border-border bg-surface-2 text-accent">
-                  <Icon aria-hidden className="size-5" strokeWidth={1.75} />
+              <Card padding="md" className="flex h-full flex-col gap-4 md:gap-6">
+                <span className="grid size-9 place-items-center rounded-full border border-border bg-surface-2 text-accent md:size-11">
+                  <Icon aria-hidden className="size-4 md:size-5" strokeWidth={1.75} />
                 </span>
                 <div>
-                  <h3 className="text-xl font-semibold tracking-tight text-balance">{title}</h3>
-                  <p className="mt-2 text-base text-pretty text-muted">{text}</p>
+                  <h3 className="text-base font-semibold tracking-tight text-balance md:text-xl">{title}</h3>
+                  <p className="mt-1.5 text-sm text-pretty text-muted md:mt-2 md:text-base">{text}</p>
                 </div>
               </Card>
             </FadeIn>

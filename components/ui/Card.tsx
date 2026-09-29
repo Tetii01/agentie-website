@@ -9,9 +9,9 @@ const variants = {
 };
 
 const paddings = {
-  lg: "p-6 md:p-10",
+  lg: "p-5 md:p-10",
   /** Pentru carduri înguste (ex. 4 pe rând). */
-  md: "p-6 md:p-8",
+  md: "p-4 md:p-8",
   /** Mic pe mobil (ex. grid 2×2), generos de la tabletă în sus. */
   tight: "p-4 md:p-10",
   /** Pentru carduri cu imagine sus (imaginea stă aproape de margine). */

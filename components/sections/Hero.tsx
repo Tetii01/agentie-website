@@ -17,21 +17,21 @@ export function Hero() {
   return (
     <section className="pt-[calc(var(--spacing-header-mobile)+0.5rem)] md:pt-[calc(var(--spacing-header)+0.75rem)]">
       <Container>
-        <div className="hero-frame relative isolate flex min-h-[32rem] flex-col justify-end overflow-hidden rounded-card md:min-h-[clamp(36rem,calc(100svh-var(--spacing-header)-6rem),44rem)]">
+        <div className="hero-frame relative isolate flex min-h-[26rem] flex-col justify-end overflow-hidden rounded-card md:min-h-[clamp(36rem,calc(100svh-var(--spacing-header)-6rem),44rem)]">
           <div aria-hidden className="hero-dots absolute inset-0 -z-10" />
-          {/* Orizontul: marginea de sus a cercului stă la 7rem (mobil) / 10rem (desktop) de jos. */}
+          {/* Orizontul: marginea de sus a cercului stă la 6rem (mobil) / 10rem (desktop) de jos. */}
           <div
             aria-hidden
-            className="hero-horizon absolute top-[calc(100%-7rem)] left-1/2 -z-10 aspect-square w-[300%] -translate-x-1/2 md:top-[calc(100%-10rem)] md:w-[160%]"
+            className="hero-horizon absolute top-[calc(100%-6rem)] left-1/2 -z-10 aspect-square w-[300%] -translate-x-1/2 md:top-[calc(100%-10rem)] md:w-[160%]"
           />
           {/* „Soarele": un glow moale pe mijlocul orizontului. */}
           <div
             aria-hidden
-            className="absolute top-[calc(100%-7rem)] left-1/2 -z-10 h-28 w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl md:top-[calc(100%-10rem)] md:h-36 md:w-[50%]"
+            className="absolute top-[calc(100%-6rem)] left-1/2 -z-10 h-28 w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl md:top-[calc(100%-10rem)] md:h-36 md:w-[50%]"
           />
 
           <RotationProvider items={hero.actions}>
-            <div className="px-5 pt-12 pb-[calc(7rem+2rem)] md:px-14 md:pb-[calc(10rem+2.5rem)]">
+            <div className="px-5 pt-12 pb-[calc(6rem+1.75rem)] md:px-14 md:pb-[calc(10rem+2.5rem)]">
               <div className="flex flex-col items-start">
                 <FadeIn eager>
                   <h1 className="text-h1 font-bold md:text-h1-lg">
@@ -41,18 +41,18 @@ export function Hero() {
                     <span aria-hidden className="block">
                       {hero.title}
                     </span>
-                    <span aria-hidden className="block whitespace-nowrap md:inline">
+                    <span aria-hidden className="whitespace-nowrap">
                       {hero.subject}{" "}
                     </span>
                     <RotatingText className="text-accent" />
                   </h1>
                 </FadeIn>
 
-                <FadeIn eager delay={120} className="mt-8 md:mt-10">
+                <FadeIn eager delay={120} className="mt-6 md:mt-10">
                   <Button href={primaryCta.href} variant="light" size="cta">
                     {primaryCta.label}
-                    <span className="grid size-10 place-items-center rounded-full bg-accent text-accent-foreground md:size-12">
-                      <ArrowRight aria-hidden className="size-5" />
+                    <span className="grid size-9 place-items-center rounded-full bg-accent text-accent-foreground md:size-12">
+                      <ArrowRight aria-hidden className="size-4 md:size-5" />
                     </span>
                   </Button>
                 </FadeIn>

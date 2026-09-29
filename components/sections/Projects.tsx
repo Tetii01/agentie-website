@@ -36,7 +36,7 @@ export function Projects() {
                   aria-hidden={isCopy || undefined}
                   inert={isCopy}
                   className={cn(
-                    "w-full shrink-0 snap-start",
+                    "w-[85%] shrink-0 snap-start md:w-full",
                     index % 2 === 0
                       ? "lg:w-[calc((200%-var(--spacing-grid))/3)]"
                       : "lg:w-[calc((100%-2*var(--spacing-grid))/3)]",
@@ -59,7 +59,7 @@ export function Projects() {
  */
 function ProjectCard({ project, id }: { project: Project; id: string }) {
   return (
-    <article className="card-surface group relative isolate h-[27rem] overflow-hidden rounded-card md:h-[36rem]">
+    <article className="card-surface group relative isolate h-[22rem] overflow-hidden rounded-card md:h-[36rem]">
       <div className="absolute inset-0 -z-10 transition-transform duration-base ease-smooth group-hover:scale-[1.03] motion-reduce:transition-none">
         <Media
           image={project.image}
@@ -75,12 +75,12 @@ function ProjectCard({ project, id }: { project: Project; id: string }) {
         className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-b from-background/70 via-transparent via-40% to-background/85"
       />
 
-      <div className="flex h-full flex-col justify-between p-6 md:p-8">
-        <div className="pr-14">
-          <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
+      <div className="flex h-full flex-col justify-between p-5 md:p-8">
+        <div className="pr-12 md:pr-14">
+          <h3 className="text-base font-semibold tracking-tight md:text-lg">{project.title}</h3>
           <p className="mt-1 text-label font-medium text-accent">{project.category}</p>
         </div>
-        <div className="flex items-end justify-between gap-6">
+        <div className="flex items-end justify-between gap-4 md:gap-6">
           <p className="max-w-xs text-sm text-pretty text-foreground/85 md:text-base">{project.description}</p>
           <VisitLink
             url={project.url}

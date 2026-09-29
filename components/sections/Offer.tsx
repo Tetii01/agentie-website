@@ -31,7 +31,7 @@ export function Offer() {
         <StatCard stat={second} delay={80} className="lg:col-start-1 lg:row-start-2" />
 
         <FadeIn as="li" className="col-span-2 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-          <Card padding="none" className="flex h-full flex-col px-5 py-8 md:p-8 lg:px-8 lg:py-10">
+          <Card padding="none" className="flex h-full flex-col px-4 py-6 md:p-8 lg:px-8 lg:py-10">
             <div className="flex flex-col items-center text-center">
               <p className="inline-flex items-center gap-2 rounded-pill border border-border bg-surface-2 px-3.5 py-1.5 text-label font-medium text-foreground">
                 <Sparkles aria-hidden className="size-3.5 text-accent" />
@@ -40,11 +40,11 @@ export function Offer() {
               <h2 id="analiza-titlu" className="mt-5 text-h2-mobile font-bold text-balance md:text-h2">
                 <RichText text={offer.title} strongClassName="font-bold text-accent" />
               </h2>
-              <p className="mt-4 max-w-md text-base text-pretty text-muted">{offer.subtitle}</p>
+              <p className="mt-3 max-w-md text-sm text-pretty text-muted md:mt-4 md:text-base">{offer.subtitle}</p>
             </div>
 
             <LogoLoop
-              className="mt-8"
+              className="mt-6 md:mt-8"
               items={offer.benefits.map((text) => ({
                 key: text,
                 node: (
@@ -56,7 +56,7 @@ export function Offer() {
               }))}
             />
 
-            <div className="mt-8 rounded-inner border border-border bg-background/60 p-5 md:p-6">
+            <div className="mt-6 rounded-inner border border-border bg-background/60 p-4 md:mt-8 md:p-6">
               <LeadForm texts={texts} />
             </div>
 
