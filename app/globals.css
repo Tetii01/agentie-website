@@ -92,6 +92,7 @@
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --transition-duration-base: 300ms;
   --transition-duration-fade: 800ms; /* fade-in la scroll și apariția CTA-ului plutitor */
+  --transition-duration-slide: 600ms; /* un pas în carusele (săgeți, buline), cu --ease-smooth */
   --ease-fade: ease-in-out; /* easing-ul fade-in-ului */
   --animate-marquee: marquee 45s linear infinite; /* viteza logo loop-ului */
   --animate-step-next: step-in-next 450ms var(--ease-smooth) both; /* formular: pasul următor */

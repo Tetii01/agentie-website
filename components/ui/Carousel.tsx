@@ -3,6 +3,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { durationToken, easingToken } from "@/lib/easing";
 
 export type CarouselLabels = {
   previous: string;
@@ -33,18 +34,13 @@ type CarouselProps = {
   className?: string;
 };
 
-/** Viteza animației: aceeași pe pixel, deci un card lat durează mai mult decât unul îngust și mișcarea arată uniform. */
-const MS_PER_PX = 1.1;
-const MIN_DURATION = 380;
-const MAX_DURATION = 1100;
-const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
-
 /**
- * Rând derulabil pe orizontală, card cu card. Săgețile, bulinele și scroll-ul orizontal de pe
- * trackpad mută rândul exact un card, cu o animație proprie la viteză constantă.
+ * Rând derulabil pe orizontală, card cu card. Săgețile și bulinele mută rândul cu o animație proprie,
+ * cu aceeași curbă ca restul site-ului (--ease-smooth) și o durată aproape fixă (--transition-duration-slide):
+ * un pas mai lung (cardul lat) durează doar puțin mai mult, ca mișcarea să arate la fel la fiecare pas.
+ * Trackpad-ul și degetul derulează nativ, cu scroll-snap pe fiecare card.
  * Fără `loop`, fiecare bulină e o poziție (ultimele carduri se adună în ultima, la capătul rândului);
  * cu `loop`, câte o bulină pentru fiecare card.
- * Pe mobil se glisează nativ (scroll-snap pe fiecare card).
  * `data-lenis-prevent-horizontal`: gesturile orizontale rămân native, scroll-ul paginii rămâne lin.
  * Stilul controalelor: control-border + bg-control (app/globals.css), bulinele: bg-dot / bg-dot-active.
  */
@@ -98,7 +94,15 @@ export function Carousel({ children, labels, label, leading, loop = false, listC
     else if (list.scrollLeft >= 2 * copyWidth - 2) list.scrollLeft -= copyWidth;
   }, [itemPositions, loop]);
 
-  /** Animația spre poziția cu indexul dat: viteză constantă, fără scroll-snap cât timp rulează. */
+  /** Oprește animația în curs (ex. când utilizatorul pune mâna pe rând) și repune scroll-snap-ul. */
+  const stopAnimation = useCallback(() => {
+    if (!animationRef.current) return;
+    cancelAnimationFrame(animationRef.current.frame);
+    animationRef.current = null;
+    if (listRef.current) listRef.current.style.scrollSnapType = "";
+  }, []);
+
+  /** Animația spre poziția cu indexul dat. Scroll-snap-ul e oprit cât timp rulează, ca să nu tragă de rând. */
   const animateTo = useCallback(
     (targetIndex: number) => {
       const list = listRef.current;
@@ -108,31 +112,34 @@ export function Carousel({ children, labels, label, leading, loop = false, listC
       const start = list.scrollLeft;
       const distance = positions[index] - start;
 
-      if (animationRef.current) cancelAnimationFrame(animationRef.current.frame);
-      const finish = () => {
-        animationRef.current = null;
-        list.style.scrollSnapType = "";
-        recenter();
-      };
-
+      stopAnimation();
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || Math.abs(distance) < 1) {
         list.scrollLeft = positions[index];
-        finish();
+        recenter();
         return;
       }
 
-      const duration = Math.min(Math.max(Math.abs(distance) * MS_PER_PX, MIN_DURATION), MAX_DURATION);
+      // Durata: tokenul pentru un pas obișnuit, puțin mai mult pentru distanțe mai mari (max. +30%).
+      const base = durationToken("--transition-duration-slide", 600);
+      const duration = base * (0.85 + 0.3 * Math.min(Math.abs(distance) / list.clientWidth, 1));
+      const ease = easingToken("--ease-smooth");
       const startedAt = performance.now();
       list.style.scrollSnapType = "none";
+
       const tick = (now: number) => {
         const progress = Math.min((now - startedAt) / duration, 1);
-        list.scrollLeft = start + distance * easeInOutCubic(progress);
-        if (progress < 1) animationRef.current = { frame: requestAnimationFrame(tick), targetIndex: index };
-        else finish();
+        list.scrollLeft = start + distance * ease(progress);
+        if (progress < 1) {
+          animationRef.current = { frame: requestAnimationFrame(tick), targetIndex: index };
+        } else {
+          animationRef.current = null;
+          list.style.scrollSnapType = "";
+          recenter();
+        }
       };
       animationRef.current = { frame: requestAnimationFrame(tick), targetIndex: index };
     },
-    [measureStops, recenter],
+    [measureStops, recenter, stopAnimation],
   );
 
   /** Mută rândul cu un card. Dacă o animație e în curs, pornește de la cardul spre care merge ea. */
@@ -175,61 +182,48 @@ export function Carousel({ children, labels, label, leading, loop = false, listC
     };
   }, [measureStops, nearest, loop]);
 
-  // Loop: pornește de la primul card din copia din mijloc (înainte de primul cadru desenat), apoi,
-  // după fiecare glisare nativă (pe mobil), revine în copia din mijloc, lipit de un card.
+  // Loop: pornește de la primul card din copia din mijloc (înainte de primul cadru desenat).
   useLayoutEffect(() => {
     const list = listRef.current;
-    if (!list || !loop) return;
+    if (!loop || !list) return;
     const items = itemPositions();
     list.scrollLeft = items[items.length / 3] ?? 0;
+  }, [loop, itemPositions]);
 
-    let timer = 0;
-    const settle = () => {
-      window.clearTimeout(timer);
-      timer = window.setTimeout(() => {
-        if (animationRef.current) return;
-        recenter();
-        const positions = measureStops();
-        const position = positions[nearest(positions)];
-        if (Math.abs(position - list.scrollLeft) > 2) list.scrollLeft = position;
-      }, 150);
-    };
-    list.addEventListener("scroll", settle, { passive: true });
-    return () => {
-      window.clearTimeout(timer);
-      list.removeEventListener("scroll", settle);
-    };
-  }, [loop, recenter, itemPositions, measureStops, nearest]);
-
-  // Scroll orizontal pe trackpad: un gest = un card, cu aceeași animație ca săgețile.
-  // Scroll-ul vertical trece mai departe la pagină.
+  // Derulare nativă (trackpad, deget): când scroll-ul s-a oprit de tot (inclusiv snap-ul),
+  // rândul revine în copia din mijloc. Orice atingere oprește animația săgeților, ca să nu se certe.
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;
 
-    let accumulated = 0;
-    let locked = false;
-    let lastEvent = 0;
-    const onWheel = (event: WheelEvent) => {
-      if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
-      event.preventDefault();
-      const now = performance.now();
-      // O pauză între evenimente = gestul (inclusiv inerția) s-a terminat.
-      if (now - lastEvent > 220) {
-        locked = false;
-        accumulated = 0;
-      }
-      lastEvent = now;
-      if (locked) return;
-      accumulated += event.deltaX;
-      if (Math.abs(accumulated) > 24) {
-        step(accumulated > 0 ? 1 : -1);
-        locked = true;
-      }
+    let timer = 0;
+    const settled = () => {
+      if (!animationRef.current) recenter();
     };
-    list.addEventListener("wheel", onWheel, { passive: false });
-    return () => list.removeEventListener("wheel", onWheel);
-  }, [step]);
+    // „scrollend" nu apare în toate browserele (și nici la orice fel de scroll), așa că se folosește
+    // și o pauză de 200 ms fără scroll. Oricare vine prima; revenirea e fără efect dacă e deja în mijloc.
+    const onScroll = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(settled, 200);
+    };
+    const takeOver = () => stopAnimation();
+
+    if (loop) {
+      list.addEventListener("scrollend", settled);
+      list.addEventListener("scroll", onScroll, { passive: true });
+    }
+    list.addEventListener("wheel", takeOver, { passive: true });
+    list.addEventListener("pointerdown", takeOver, { passive: true });
+    list.addEventListener("touchstart", takeOver, { passive: true });
+    return () => {
+      window.clearTimeout(timer);
+      list.removeEventListener("scrollend", settled);
+      list.removeEventListener("scroll", onScroll);
+      list.removeEventListener("wheel", takeOver);
+      list.removeEventListener("pointerdown", takeOver);
+      list.removeEventListener("touchstart", takeOver);
+    };
+  }, [loop, recenter, stopAnimation]);
 
   const list = (
     <ul
