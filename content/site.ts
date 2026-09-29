@@ -199,6 +199,7 @@ export type Project = {
   title: string;
   category: string;
   description: string;
+  /** Linkul spre site (butonul rotund ↗). Gol = proiect fără site public, fără buton. */
   url: string;
   image: ImageRef;
   /** Cardurile din fereastra de detalii (se deschide la click pe proiect). Scurte: 3–4 carduri, câte o frază. */
@@ -230,13 +231,18 @@ export const projects = {
       ],
     },
     {
-      placeholder: true,
-      title: "[TITLU PROIECT 2]",
-      category: "Chatbot WhatsApp",
-      description: "[DESCRIERE SCURTĂ]",
-      url: "[URL PROIECT]",
-      image: null,
-      details: projectDetailsPlaceholder,
+      title: "AT Transport",
+      category: "Aplicație internă",
+      description: "Aplicație pentru flota de mașini: șoferii raportează zilnic, iar administratorul vede totul într-un singur loc.",
+      /** Aplicație internă, fără site public: gol = fără butonul spre site. */
+      url: "",
+      image: { src: "/proiecte/at-transport.webp", alt: "Panoul de administrator al aplicației AT Transport pe un telefon" },
+      details: [
+        { title: "Clientul", text: "Firmă de transport cu o flotă de mașini." },
+        { title: "Aplicația", text: "Șoferii trimit raportul zilnic din telefon, în câteva secunde." },
+        { title: "Alerte", text: "Semnalează reviziile care se apropie și mașinile care nu au mai raportat." },
+        { title: "Rezultat", text: "[REZULTAT]" },
+      ],
     },
     {
       placeholder: true,

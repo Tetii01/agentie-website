@@ -82,12 +82,15 @@ function ProjectCard({ project, id }: { project: Project; id: string }) {
         </div>
         <div className="flex items-end justify-between gap-4 md:gap-6">
           <p className="max-w-xs text-sm text-pretty text-foreground/85 md:text-base">{project.description}</p>
-          <VisitLink
-            url={project.url}
-            label={`${ui.visitSite} ${project.title}`}
-            newTabLabel={ui.externalLink}
-            className="relative z-20 shrink-0"
-          />
+          {/* Fără link (ex. o aplicație internă): fără buton. Placeholder-ul „[URL …]" apare estompat. */}
+          {project.url && (
+            <VisitLink
+              url={project.url}
+              label={`${ui.visitSite} ${project.title}`}
+              newTabLabel={ui.externalLink}
+              className="relative z-20 shrink-0"
+            />
+          )}
         </div>
       </div>
 
