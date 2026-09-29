@@ -10,6 +10,7 @@ import * as z from "zod/mini";
 export type LeadMessages = {
   companyRequired: string;
   interestsRequired: string;
+  ideaRequired: string;
   nameRequired: string;
   emailRequired: string;
   emailInvalid: string;
@@ -24,6 +25,8 @@ export type LeadValues = {
   company: string;
   website: string;
   interests: string[];
+  /** Ideea clientului: obligatorie doar când e bifată opțiunea „propune-ne tu ceva". */
+  idea: string;
   name: string;
   email: string;
   /** Fără prefixul +40, care e afișat fix lângă câmp. */
@@ -35,7 +38,7 @@ export type LeadValues = {
 export type LeadField = keyof LeadValues;
 export type LeadErrors = Partial<Record<LeadField, string>>;
 
-export const STEP1_FIELDS: LeadField[] = ["company", "website", "interests"];
+export const STEP1_FIELDS: LeadField[] = ["company", "website", "interests", "idea"];
 
 /** Timpul minim (de la încărcarea paginii) sub care o trimitere e considerată spam. */
 export const MIN_FILL_MS = 3000;
@@ -50,18 +53,31 @@ export function normalizePhone(value: string) {
   return digits;
 }
 
-export function createLeadSchema(m: LeadMessages, interestOptions: readonly string[]) {
+/**
+ * @param interestOptions opțiunile permise la „Ce te interesează?"
+ * @param ideaOption opțiunea care cere descrierea ideii (câmpul `idea` devine obligatoriu)
+ */
+export function createLeadSchema(m: LeadMessages, interestOptions: readonly string[], ideaOption: string) {
   const text = (max: number, required?: string) =>
     z.string().check(z.trim(), ...(required ? [z.minLength(1, required)] : []), z.maxLength(max, m.tooLong));
 
-  const step1 = z.object({
-    company: text(120, m.companyRequired),
-    website: text(200),
-    interests: z.array(z.string()).check(
-      z.refine((list) => list.length > 0, m.interestsRequired),
-      z.refine((list) => list.every((item) => interestOptions.includes(item)), m.interestsRequired),
-    ),
-  });
+  // Regula pe mai multe câmpuri: pusă și pe pasul 1, și pe schema completă (spread-ul `.shape` n-o păstrează).
+  const ideaCheck = z.refine<{ interests: string[]; idea: string }>(
+    (lead) => !lead.interests.includes(ideaOption) || lead.idea.trim() !== "",
+    { error: m.ideaRequired, path: ["idea"] },
+  );
+
+  const step1 = z
+    .object({
+      company: text(120, m.companyRequired),
+      website: text(200),
+      interests: z.array(z.string()).check(
+        z.refine((list) => list.length > 0, m.interestsRequired),
+        z.refine((list) => list.every((item) => interestOptions.includes(item)), m.interestsRequired),
+      ),
+      idea: text(2000),
+    })
+    .check(ideaCheck);
 
   const step2 = z.object({
     name: text(120, m.nameRequired),
@@ -75,7 +91,7 @@ export function createLeadSchema(m: LeadMessages, interestOptions: readonly stri
     consent: z.boolean().check(z.refine((accepted) => accepted, m.consentRequired)),
   });
 
-  return { step1, step2, full: z.object({ ...step1.shape, ...step2.shape }) };
+  return { step1, step2, full: z.object({ ...step1.shape, ...step2.shape }).check(ideaCheck) };
 }
 
 export type Lead = z.output<ReturnType<typeof createLeadSchema>["full"]>;

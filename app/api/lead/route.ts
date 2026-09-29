@@ -20,7 +20,11 @@ type LeadResponse = { ok: true } | { ok: false; error: "bad_request" | "validati
 
 const MAX_BODY_BYTES = 20_000;
 const isDev = process.env.NODE_ENV === "development";
-const schema = createLeadSchema(ui.form.errors, offer.form.step1.interests.options).full;
+const schema = createLeadSchema(
+  ui.form.errors,
+  offer.form.step1.interests.options,
+  offer.form.step1.idea.option,
+).full;
 
 const reply = (body: LeadResponse, status = 200) => Response.json(body, { status });
 
@@ -106,6 +110,7 @@ function buildEmail(lead: Lead, submittedAt: Date) {
     [f.step1.company, lead.company],
     [f.step1.website, lead.website || t.empty],
     [f.step1.interests.label, lead.interests.join(", ")],
+    [f.step1.idea.label, lead.idea || t.empty],
     [f.step2.name, lead.name],
     [f.step2.email, lead.email],
     [f.step2.phone.label, formatPhone(lead.phone)],

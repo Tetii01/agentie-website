@@ -113,6 +113,7 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 
 - Interfața: `components/sections/LeadForm.tsx`. Textele sunt în `content/site.ts` (`offer.form`, plus `ui.form` pentru erori).
 - Validarea: `lib/lead.ts`, aceeași schemă în browser și pe server.
+- „Propune-ne tu ceva": opțiunea din `offer.form.step1.idea.option` deschide câmpul `idea` (ideea clientului), obligatoriu doar atunci. Ideea apare în email și în JSON-ul trimis la webhook.
 - Trimiterea: `app/api/lead/route.ts`. Trimite email prin Resend, cu Reply-To pe adresa clientului, și, opțional, un POST JSON către un webhook (n8n, CRM).
 - Anti-spam: un câmp capcană invizibil, plus respingerea trimiterilor făcute în mai puțin de 3 secunde de la încărcarea paginii.
 

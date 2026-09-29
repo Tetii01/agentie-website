@@ -382,8 +382,15 @@ export const offer = {
           "Conținut pentru social media",
           "Sistem cu hardware",
           "Design, video sau producție",
+          "Propune-ne tu ceva",
           "Nu știu încă",
         ],
+      },
+      /** Când e bifată opțiunea `option` (una din lista de mai sus), apare câmpul pentru ideea clientului. */
+      idea: {
+        option: "Propune-ne tu ceva",
+        label: "Descrie-ne ideea ta",
+        placeholder: "Ce ai vrea să construim? Câteva rânduri sunt de ajuns.",
       },
       next: "Continuă",
     },
@@ -799,6 +806,7 @@ export const ui = {
     errors: {
       companyRequired: "Completează numele firmei.",
       interestsRequired: "Alege cel puțin o opțiune.",
+      ideaRequired: "Scrie-ne pe scurt ideea ta.",
       nameRequired: "Completează numele.",
       emailRequired: "Completează adresa de email.",
       emailInvalid: "Adresa de email nu pare corectă.",

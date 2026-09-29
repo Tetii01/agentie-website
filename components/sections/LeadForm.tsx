@@ -24,12 +24,13 @@ export type LeadFormTexts = {
 };
 
 type Status = "idle" | "submitting" | "success" | "error";
-type TextField = "company" | "website" | "name" | "email" | "phone" | "message";
+type TextField = "company" | "website" | "idea" | "name" | "email" | "phone" | "message";
 
 const EMPTY: LeadValues = {
   company: "",
   website: "",
   interests: [],
+  idea: "",
   name: "",
   email: "",
   phone: "",
@@ -37,7 +38,7 @@ const EMPTY: LeadValues = {
   consent: false,
 };
 
-const FIELD_ORDER: LeadField[] = ["company", "website", "interests", "name", "email", "phone", "message", "consent"];
+const FIELD_ORDER: LeadField[] = ["company", "website", "interests", "idea", "name", "email", "phone", "message", "consent"];
 
 /** Elementul care primește focus când câmpul are eroare. */
 const focusId = (field: LeadField) => (field === "interests" ? "lead-interests-0" : `lead-${field}`);
@@ -49,9 +50,10 @@ const focusId = (field: LeadField) => (field === "interests" ? "lead-interests-0
  */
 export function LeadForm({ texts }: { texts: LeadFormTexts }) {
   const { form, ui: t } = texts;
+  const ideaOption = form.step1.idea.option;
   const schemas = useMemo(
-    () => createLeadSchema(t.errors, form.step1.interests.options),
-    [t.errors, form.step1.interests.options],
+    () => createLeadSchema(t.errors, form.step1.interests.options, ideaOption),
+    [t.errors, form.step1.interests.options, ideaOption],
   );
 
   const [step, setStep] = useState<1 | 2>(1);
@@ -90,7 +92,10 @@ export function LeadForm({ texts }: { texts: LeadFormTexts }) {
 
   function toggleInterest(option: string) {
     const { interests } = values;
-    update("interests", interests.includes(option) ? interests.filter((item) => item !== option) : [...interests, option]);
+    const removing = interests.includes(option);
+    update("interests", removing ? interests.filter((item) => item !== option) : [...interests, option]);
+    // Câmpul pentru idee dispare odată cu opțiunea, deci și eroarea lui.
+    if (removing && option === ideaOption) setErrors((current) => ({ ...current, idea: undefined }));
   }
 
   function showErrors(next: LeadErrors) {
@@ -242,6 +247,24 @@ export function LeadForm({ texts }: { texts: LeadFormTexts }) {
                 <FieldError id="lead-interests-error" error={errors.interests} />
               </div>
             </fieldset>
+
+            {/* Apare doar când clientul alege „propune-ne tu ceva". */}
+            {values.interests.includes(ideaOption) && (
+              <Field
+                id="lead-idea"
+                label={form.step1.idea.label}
+                error={errors.idea}
+                className="animate-step-next motion-reduce:animate-none"
+              >
+                <textarea
+                  {...textProps("idea")}
+                  rows={3}
+                  placeholder={form.step1.idea.placeholder}
+                  data-lenis-prevent
+                  className={cn(controlClasses, "min-h-28 resize-y px-4 py-3 placeholder:text-muted/70")}
+                />
+              </Field>
+            )}
           </>
         ) : (
           <>
