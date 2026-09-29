@@ -383,7 +383,6 @@ export const offer = {
           "Sistem cu hardware",
           "Design, video sau producție",
           "Propune-ne tu ceva",
-          "Nu știu încă",
         ],
       },
       /** Când e bifată opțiunea `option` (una din lista de mai sus), apare câmpul pentru ideea clientului. */
