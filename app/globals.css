@@ -40,12 +40,12 @@
   --radius-field: 16px; /* câmpurile din formular */
 
   /* Tipografie. Titlurile: bold, litere strânse. Textul: 16–19px, rânduri aerisite. */
-  /* Titlul din hero crește cu ecranul, cât încape cel mai lung rând („AI-ul răspunde instant."),
+  /* Titlul din hero crește cu ecranul, cât încape cel mai lung rând („AI-ul citește emailurile."),
      ca pe orice ecran să stea pe două rânduri, ca pe desktop. */
-  --text-h1: clamp(1.5rem, calc((100vw - 4.25rem) / 10.4), 2.75rem); /* mobil: ~30px la 375px */
+  --text-h1: clamp(1.5rem, calc((100vw - 4.25rem) / 10.6), 2.75rem); /* mobil: ~29px la 375px */
   --text-h1--line-height: 1.02;
   --text-h1--letter-spacing: -0.05em;
-  --text-h1-lg: clamp(3rem, calc((100vw - 11.25rem) / 10.4), 6rem); /* tabletă → desktop: până la 96px */
+  --text-h1-lg: clamp(3rem, calc((100vw - 11.25rem) / 10.6), 6rem); /* tabletă → desktop: până la 96px */
   --text-h1-lg--line-height: 1;
   --text-h1-lg--letter-spacing: -0.05em;
   --text-h2: 3rem; /* 48px, titlurile de secțiune / din carduri mari */

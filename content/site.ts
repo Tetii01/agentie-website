@@ -15,7 +15,7 @@ import {
   Clapperboard,
   Eye,
   FolderCheck,
-  MessageCircleWarning,
+  PhoneMissed,
   Repeat,
   Rocket,
   Shuffle,
@@ -85,7 +85,7 @@ export const hero = {
   /** Rândul 2 pe ecran: „AI-ul" + o acțiune care se schimbă singură (în accent). */
   subject: "AI-ul",
   /** Ultima rămâne pe ecran pentru cine are animațiile oprite. Scurte: încap pe un rând pe telefon. */
-  actions: ["răspunde instant.", "aduce clienți.", "scrie conținutul.", "face rapoartele.", "face restul."],
+  actions: ["preia apelurile.", "citește emailurile.", "scrie conținutul.", "aduce clienți.", "face restul."],
   primaryCta: { label: "Cere analiza gratuită", href: toSection(anchors.offer) } satisfies LinkItem,
 };
 
@@ -93,7 +93,7 @@ export const hero = {
 export const seo = {
   title: `${brand.name} · ${hero.title} ${hero.highlight}`,
   description:
-    "Implementăm chatboți, automatizări și conținut generat cu AI, construite pe procesele firmei tale. Tu te ocupi de clienți, restul merge singur.",
+    "Agenție AI din Sibiu. Construim agenți AI, aplicații la comandă, automatizări și sisteme cu hardware, plus design și video. Începem cu o analiză gratuită.",
 };
 
 /* ───────────────────────── 5.3 Logo loop ───────────────────────── */
@@ -127,27 +127,27 @@ export const problems = {
   title: "Sună cunoscut?",
   items: [
     {
-      icon: MessageCircleWarning,
-      title: "Răspunzi prea târziu la mesaje",
-      text: "Un client care îți scrie seara și primește răspuns a doua zi a cumpărat deja de la altcineva.",
+      icon: PhoneMissed,
+      title: "Clienți care nu primesc răspuns",
+      text: "Un apel ratat sau un mesaj citit a doua zi înseamnă, de multe ori, un client care a ales pe altcineva.",
     },
     {
       icon: Clapperboard,
-      title: "Nu ai timp de conținut",
-      text: "Știi că trebuie să postezi constant, dar între clienți și operațional, social media rămâne mereu pe mâine.",
+      title: "Conținut amânat mereu",
+      text: "Știi că trebuie să postezi constant, dar între clienți și operațional nu mai rămâne timp de filmat și editat.",
     },
     {
       icon: Repeat,
-      title: "Pierzi ore pe aceleași task-uri",
-      text: "Copiezi date, trimiți aceleași mesaje, faci aceleași rapoarte. Muncă repetitivă care ar putea merge singură.",
+      title: "Aceleași task-uri, zi de zi",
+      text: "Emailuri, tabele, rapoarte, aceleași mesaje trimise de zeci de ori. Muncă ce poate merge singură.",
     },
     {
       icon: Shuffle,
-      title: "Informațiile sunt peste tot",
+      title: "Informații împrăștiate",
       text: "Clienți în WhatsApp, oferte în Excel, notițe pe hârtie. Nimic nu comunică și mereu scapă ceva.",
     },
   ] satisfies { icon: LucideIcon; title: string; text: string }[],
-  closing: "Toate au rezolvare. Și nu înseamnă să mai angajezi un om.",
+  closing: "Toate au rezolvare. Și nu înseamnă să mai angajezi pe cineva.",
 };
 
 /* ───────────────────────── 5.5 Servicii ───────────────────────── */
@@ -156,37 +156,38 @@ export const services = {
   id: anchors.services,
   title: "Ce construim",
   subtitle:
-    "Fiecare firmă funcționează diferit. De aceea nu vindem pachete standard: pornim de la ce te blochează pe tine și construim exact ce-ți trebuie.",
+    "Pe scurt: orice. De la un asistent care îți preia apelurile până la aplicații complete și sisteme cu camere și senzori. Nu vindem pachete: pornim de la ce te încurcă pe tine.",
+  /** Primul serviciu e cardul lat (pe desktop), așa că are cea mai lungă descriere. */
   items: [
     {
-      title: "Lead-uri și conversații",
+      title: "Aplicații și sisteme la comandă",
       description:
-        "Chatbot pe site și pe WhatsApp care răspunde instant, zi și noapte, califică clienții și ți-i trimite gata de închis.",
-      tags: ["Chatbot site", "WhatsApp", "Captare lead-uri", "Programări"],
+        "Construite pe felul tău de lucru. De exemplu: o aplicație care îți editează filmările, îți propune idei de conținut cu scripturi și postează singură, sau un sistem care scade retururile unui magazin online.",
+      tags: ["Aplicații web și mobile", "CRM-uri", "Automatizări", "Website-uri"],
     },
     {
-      title: "Conținut pe pilot automat",
+      title: "Agenți AI",
       description:
-        "AI-ul analizează ce funcționează în nișa ta și îți trimite scripturi. Tu filmezi, noi edităm și postăm la orele potrivite.",
-      tags: ["Research", "Scripturi", "Editare video", "Postare automată"],
+        "Asistenți care nu iau pauză: răspund la telefon și pe chat, citesc și rezumă emailurile, califică clienții și îți trimit doar ce contează.",
+      tags: ["Agenți vocali", "Chat pe site și WhatsApp", "Emailuri", "Clienți calificați"],
     },
     {
-      title: "Aplicații și automatizări la comandă",
+      title: "Sisteme cu hardware",
       description:
-        "CRM-uri, aplicații interne și integrări între tool-urile pe care le folosești deja, construite în jurul felului tău de lucru.",
-      tags: ["CRM", "Aplicații interne", "Integrări", "Rapoarte"],
+        "Când nu e de ajuns un program, adăugăm și aparatura. De exemplu, camere pe terenurile de sport: jucătorii primesc meciul pe telefon, cu faze bune și statistici.",
+      tags: ["Camere și senzori", "Instalare", "Statistici", "Aplicație pe telefon"],
     },
     {
-      title: "Website-uri",
+      title: "Design, video și producție",
       description:
-        "Site-uri rapide și curate, gândite să transforme vizitatorii în clienți, cu AI integrat de la început.",
-      tags: ["Prezentare", "Landing page", "Chatbot integrat", "SEO"],
+        "Și partea creativă o facem noi: design grafic, editare video, direcție și producție creativă pentru firme, artiști și evenimente.",
+      tags: ["Design grafic", "Editare video", "Direcție creativă", "Evenimente"],
     },
   ] satisfies { title: string; description: string; tags: string[] }[],
-  /** Cardul lat de sub servicii. */
+  /** „Ai altă idee?", în cardul cu titlul secțiunii. */
   custom: {
-    title: "Ai altă idee?",
-    text: "Dacă se poate automatiza, o construim.",
+    title: "Ideea ta nu e aici?",
+    text: "Spune-ne ce ai în minte. Dacă se poate gândi, se poate construi.",
     cta: { label: "Hai să vorbim", href: toSection(anchors.offer) } satisfies LinkItem,
   },
 };
@@ -338,16 +339,16 @@ export type Stat = {
 
 export const stats = {
   items: [
-    { placeholder: true, icon: FolderCheck, label: "[ETICHETĂ]", value: "[X]+", text: "Proiecte livrate" },
+    { placeholder: true, icon: FolderCheck, label: "Până acum", value: "[X]+", text: "Proiecte livrate" },
     {
       placeholder: true,
       icon: Eye,
-      label: "[ETICHETĂ]",
+      label: "Pe conținutul lucrat",
       value: "[X] mil.+",
-      text: "Vizualizări pe proiectele lucrate",
+      text: "Vizualizări",
     },
-    { placeholder: true, icon: Timer, label: "[ETICHETĂ]", value: "[X] ore", text: "Timp de răspuns" },
-    { placeholder: true, icon: Rocket, label: "[ETICHETĂ]", value: "[X] zile", text: "Până la prima implementare" },
+    { placeholder: true, icon: Timer, label: "Îți răspundem în", value: "[X] ore", text: "Timp de răspuns" },
+    { placeholder: true, icon: Rocket, label: "Primul sistem", value: "[X] zile", text: "De la analiză la lansare" },
   ] satisfies Stat[],
 };
 
@@ -359,13 +360,13 @@ export const offer = {
   /** Partea dintre ** ** apare în culoarea de accent. */
   title: "Analiză **gratuită**",
   subtitle:
-    "Află unde pierde firma ta timp și clienți. Într-o discuție de 20 de minute îți arătăm concret ce se poate automatiza și ce impact ar avea.",
+    "Ne povestești cum lucrezi, iar în 20 de minute îți arătăm ce se poate automatiza sau construi pentru firma ta și ce ar schimba. Explicat simplu, fără jargon.",
   benefits: [
     "Pe firma ta, nu teorie generală",
-    "Vezi exact unde pierzi timp și clienți",
-    "Primești idei concrete, gata de aplicat",
-    "Tu alegi pe ce ne concentrăm",
-    "Fără obligații",
+    "Vezi clar unde pierzi timp și clienți",
+    "Idei concrete, gata de aplicat",
+    "Fără termeni tehnici",
+    "Fără nicio obligație",
   ],
   form: {
     optional: "(opțional)",
@@ -376,10 +377,11 @@ export const offer = {
       interests: {
         label: "Ce te interesează?",
         options: [
-          "Lead-uri și conversații",
-          "Conținut automat",
-          "Aplicație sau automatizare la comandă",
-          "Website",
+          "Agent AI (telefon, chat, email)",
+          "Aplicație sau automatizare",
+          "Conținut pentru social media",
+          "Sistem cu hardware",
+          "Design, video sau producție",
           "Nu știu încă",
         ],
       },
@@ -432,7 +434,7 @@ export const contact = {
 /* ───────────────────────── 5.10 CTA final ───────────────────────── */
 
 export const finalCta = {
-  title: "Ai un proiect?",
+  title: "Ai o idee în minte?",
   primary: { label: "Hai să vorbim", href: toSection(anchors.offer) } satisfies LinkItem,
   whatsappLabel: "WhatsApp",
 };
@@ -457,21 +459,21 @@ export const about = {
       placeholder: true,
       name: "Teti",
       role: "Tehnic și implementare",
-      highlights: ["**Implementare** AI", "**Automatizări**"],
+      highlights: ["**Agenți** AI", "**Aplicații** la comandă"],
       photo: null,
     },
     {
       placeholder: true,
       name: "David",
-      role: "Design și brand",
-      highlights: ["**Brand** Designer", "**UI/UX** Designer"],
+      role: "Design și direcție creativă",
+      highlights: ["**Design** grafic", "**Video** și producție"],
       photo: null,
     },
   ] satisfies Founder[],
   text: {
     placeholder: true,
     value:
-      "Construim soluții AI care chiar sunt folosite. Credem că **tehnologia bună** începe cu **înțelegerea afacerii**, comunicare deschisă și rezultate pe care le vezi în prima lună.",
+      "Suntem o echipă mică din Sibiu, cu un singur scop: sisteme care chiar sunt folosite. Credem că **tehnologia bună** începe cu **înțelegerea afacerii**. De aceea ascultăm întâi, explicăm simplu și construim doar ce te ajută.",
   },
 };
 
@@ -500,8 +502,8 @@ export const footer = {
 /* ───────────────────────── 5.13 CTA plutitor ───────────────────────── */
 
 export const floatingCta = {
-  line1: "Află unde pierzi timp și clienți.",
-  line2: "Primești o analiză gratuită.",
+  line1: "Nu știi de unde să începi?",
+  line2: "Cere o analiză gratuită.",
   href: toSection(anchors.offer),
 };
 
