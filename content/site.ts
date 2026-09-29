@@ -245,13 +245,20 @@ export const projects = {
       ],
     },
     {
-      placeholder: true,
-      title: "[TITLU PROIECT 3]",
-      category: "Aplicație internă",
-      description: "[DESCRIERE SCURTĂ]",
-      url: "[URL PROIECT]",
-      image: null,
-      details: projectDetailsPlaceholder,
+      title: "Swae Lee",
+      category: "Design grafic",
+      description: "Design grafic pentru turneul european al lui Swae Lee și pentru rețelele lui de socializare.",
+      url: "",
+      image: {
+        src: "/proiecte/swae-lee.webp",
+        alt: "Ecuson de acces și brățări VIP pentru turneul lui Swae Lee, lângă un laptop cu canalul lui de YouTube",
+      },
+      details: [
+        { title: "Clientul", text: "Swae Lee, artist internațional." },
+        { title: "Turneul", text: "Materialele pentru Same Difference Tour, inclusiv ecusoanele de acces și brățările VIP." },
+        { title: "Social media", text: "Grafică pentru rețelele de socializare ale artistului." },
+        { title: "Rezultat", text: "[REZULTAT]" },
+      ],
     },
     {
       placeholder: true,
