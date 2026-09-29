@@ -6,6 +6,8 @@ export const aspects = {
   video: "aspect-video",
   landscape: "aspect-[4/3]",
   portrait: "aspect-[3/4]",
+  /** Bandă lată (ex. imaginea din fereastra de detalii a unui proiect). */
+  wide: "aspect-[2/1]",
   /** Umple tot containerul părinte (care are dimensiunile lui, ex. cardurile de proiect). */
   fill: "size-full",
 };

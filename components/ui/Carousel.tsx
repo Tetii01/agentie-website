@@ -27,23 +27,39 @@ type CarouselProps = {
 };
 
 /**
- * Rând derulabil pe orizontală, pe pagini: o „pagină" = lățimea vizibilă a rândului.
- * Pe mobil se glisează nativ (scroll-snap); săgețile și bulinele mută rândul o pagină.
+ * Rând derulabil pe orizontală, card cu card: săgețile mută rândul exact un card, iar fiecare
+ * bulină e o poziție (un card aliniat la stânga; ultimele carduri se adună în ultima poziție,
+ * când rândul ajunge la capăt). Pe mobil se glisează nativ (scroll-snap pe fiecare card).
  * `data-lenis-prevent-horizontal`: gesturile orizontale rămân native, scroll-ul paginii rămâne lin.
  * Stilul controalelor: control-border + bg-control (app/globals.css), bulinele: bg-dot / bg-dot-active.
  */
 export function Carousel({ children, labels, label, leading, listClassName, className }: CarouselProps) {
   const listRef = useRef<HTMLUListElement>(null);
-  const [pages, setPages] = useState(1);
+  const [stops, setStops] = useState<number[]>([0]);
   const [active, setActive] = useState(0);
 
-  const metrics = useCallback(() => {
+  /** Pozițiile de scroll la care se poate opri rândul: începutul fiecărui card, până la capătul rândului. */
+  const measureStops = useCallback(() => {
     const list = listRef.current;
-    if (!list) return null;
-    const gap = parseFloat(getComputedStyle(list).columnGap) || 0;
-    const step = list.clientWidth + gap;
+    if (!list) return [0];
     const maxScroll = list.scrollWidth - list.clientWidth;
-    return { list, step, maxScroll, gap };
+    const origin = list.getBoundingClientRect().left - list.scrollLeft;
+    const result: number[] = [];
+    for (const item of Array.from(list.children)) {
+      const position = Math.min(Math.round(item.getBoundingClientRect().left - origin), maxScroll);
+      if (result.length === 0 || position - result[result.length - 1] > 2) result.push(Math.max(position, 0));
+    }
+    return result.length ? result : [0];
+  }, []);
+
+  /** Indexul poziției celei mai apropiate de scroll-ul curent. */
+  const nearest = useCallback((positions: number[]) => {
+    const left = listRef.current?.scrollLeft ?? 0;
+    let best = 0;
+    positions.forEach((position, index) => {
+      if (Math.abs(position - left) < Math.abs(positions[best] - left)) best = index;
+    });
+    return best;
   }, []);
 
   useEffect(() => {
@@ -54,12 +70,9 @@ export function Carousel({ children, labels, label, leading, listClassName, clas
     const update = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        const m = metrics();
-        if (!m) return;
-        const total = Math.max(1, Math.ceil((m.list.scrollWidth + m.gap) / m.step - 0.01));
-        const current = m.list.scrollLeft >= m.maxScroll - 2 ? total - 1 : Math.round(m.list.scrollLeft / m.step);
-        setPages(total);
-        setActive(Math.min(current, total - 1));
+        const positions = measureStops();
+        setStops(positions);
+        setActive(nearest(positions));
       });
     };
 
@@ -72,23 +85,22 @@ export function Carousel({ children, labels, label, leading, listClassName, clas
       list.removeEventListener("scroll", update);
       resize.disconnect();
     };
-  }, [metrics]);
+  }, [measureStops, nearest]);
 
-  /** Pagina curentă, citită direct din poziția rândului (nu din state, care se actualizează un cadru mai târziu). */
-  const currentPage = () => {
-    const m = metrics();
-    if (!m) return 0;
-    return m.list.scrollLeft >= m.maxScroll - 2 ? pages - 1 : Math.round(m.list.scrollLeft / m.step);
-  };
-
-  const goTo = (page: number) => {
-    const m = metrics();
-    if (!m) return;
+  const goTo = (index: number) => {
+    const list = listRef.current;
+    if (!list) return;
+    const positions = measureStops();
+    const target = positions[Math.min(Math.max(index, 0), positions.length - 1)];
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const target = Math.min(Math.max(page, 0) * m.step, m.maxScroll);
     // scrollBy, nu scrollTo: în Chrome, scrollTo lin cu scroll-snap uneori rămâne pe loc.
-    m.list.scrollBy({ left: target - m.list.scrollLeft, behavior: reduce ? "auto" : "smooth" });
+    list.scrollBy({ left: target - list.scrollLeft, behavior: reduce ? "auto" : "smooth" });
   };
+
+  /** Mută rândul cu un card față de poziția curentă (citită din scroll, nu din state). */
+  const step = (direction: 1 | -1) => goTo(nearest(measureStops()) + direction);
+
+  const pages = stops.length;
 
   const list = (
     <ul
@@ -135,10 +147,10 @@ export function Carousel({ children, labels, label, leading, listClassName, clas
           </div>
         </div>
         <div className="flex items-center gap-2 md:gap-3">
-          <ArrowButton label={labels.previous} disabled={active === 0} onClick={() => goTo(currentPage() - 1)}>
+          <ArrowButton label={labels.previous} disabled={active === 0} onClick={() => step(-1)}>
             <ChevronLeft aria-hidden className="size-6 scale-120" strokeWidth={1.75} />
           </ArrowButton>
-          <ArrowButton label={labels.next} disabled={active >= pages - 1} onClick={() => goTo(currentPage() + 1)}>
+          <ArrowButton label={labels.next} disabled={active >= pages - 1} onClick={() => step(1)}>
             <ChevronRight aria-hidden className="size-6 scale-120" strokeWidth={1.75} />
           </ArrowButton>
         </div>

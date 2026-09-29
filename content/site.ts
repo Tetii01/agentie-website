@@ -13,13 +13,18 @@
 import type { LucideIcon } from "lucide-react";
 import {
   Clapperboard,
+  Database,
   Eye,
   FolderCheck,
+  Globe,
+  MessageCircle,
   MessageCircleWarning,
+  Plug,
   Repeat,
   Rocket,
   Shuffle,
   Timer,
+  Workflow,
 } from "lucide-react";
 import type { SimpleIcon } from "simple-icons";
 import {
@@ -78,8 +83,6 @@ export const nav = {
 /* ───────────────────────── 5.2 Hero ───────────────────────── */
 
 export const hero = {
-  /** Eticheta mică de deasupra titlului, cu un punct care pulsează. */
-  eyebrow: "Implementare AI pentru firme",
   /** Primul rând al titlului. */
   title: "Tu conduci firma.",
   /** Titlul complet din rândul 2: îl citesc cititoarele de ecran, Google și imaginea de share. */
@@ -125,6 +128,8 @@ export const tools = {
 /* ───────────────────────── 5.4 Probleme ───────────────────────── */
 
 export const problems = {
+  /** Eticheta mică de deasupra secțiunii. */
+  label: "Provocări",
   id: anchors.problems,
   title: "Sună cunoscut?",
   items: [
@@ -154,14 +159,23 @@ export const problems = {
 
 /* ───────────────────────── Banda dintre probleme și servicii ───────────────────────── */
 
-/** Cuvinte scurte cu ce construim, pe banda care trece între „Sună cunoscut?" și „Ce construim". */
+/** Ce construim, pe banda discretă care trece între „Sună cunoscut?" și „Ce construim" (iconiță + cuvânt). */
 export const band = {
-  items: ["Chatboți", "Automatizări", "Conținut", "CRM-uri", "Integrări", "Website-uri"],
+  items: [
+    { label: "Chatboți", icon: MessageCircle },
+    { label: "Automatizări", icon: Workflow },
+    { label: "Conținut", icon: Clapperboard },
+    { label: "CRM-uri", icon: Database },
+    { label: "Integrări", icon: Plug },
+    { label: "Website-uri", icon: Globe },
+  ] satisfies { label: string; icon: LucideIcon }[],
 };
 
 /* ───────────────────────── 5.5 Servicii ───────────────────────── */
 
 export const services = {
+  /** Eticheta mică de deasupra secțiunii. */
+  label: "Servicii",
   id: anchors.services,
   title: "Ce construim",
   subtitle:
@@ -209,7 +223,15 @@ export type Project = {
   description: string;
   url: string;
   image: ImageRef;
+  /** Cardurile din fereastra de detalii (se deschide la click pe proiect). Scurte: 3–4 carduri, câte o frază. */
+  details: { title: string; text: string }[];
 };
+
+const projectDetailsPlaceholder = [
+  { title: "[TITLU]", text: "[TEXT]" },
+  { title: "[TITLU]", text: "[TEXT]" },
+  { title: "[TITLU]", text: "[TEXT]" },
+];
 
 export const projects = {
   id: anchors.projects,
@@ -222,6 +244,12 @@ export const projects = {
       description: "Site nou pentru cafenea, cu chatboți AI integrați care răspund clienților pe loc.",
       url: "https://xsweetsandcoffee.ro",
       image: { src: "/proiecte/x-sweets-and-coffee.jpg", alt: "Site-ul X Sweets and Coffee pe un laptop" },
+      details: [
+        { title: "Clientul", text: "Cafenea și cofetărie din Păltiniș, Sibiu." },
+        { title: "Website", text: "Site de prezentare cu meniu, galerie și rezervări." },
+        { title: "Chatboți AI", text: "Chatboți integrați care răspund pe loc la întrebările clienților." },
+        { title: "Rezultat", text: "[REZULTAT]" },
+      ],
     },
     {
       placeholder: true,
@@ -230,6 +258,7 @@ export const projects = {
       description: "[DESCRIERE SCURTĂ]",
       url: "[URL PROIECT]",
       image: null,
+      details: projectDetailsPlaceholder,
     },
     {
       placeholder: true,
@@ -238,6 +267,7 @@ export const projects = {
       description: "[DESCRIERE SCURTĂ]",
       url: "[URL PROIECT]",
       image: null,
+      details: projectDetailsPlaceholder,
     },
     {
       placeholder: true,
@@ -246,6 +276,7 @@ export const projects = {
       description: "[DESCRIERE SCURTĂ]",
       url: "[URL PROIECT]",
       image: null,
+      details: projectDetailsPlaceholder,
     },
     {
       placeholder: true,
@@ -254,6 +285,7 @@ export const projects = {
       description: "[DESCRIERE SCURTĂ]",
       url: "[URL PROIECT]",
       image: null,
+      details: projectDetailsPlaceholder,
     },
     {
       placeholder: true,
@@ -262,6 +294,7 @@ export const projects = {
       description: "[DESCRIERE SCURTĂ]",
       url: "[URL PROIECT]",
       image: null,
+      details: projectDetailsPlaceholder,
     },
   ] satisfies Project[],
 };
@@ -345,6 +378,7 @@ export const stats = {
 
 export const offer = {
   id: anchors.offer,
+  /** Eticheta mică de deasupra secțiunii. */
   eyebrow: "Primul pas",
   /** Partea dintre ** ** apare în culoarea de accent. */
   title: "Analiză **gratuită**",
@@ -439,6 +473,8 @@ export type Founder = {
 };
 
 export const about = {
+  /** Eticheta mică de deasupra secțiunii. */
+  label: "Despre noi",
   id: anchors.about,
   title: "Cine suntem",
   photoPlaceholderLabel: "Poză fondator",
@@ -772,10 +808,13 @@ export const ui = {
   externalLink: "(se deschide într-un tab nou)",
   /** Butonul rotund cu săgeată de pe cardurile de proiect; urmat de numele proiectului. */
   visitSite: "Vezi site-ul",
+  /** Click pe un card de proiect: „Detalii despre proiect: {nume}". */
+  projectDetails: "Detalii despre proiect",
+  close: "Închide",
   carousel: {
     previous: "Înapoi",
     next: "Înainte",
-    goTo: "Mergi la pagina {page}",
+    goTo: "Mergi la cardul {page}",
   },
   form: {
     back: "Înapoi",

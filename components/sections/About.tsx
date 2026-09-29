@@ -17,7 +17,7 @@ export function About() {
   const [first, second] = about.founders;
 
   return (
-    <Section id={about.id} aria-labelledby="despre-titlu">
+    <Section id={about.id} aria-labelledby="despre-titlu" label={about.label}>
       <ul className="grid gap-grid-mobile md:grid-cols-2 md:gap-grid lg:grid-cols-3 lg:grid-rows-[auto_auto]">
         <FadeIn as="li" className="md:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-start-1">
           <Card className="relative isolate h-full overflow-hidden lg:p-10">

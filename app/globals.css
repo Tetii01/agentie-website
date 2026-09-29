@@ -94,7 +94,15 @@
   --animate-marquee: marquee 45s linear infinite; /* viteza logo loop-ului */
   --animate-step-next: step-in-next 450ms var(--ease-smooth) both; /* formular: pasul următor */
   --animate-step-back: step-in-back 450ms var(--ease-smooth) both; /* formular: înapoi */
+  --animate-dialog-in: dialog-in 350ms var(--ease-smooth) both; /* fereastra de detalii a proiectelor */
   --animate-word-in: word-in 700ms var(--ease-smooth) both; /* hero: acțiunea nouă intră de jos */
+
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+    }
+  }
   --animate-word-out: word-out 500ms var(--ease-smooth) both; /* hero: acțiunea veche iese în sus */
 
   @keyframes word-in {
@@ -201,8 +209,8 @@
 /* ==========================================================================
    HERO (components/sections/Hero.tsx)
    Un card mare, curat: sus un cer întunecat cu o rețea fină de puncte, jos un
-   „orizont" (marginea unei planete) care se aprinde în accent. Textul stă aliniat
-   la stânga, deasupra orizontului.
+   „orizont" (marginea unei planete) care se aprinde în accent. Deasupra orizontului:
+   titlul și butonul în stânga, indexul acțiunilor în dreapta.
    ========================================================================== */
 
 @utility hero-frame {
@@ -236,21 +244,6 @@
     inset 0 14px 40px -10px color-mix(in oklab, var(--color-accent) 65%, transparent),
     0 -2px 14px 0 color-mix(in oklab, var(--color-accent) 70%, transparent),
     0 -40px 160px 20px color-mix(in oklab, var(--color-accent) 28%, transparent);
-}
-
-/* Punctul care pulsează din eticheta de deasupra titlului. */
-@utility pulse-dot {
-  box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-accent) 70%, transparent);
-  animation: pulse-dot 2s var(--ease-smooth) infinite;
-}
-
-@keyframes pulse-dot {
-  70% {
-    box-shadow: 0 0 0 8px transparent;
-  }
-  100% {
-    box-shadow: 0 0 0 0 transparent;
-  }
 }
 
 /* ==========================================================================

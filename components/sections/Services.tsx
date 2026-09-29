@@ -16,7 +16,7 @@ export function Services() {
   const { custom } = services;
 
   return (
-    <Section id={services.id} aria-labelledby="servicii-titlu">
+    <Section id={services.id} aria-labelledby="servicii-titlu" label={services.label}>
       <ul className="grid gap-grid-mobile md:grid-cols-2 md:gap-grid lg:grid-cols-3">
         <FadeIn as="li">
           <Card className="flex h-full flex-col justify-between gap-10 lg:p-10">

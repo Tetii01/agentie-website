@@ -38,11 +38,9 @@ export function Testimonials() {
             ))}
           </Carousel>
 
-          <div className="flex flex-col items-center gap-4 pt-3 pb-4 md:pt-4 md:pb-5">
-            <p className="text-label text-muted">{tools.label}</p>
+          <div className="py-3 md:py-4">
             <LogoLoop
               label={tools.label}
-              className="w-full"
               items={tools.items.map((tool) => ({
                 key: tool.name,
                 node: (
