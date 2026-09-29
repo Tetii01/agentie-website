@@ -223,8 +223,8 @@ export const projects = {
       description: "Site nou pentru cafenea, cu chatboți AI integrați care răspund clienților pe loc.",
       url: "https://xsweetsandcoffee.ro",
       image: {
-        src: "/proiecte/x-sweets-and-coffee.webp",
-        alt: "Site-ul X Sweets and Coffee pe un laptop, lângă prăjituri și un cocktail",
+        src: "/proiecte/x-sweets-and-coffee-deserturi.webp",
+        alt: "Site-ul X Sweets and Coffee pe un laptop, cu prăjituri în față",
       },
       details: [
         { title: "Clientul", text: "Cafenea și cofetărie din Păltiniș, Sibiu." },
@@ -239,7 +239,10 @@ export const projects = {
       description: "Aplicație pentru flota de mașini: șoferii raportează zilnic, iar administratorul vede totul într-un singur loc.",
       /** Aplicație internă, fără site public: gol = fără butonul spre site. */
       url: "",
-      image: { src: "/proiecte/at-transport.webp", alt: "Panoul de administrator al aplicației AT Transport pe un telefon" },
+      image: {
+        src: "/proiecte/at-transport-camion.jpg",
+        alt: "Panoul de administrator al aplicației AT Transport pe un telefon, lângă un camion cu sigla firmei",
+      },
       details: [
         { title: "Clientul", text: "Firmă de transport cu o flotă de mașini." },
         { title: "Aplicația", text: "Șoferii trimit raportul zilnic din telefon, în câteva secunde." },

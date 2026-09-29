@@ -47,6 +47,8 @@ type CarouselProps = {
 export function Carousel({ children, labels, label, leading, loop = false, listClassName, className }: CarouselProps) {
   const listRef = useRef<HTMLUListElement>(null);
   const animationRef = useRef<{ frame: number; targetIndex: number } | null>(null);
+  /** Cardul pe care stă rândul (index în toată lista), ca să rămână pe el când se schimbă lățimea. */
+  const indexRef = useRef(0);
   const [pages, setPages] = useState(1);
   const [active, setActive] = useState(0);
 
@@ -155,6 +157,8 @@ export function Carousel({ children, labels, label, leading, loop = false, listC
   const goTo = (page: number) => animateTo(loop ? pages + page : page);
 
   // Bulina activă + numărul de buline, la orice scroll sau redimensionare.
+  // La o schimbare de lățime (fereastră, telefon întors), cardurile își schimbă mărimea: rândul
+  // revine instant pe cardul pe care era, ca să nu rămână între două carduri.
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;
@@ -166,14 +170,26 @@ export function Carousel({ children, labels, label, leading, loop = false, listC
         const positions = measureStops();
         const index = nearest(positions);
         const count = loop ? positions.length / 3 : positions.length;
+        indexRef.current = index;
         setPages(Math.max(1, count));
         setActive(loop ? index % count : index);
       });
     };
 
+    let firstResize = true;
+    const onResize = () => {
+      if (firstResize) {
+        firstResize = false;
+      } else if (!animationRef.current) {
+        const positions = measureStops();
+        list.scrollLeft = positions[Math.min(indexRef.current, positions.length - 1)];
+      }
+      update();
+    };
+
     update();
     list.addEventListener("scroll", update, { passive: true });
-    const resize = new ResizeObserver(update);
+    const resize = new ResizeObserver(onResize);
     resize.observe(list);
     return () => {
       cancelAnimationFrame(frame);
@@ -187,7 +203,8 @@ export function Carousel({ children, labels, label, leading, loop = false, listC
     const list = listRef.current;
     if (!loop || !list) return;
     const items = itemPositions();
-    list.scrollLeft = items[items.length / 3] ?? 0;
+    indexRef.current = items.length / 3;
+    list.scrollLeft = items[indexRef.current] ?? 0;
   }, [loop, itemPositions]);
 
   // Derulare nativă (trackpad, deget): când scroll-ul s-a oprit de tot (inclusiv snap-ul),
