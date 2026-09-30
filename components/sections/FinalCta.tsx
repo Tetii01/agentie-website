@@ -1,5 +1,5 @@
 import { siWhatsapp } from "simple-icons";
-import { Logo } from "@/components/brand/Logo";
+import { Submark } from "@/components/brand/Logo";
 import { BrandIcon } from "@/components/ui/BrandIcon";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -7,7 +7,7 @@ import { getContent } from "@/content";
 import { whatsappUrl } from "@/lib/whatsapp";
 
 /**
- * CTA final, ca un card: logo, „Ai un proiect?", buton spre formular și buton WhatsApp.
+ * CTA final, ca un card: submark-ul, „Ai o idee în minte?", buton spre formular și buton WhatsApp.
  * Stă în grid-ul din „Despre" (components/sections/About.tsx).
  */
 export async function FinalCtaCard({ className }: { className?: string }) {
@@ -16,7 +16,7 @@ export async function FinalCtaCard({ className }: { className?: string }) {
   return (
     <Card className={className}>
       <div className="flex h-full flex-col items-center justify-center gap-6 text-center">
-        <Logo />
+        <Submark />
         <h2 id="cta-final-titlu" className="text-h3-mobile font-bold text-balance md:text-h3">
           {finalCta.title}
         </h2>

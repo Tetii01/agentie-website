@@ -1,13 +1,6 @@
 import { brand } from "@/content/site";
 import { cn } from "@/lib/cn";
-import { logoDot, logoShapes, logoViewBox } from "./logo-shapes";
-
-const sizes = {
-  /** Header, footer, CTA final. */
-  md: "h-6 md:h-7",
-  /** Conturul decorativ mare din „Despre". */
-  display: "h-[16vw] lg:h-[9.5rem]",
-};
+import { logoDot, logoShapes, logoViewBox, symbolViewBox } from "./logo-shapes";
 
 const variants = {
   /** Orbita și literele în culoarea textului, punctul în culoarea de accent. */
@@ -16,27 +9,27 @@ const variants = {
   outline: "logo-outline",
 };
 
-type LogoProps = {
-  size?: keyof typeof sizes;
-  variant?: keyof typeof variants;
-  className?: string;
-};
+type Variant = keyof typeof variants;
 
-/**
- * Logo-ul Creos (SVG din Illustrator, formele sunt în ./logo-shapes.ts).
- * Numele din content/site.ts rămâne textul accesibil.
- * `size` controlează înălțimea în fiecare loc unde apare; `variant="outline"` e varianta
- * de contur din fundalul secțiunii „Despre".
- */
-export function Logo({ size = "md", variant = "solid", className }: LogoProps) {
+function LogoSvg({
+  shapes,
+  viewBox,
+  variant,
+  className,
+}: {
+  shapes: string[];
+  viewBox: { width: number; height: number };
+  variant: Variant;
+  className: string;
+}) {
   return (
     <svg
       role="img"
       aria-label={brand.name}
-      viewBox={`0 0 ${logoViewBox.width} ${logoViewBox.height}`}
-      className={cn("block w-auto shrink-0", sizes[size], variants[variant], className)}
+      viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
+      className={cn("block w-auto shrink-0", variants[variant], className)}
     >
-      {logoShapes.map((d) => (
+      {shapes.map((d) => (
         <path key={d} d={d} fill="currentColor" vectorEffect="non-scaling-stroke" />
       ))}
       <circle
@@ -46,5 +39,49 @@ export function Logo({ size = "md", variant = "solid", className }: LogoProps) {
         className={variant === "solid" ? "text-accent" : undefined}
       />
     </svg>
+  );
+}
+
+const logoSizes = {
+  /** Header, footer. */
+  md: "h-6 md:h-7",
+};
+
+type LogoProps = {
+  size?: keyof typeof logoSizes;
+  variant?: Variant;
+  className?: string;
+};
+
+/**
+ * Logo-ul Creos: simbolul și textul „creos" (SVG din Illustrator, formele sunt în ./logo-shapes.ts).
+ * Numele din content/site.ts rămâne textul accesibil.
+ */
+export function Logo({ size = "md", variant = "solid", className }: LogoProps) {
+  return <LogoSvg shapes={logoShapes} viewBox={logoViewBox} variant={variant} className={cn(logoSizes[size], className)} />;
+}
+
+const submarkSizes = {
+  /** CTA final. */
+  md: "h-10 md:h-12",
+  /** Conturul decorativ mare din „Despre". */
+  display: "h-[44vw] lg:h-[17rem]",
+};
+
+type SubmarkProps = {
+  size?: keyof typeof submarkSizes;
+  variant?: Variant;
+  className?: string;
+};
+
+/** Submark-ul Creos: doar simbolul (orbita + punctul), fără text. */
+export function Submark({ size = "md", variant = "solid", className }: SubmarkProps) {
+  return (
+    <LogoSvg
+      shapes={logoShapes.slice(0, 1)}
+      viewBox={symbolViewBox}
+      variant={variant}
+      className={cn(submarkSizes[size], className)}
+    />
   );
 }

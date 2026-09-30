@@ -1,4 +1,4 @@
-import { Logo } from "@/components/brand/Logo";
+import { Submark } from "@/components/brand/Logo";
 import { Card } from "@/components/ui/Card";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { Media } from "@/components/ui/Media";
@@ -12,7 +12,7 @@ import { FinalCtaCard } from "./FinalCta";
 /**
  * Despre, ca grid de 3 coloane:
  * stânga și mijloc, fondatorii (carduri înalte, cu poză portret);
- * dreapta, sus: „Cine suntem" + paragraful (cu conturul logo-ului în fundal); jos: CTA-ul final.
+ * dreapta, sus: „Cine suntem" + paragraful (cu conturul submark-ului în fundal); jos: CTA-ul final.
  */
 export async function About() {
   const { about } = await getContent();
@@ -23,8 +23,8 @@ export async function About() {
       <ul className="grid grid-cols-2 gap-grid-mobile md:gap-grid lg:grid-cols-3 lg:grid-rows-[auto_auto]">
         <FadeIn as="li" className="col-span-2 lg:col-span-1 lg:col-start-3 lg:row-start-1">
           <Card className="relative isolate h-full overflow-hidden lg:p-10">
-            <div aria-hidden className="pointer-events-none absolute -right-6 -bottom-6 -z-10 select-none">
-              <Logo size="display" variant="outline" />
+            <div aria-hidden className="pointer-events-none absolute right-6 -bottom-16 -z-10 select-none md:right-8">
+              <Submark size="display" variant="outline" />
             </div>
             <h2 id="despre-titlu" className="text-h2-mobile font-bold text-balance md:text-h2">
               {about.title}

@@ -61,7 +61,7 @@ Excepții, care nu pot citi tokens: `app/icon.svg` (favicon) și `themeColor` di
 
 Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „creos" și punctul) sunt în `components/brand/logo-shapes.ts`, și le folosesc toate locurile de mai jos. Pentru un logo nou, înlocuiești formele de acolo (atributele `d` din SVG) și dimensiunile din `logoViewBox`.
 
-- **Pe site:** `components/brand/Logo.tsx`. Orbita și literele iau culoarea textului, punctul ia culoarea de accent (`--color-accent`). Numele din `brand.name` rămâne textul accesibil. Are două mărimi: `md` (header, footer, CTA-ul final) și `display` (conturul din „Despre"), plus varianta `outline` (doar contur, tokenul `--color-logo-outline`).
+- **Pe site:** `components/brand/Logo.tsx`, cu două componente. `Logo` e logo-ul întreg (header, footer). `Submark` e doar simbolul, orbita și punctul (cardul CTA final, plus conturul mare din „Despre", cu `variant="outline"`, tokenul `--color-logo-outline`). Orbita și literele iau culoarea textului, punctul ia culoarea de accent (`--color-accent`). Numele din `brand.name` rămâne textul accesibil.
 - **Imaginea de share:** `app/opengraph-image.tsx`.
 - **Iconița iOS:** `app/apple-icon.tsx`. Doar simbolul: orbita și punctul.
 - **Favicon:** `app/icon.svg`. Doar simbolul, cu forma și culorile copiate direct, pentru că e un fișier static.
