@@ -392,9 +392,11 @@ html.lenis body {
 }
 
 /* Contur de text (logo-ul decorativ din „Despre") */
+/* Logo-ul SVG doar ca contur: formele au fill="currentColor" (transparent aici) și stroke fin de 1px. */
 @utility logo-outline {
   color: transparent;
-  -webkit-text-stroke: 1px var(--color-logo-outline);
+  stroke: var(--color-logo-outline);
+  stroke-width: 1px;
 }
 
 /* ==========================================================================

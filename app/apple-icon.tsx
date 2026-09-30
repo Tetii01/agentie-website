@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
+import { logoDot, logoShapes, symbolViewBox } from "@/components/brand/logo-shapes";
 import { themeColors } from "@/lib/theme";
 
-/** Iconița PLACEHOLDER pentru ecranul de start iOS (aceeași formă ca app/icon.svg). Se înlocuiește cu logo-ul. */
+/** Iconița pentru ecranul de start iOS: simbolul Creos (orbita + punctul), ca în app/icon.svg. */
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
@@ -20,7 +21,10 @@ export default function AppleIcon() {
           backgroundColor: colors.background,
         }}
       >
-        <div style={{ width: 80, height: 80, borderRadius: 9999, backgroundColor: colors.accent }} />
+        <svg width={104} height={(104 * symbolViewBox.height) / symbolViewBox.width} viewBox={`0 0 ${symbolViewBox.width} ${symbolViewBox.height}`}>
+          <path d={logoShapes[0]} fill={colors.foreground} />
+          <circle {...logoDot} fill={colors.accent} />
+        </svg>
       </div>
     ),
     size,

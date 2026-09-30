@@ -16,7 +16,7 @@ Spec-ul complet e în [docs/SPEC.md](docs/SPEC.md). Citește-l înainte de orice
 1. **Tot textul** stă în `content/site.ts` (română) și `content/en.ts` (engleză). Nicio componentă nu are text hardcodat.
 2. **Toate valorile vizuale** sunt tokens în `app/globals.css`, în `@theme`. Componentele folosesc doar clasele generate (`bg-background`, `text-accent`, `rounded-card`, `duration-fade`…), niciodată hex sau rgba direct.
 3. **Numele brandului** e `brand.name` din `content/site.ts`, folosit peste tot.
-4. **Logo-ul** e `components/brand/Logo.tsx` (acum text; David îl înlocuiește cu SVG).
+4. **Logo-ul** e `components/brand/Logo.tsx` (SVG inline). Formele sunt în `components/brand/logo-shapes.ts`, folosite și de iconița iOS și imaginea OG; `app/icon.svg` are simbolul copiat.
 5. **Placeholder-ele** folosesc componenta `Placeholder`, iar obiectele lor din `content/site.ts` au `placeholder: true`.
 6. O componentă per secțiune în `components/sections/`, primitivele în `components/ui/`.
 7. `README.md` explică unde e textul, tokens, logo-ul, placeholder-ele și variabilele de mediu.

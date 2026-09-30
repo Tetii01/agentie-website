@@ -59,9 +59,12 @@ Excepții, care nu pot citi tokens: `app/icon.svg` (favicon) și `themeColor` di
 
 ## Logo-ul
 
-`components/brand/Logo.tsx` afișează acum numele ca text. Pentru logo-ul final, înlocuiești `<span>` cu SVG-ul (inline sau prin `next/image`) și păstrezi `aria-label={brand.name}` pe el. Componenta e folosită peste tot, deci se schimbă într-un singur loc. Are trei mărimi (`md` în header și footer, `xl` în CTA-ul final, `display` pentru conturul din „Despre") și varianta `outline` (doar contur).
+Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „creos" și punctul) sunt în `components/brand/logo-shapes.ts`, și le folosesc toate locurile de mai jos. Pentru un logo nou, înlocuiești formele de acolo (atributele `d` din SVG) și dimensiunile din `logoViewBox`.
 
-Favicon-ul (`app/icon.svg`) și iconița iOS (`app/apple-icon.tsx`) sunt forme provizorii: le înlocuiești cu logo-ul. Pentru iOS poți pune direct un fișier `app/apple-icon.png` de 180×180 și ștergi `apple-icon.tsx`.
+- **Pe site:** `components/brand/Logo.tsx`. Orbita și literele iau culoarea textului, punctul ia culoarea de accent (`--color-accent`). Numele din `brand.name` rămâne textul accesibil. Are două mărimi: `md` (header, footer, CTA-ul final) și `display` (conturul din „Despre"), plus varianta `outline` (doar contur, tokenul `--color-logo-outline`).
+- **Imaginea de share:** `app/opengraph-image.tsx`.
+- **Iconița iOS:** `app/apple-icon.tsx`. Doar simbolul: orbita și punctul.
+- **Favicon:** `app/icon.svg`. Doar simbolul, cu forma și culorile copiate direct, pentru că e un fișier static.
 
 ## Placeholder-e → conținut real
 
@@ -76,8 +79,6 @@ Tot conținutul provizoriu are `placeholder: true` în `content/site.ts`. Caută
 Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 
 **Brand și general**
-- Logo-ul: `components/brand/Logo.tsx` (acum e text).
-- Favicon și iconița iOS: `app/icon.svg`, `app/apple-icon.tsx`.
 - Culoarea de accent: `--color-accent` în `app/globals.css` e provizorie. Dacă o schimbi, actualizează și `app/icon.svg`.
 
 **Hero**

@@ -1,8 +1,9 @@
 import { ImageResponse } from "next/og";
+import { logoDot, logoShapes, logoViewBox } from "@/components/brand/logo-shapes";
 import { brand, hero } from "@/content/site";
 import { ogFonts, themeColors } from "@/lib/theme";
 
-/** Imaginea de share (Facebook, LinkedIn, WhatsApp, X): fundal dark, numele brandului, tagline-ul din hero. */
+/** Imaginea de share (Facebook, LinkedIn, WhatsApp, X): fundal dark, logo-ul, tagline-ul din hero. */
 export const alt = `${brand.name} · ${hero.title} ${hero.highlight}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -25,9 +26,16 @@ export default function OpengraphImage() {
           fontFamily: "Geist",
         }}
       >
-        <div style={{ display: "flex", fontSize: 34, fontWeight: 700, letterSpacing: -0.7, color: colors.foreground }}>
-          {brand.name}
-        </div>
+        <svg
+          width={(48 * logoViewBox.width) / logoViewBox.height}
+          height={48}
+          viewBox={`0 0 ${logoViewBox.width} ${logoViewBox.height}`}
+        >
+          {logoShapes.map((d) => (
+            <path key={d} d={d} fill={colors.foreground} />
+          ))}
+          <circle {...logoDot} fill={colors.accent} />
+        </svg>
         <div
           style={{
             display: "flex",

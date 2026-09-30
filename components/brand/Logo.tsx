@@ -1,16 +1,16 @@
 import { brand } from "@/content/site";
 import { cn } from "@/lib/cn";
+import { logoDot, logoShapes, logoViewBox } from "./logo-shapes";
 
 const sizes = {
-  /** Header, footer. */
-  md: "text-lg",
-  /** CTA final. */
-  xl: "text-4xl sm:text-5xl md:text-7xl",
+  /** Header, footer, CTA final. */
+  md: "h-6 md:h-7",
   /** Conturul decorativ mare din „Despre". */
-  display: "text-[11vw] leading-none lg:text-[8.5rem]",
+  display: "h-[16vw] lg:h-[9.5rem]",
 };
 
 const variants = {
+  /** Orbita și literele în culoarea textului, punctul în culoarea de accent. */
   solid: "text-foreground",
   /** Doar contur, foarte transparent (tokenul --color-logo-outline). */
   outline: "logo-outline",
@@ -23,18 +23,28 @@ type LogoProps = {
 };
 
 /**
- * Logo-ul agenției. Deocamdată afișează numele din content/site.ts, ca text.
- *
- * Pentru logo-ul final: înlocuiește <span> cu SVG-ul (inline sau next/image) și păstrează
- * numele brandului ca text accesibil, de ex.:
- *   <svg role="img" aria-label={brand.name} className={…}>…</svg>
- * `size` controlează mărimea în fiecare loc unde apare; `variant="outline"` e varianta
- * de contur din fundalul secțiunii „Despre" (pentru SVG: fill="none" + stroke).
+ * Logo-ul Creos (SVG din Illustrator, formele sunt în ./logo-shapes.ts).
+ * Numele din content/site.ts rămâne textul accesibil.
+ * `size` controlează înălțimea în fiecare loc unde apare; `variant="outline"` e varianta
+ * de contur din fundalul secțiunii „Despre".
  */
 export function Logo({ size = "md", variant = "solid", className }: LogoProps) {
   return (
-    <span className={cn("font-bold tracking-tight whitespace-nowrap", sizes[size], variants[variant], className)}>
-      {brand.name}
-    </span>
+    <svg
+      role="img"
+      aria-label={brand.name}
+      viewBox={`0 0 ${logoViewBox.width} ${logoViewBox.height}`}
+      className={cn("block w-auto shrink-0", sizes[size], variants[variant], className)}
+    >
+      {logoShapes.map((d) => (
+        <path key={d} d={d} fill="currentColor" vectorEffect="non-scaling-stroke" />
+      ))}
+      <circle
+        {...logoDot}
+        fill="currentColor"
+        vectorEffect="non-scaling-stroke"
+        className={variant === "solid" ? "text-accent" : undefined}
+      />
+    </svg>
   );
 }
