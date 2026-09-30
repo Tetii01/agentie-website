@@ -58,7 +58,19 @@ const projectTexts = [
       { title: "Result", text: "[RESULT]" },
     ],
   },
-  { title: "[PROJECT TITLE 4]", category: "Automated content" },
+  {
+    title: "Restaurant app",
+    category: "Internal app",
+    description:
+      "An app for restaurants: waiters keep track of orders more easily, the bar and kitchen know what to prepare, and the manager sees everything live.",
+    alt: "The manager panel of the restaurant app on a phone, with table orders and the status of each dish",
+    details: [
+      { title: "Waiters", text: "They see each table's orders and know when a dish is ready to serve." },
+      { title: "Bar and kitchen", text: "Each sees only its own orders and marks them “in progress” or “ready”." },
+      { title: "The manager", text: "Follows every order live, from the bar to the kitchen." },
+      { title: "Result", text: "[RESULT]" },
+    ],
+  },
   { title: "[PROJECT TITLE 5]", category: "UI/UX Design" },
   { title: "[PROJECT TITLE 6]", category: "Website" },
 ];

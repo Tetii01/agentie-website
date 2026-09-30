@@ -267,13 +267,21 @@ export const projects = {
       ],
     },
     {
-      placeholder: true,
-      title: "[TITLU PROIECT 4]",
-      category: "Conținut automat",
-      description: "[DESCRIERE SCURTĂ]",
-      url: "[URL PROIECT]",
-      image: null,
-      details: projectDetailsPlaceholder,
+      title: "Aplicație restaurant",
+      category: "Aplicație internă",
+      description:
+        "Aplicație pentru restaurant: ospătarii urmăresc comenzile mai ușor, barul și bucătăria știu ce au de pregătit, iar managerul vede totul live.",
+      url: "",
+      image: {
+        src: "/proiecte/aplicatie-restaurant.webp",
+        alt: "Panoul de manager al aplicației de restaurant pe un telefon, cu comenzile meselor și stadiul fiecărui preparat",
+      },
+      details: [
+        { title: "Ospătarii", text: "Văd comenzile fiecărei mese și știu când un preparat e gata de servit." },
+        { title: "Bar și bucătărie", text: "Fiecare vede doar comenzile lui și le marchează „în lucru” sau „gata”." },
+        { title: "Managerul", text: "Urmărește live toate comenzile, de la bar până la bucătărie." },
+        { title: "Rezultat", text: "[REZULTAT]" },
+      ],
     },
     {
       placeholder: true,
