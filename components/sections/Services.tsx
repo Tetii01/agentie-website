@@ -34,7 +34,7 @@ export async function Services() {
               <p className="text-base font-semibold tracking-tight text-balance md:text-lg">
                 {custom.title} <span className="text-muted">{custom.text}</span>
               </p>
-              <Button href={custom.cta.href} variant="secondary">
+              <Button href={custom.cta.href}>
                 {custom.cta.label}
               </Button>
             </div>
