@@ -69,9 +69,10 @@ Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „cr
 ## Mișcarea și stilul „liquid metal"
 
 **Hero** (`components/sections/Hero.tsx`). Animația e preluată din „Motion Footer" (21st.dev, Hossain Jahed) și întoarsă pentru partea de sus a paginii:
-- **La încărcare:** titlul și butoanele urcă unul după altul. Sub linia orizontului urcă „creos" în litere uriașe, doar contur, cu un gradient care se stinge, tăiat de marginea de jos (nu trece pe sub titlu). Lumina de pe orizont „respiră" încet.
+- **La încărcare:** titlul și butoanele urcă unul după altul. Jos urcă „creos" în litere uriașe, doar contur, cu un gradient care se stinge, tăiat de marginea de jos (nu trece pe sub titlu).
+- **Fundalul:** o „membrană" de lichid luminos care se deformează încet, sus-dreapta pe desktop și sus pe telefon (`components/ui/LiquidShader.tsx`, shader-ul preluat din „liquid shader", 21st.dev, dhileepkumargm). E WebGL direct, fără three.js, la rezoluție redusă și 30 de cadre pe secundă. Se oprește când cortina acoperă hero-ul. La prefers-reduced-motion e un singur cadru nemișcat, iar fără WebGL rămâne o lumină din CSS (`liquid-fallback`). Culorile, poziția și mărimea sunt sus în fișier (`DEEP`, `GLOW`, `INTENSITY`) și în `resize()`.
 - **Cortina:** hero-ul stă fixat (`sticky`, în `app/[lang]/page.tsx`), iar restul paginii urcă peste el, cu marginea de sus rotunjită (utilitatea `hero-curtain`). Cât e acoperit, hero-ul se micșorează și se estompează, iar literele coboară și dispar. Merge din CSS (scroll-driven animations, `hero-recede` și `hero-letters-sink`), fără JavaScript, deci e fluid și pe telefon. Browserele fără suport păstrează hero-ul static.
-- **Momentele:** tokenurile `--animate-letters-rise`, `--animate-breathe` și blocul „HERO LA SCROLL" din `app/globals.css`.
+- **Momentele:** tokenul `--animate-letters-rise` și blocul „HERO LA SCROLL" din `app/globals.css`.
 
 **Footer** (`components/sections/Footer.tsx`), după „Footer Section" (21st.dev, efferd), adaptat la site:
 - **Aspect:** colțuri mari sus, o linie care strălucește pe margine și o lumină moale care cade din mijloc.
@@ -100,7 +101,7 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 - Culoarea de accent: `--color-accent` în `app/globals.css` e provizorie. Dacă o schimbi, actualizează și `app/icon.svg`.
 
 **Hero**
-- Fără imagine: fundalul (orizontul și rețeaua de puncte) e din CSS (`hero-*` în `app/globals.css`). Acțiunile care se schimbă în titlu: `hero.actions`.
+- Fără imagine: fundalul e lichidul desenat de `LiquidShader` (vezi mai sus). Acțiunile care se schimbă în titlu: `hero.actions`.
 
 **Proiecte** (6 carduri; primele patru sunt completate)
 - Proiectele 5 și 6: `[TITLU PROIECT …]`, `[DESCRIERE SCURTĂ]`, `[URL PROIECT]`, `image`. Imaginile stau în `public/proiecte/`. Un `url` gol înseamnă fără buton spre site.

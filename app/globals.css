@@ -102,23 +102,11 @@
   --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1); /* butoanele liquid metal: apăsare cu „arc" */
   --transition-duration-spring: 800ms; /* butoanele liquid metal */
   --animate-metal-flow: metal-flow 6s linear infinite; /* inelul cromat al butoanelor liquid metal */
-  --animate-breathe: breathe 8s ease-in-out infinite alternate; /* hero: lumina de pe orizont „respiră" */
-  --animate-letters-rise: letters-rise 1.8s var(--ease-out-strong) 0.25s both; /* hero: „creos" urcă din spatele orizontului */
+  --animate-letters-rise: letters-rise 1.8s var(--ease-out-strong) 0.25s both; /* hero: „creos" urcă de jos la încărcare */
 
   @keyframes metal-flow {
     to {
       transform: rotate(1turn);
-    }
-  }
-
-  @keyframes breathe {
-    from {
-      scale: 1;
-      opacity: 0.6;
-    }
-    to {
-      scale: 1.1;
-      opacity: 1;
     }
   }
 
@@ -328,10 +316,9 @@
 
 /* ==========================================================================
    HERO (components/sections/Hero.tsx)
-   Un card mare, curat: sus un cer întunecat cu o rețea fină de puncte, jos un
-   „orizont" (marginea unei planete) care se aprinde în accent. Textul stă aliniat
-   la stânga, deasupra orizontului; în spatele orizontului, „creos" în litere uriașe.
-   Restul paginii urcă peste hero ca o cortină (hero-curtain).
+   Un card mare, întunecat, cu un lichid luminos desenat de un shader
+   (components/ui/LiquidShader.tsx). Textul stă aliniat la stânga-jos; dedesubt,
+   „creos" în litere uriașe. Restul paginii urcă peste hero ca o cortină (hero-curtain).
    ========================================================================== */
 
 @utility hero-frame {
@@ -343,7 +330,41 @@
     var(--gradient-card-border) border-box;
 }
 
-/* Literele uriașe „creos" din spatele orizontului: doar contur fin și un gradient care se stinge în jos. */
+/* Lichidul din hero, fără WebGL (sau până apare primul cadru): o lumină moale în accent, în același loc.
+   Pe telefon, lichidul (sus) se stinge spre jos, ca zona cu titlul să rămână curată. */
+@utility liquid-fallback {
+  @media (width < 48rem) {
+    mask-image: linear-gradient(180deg, black 30%, transparent 58%);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 62% 16%,
+      color-mix(in oklab, var(--color-accent) 22%, transparent) 0%,
+      transparent 45%
+    );
+    transition: opacity var(--transition-duration-fade) var(--ease-fade);
+  }
+
+  @media (width >= 48rem) {
+    &::before {
+      background: radial-gradient(
+        circle at 80% 32%,
+        color-mix(in oklab, var(--color-accent) 22%, transparent) 0%,
+        transparent 35%
+      );
+    }
+  }
+
+  &[data-ready]::before {
+    opacity: 0;
+  }
+}
+
+/* Literele uriașe „creos" de jos: doar contur fin și un gradient care se stinge în jos. */
 @utility hero-letters {
   color: var(--color-foreground);
   stroke: color-mix(in oklab, var(--color-foreground) 9%, transparent);
@@ -358,28 +379,6 @@
   box-shadow:
     inset 0 1px 0 0 rgb(255 255 255 / 0.08),
     0 -30px 60px -20px rgb(0 0 0 / 0.9);
-}
-
-/* Rețeaua de puncte din „cer", care se estompează spre margini. */
-@utility hero-dots {
-  background-image: radial-gradient(rgb(255 255 255 / 0.09) 1px, transparent 1.5px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 70% 60% at 60% 45%, black 20%, transparent 75%);
-}
-
-/* Orizontul: un cerc uriaș, închis la culoare, cu marginea de sus luminată în accent. */
-@utility hero-horizon {
-  border-radius: 9999px;
-  background: radial-gradient(
-    ellipse 50% 12% at 50% 0%,
-    color-mix(in oklab, var(--color-accent) 22%, #0b0b0d) 0%,
-    #0b0b0d 100%
-  );
-  box-shadow:
-    inset 0 1.5px 0 0 color-mix(in oklab, var(--color-accent) 55%, white),
-    inset 0 14px 40px -10px color-mix(in oklab, var(--color-accent) 65%, transparent),
-    0 -2px 14px 0 color-mix(in oklab, var(--color-accent) 70%, transparent),
-    0 -40px 160px 20px color-mix(in oklab, var(--color-accent) 28%, transparent);
 }
 
 /* ==========================================================================
@@ -605,9 +604,8 @@ html.lenis body {
     will-change: auto;
   }
 
-  /* Metalul stă pe loc, lumina nu mai respiră, literele mari apar direct. */
+  /* Metalul stă pe loc, literele mari apar direct (lichidul din hero e desenat o singură dată, nemișcat). */
   .liquid-metal::before,
-  .animate-breathe,
   .animate-letters-rise {
     animation: none;
   }

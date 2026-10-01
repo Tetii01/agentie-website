@@ -4,15 +4,16 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { LanguageSwitch } from "@/components/ui/LanguageSwitch";
+import { LiquidShader } from "@/components/ui/LiquidShader";
 import { RotatingText, RotationProvider } from "@/components/ui/RotatingText";
 import { getContent } from "@/content";
 
 /**
- * Hero: un card mare (mai scurt decât ecranul, ca să se vadă că pagina continuă). Sus, un „cer"
- * întunecat cu o rețea fină de puncte; jos, un orizont care se aprinde în accent, cu o lumină care „respiră".
- * Sub linia orizontului, „creos" în litere uriașe, care urcă la încărcare.
- * Deasupra orizontului, în stânga: titlul pe două rânduri (acțiunea AI-ului se schimbă singură), butonul
- * principal și, lângă el, butonul discret de schimbare a limbii (RO / EN).
+ * Hero: un card mare (mai scurt decât ecranul, ca să se vadă că pagina continuă), întunecat, cu o
+ * „membrană" de lichid luminos care se deformează încet (LiquidShader): în dreapta pe desktop, sus pe telefon.
+ * Jos, „creos" în litere uriașe, tăiat de marginea cardului, care urcă la încărcare.
+ * În stânga-jos: titlul pe două rânduri (acțiunea AI-ului se schimbă singură), butonul principal și,
+ * lângă el, butonul discret de schimbare a limbii (RO / EN).
  *
  * Mișcarea (preluată din „motion footer"): titlul și butoanele urcă unul după altul la încărcare; la scroll,
  * restul paginii urcă peste hero ca o cortină (app/[lang]/page.tsx), iar hero-ul se retrage și literele
@@ -26,20 +27,9 @@ export async function Hero() {
     <section className="pt-[calc(var(--spacing-header-mobile)+0.5rem)] md:pt-[calc(var(--spacing-header)+0.75rem)]">
       <Container>
         <div className="hero-frame hero-recede relative isolate flex min-h-[26rem] flex-col justify-end overflow-hidden rounded-card md:min-h-[clamp(36rem,calc(100svh-var(--spacing-header)-6rem),44rem)]">
-          <div aria-hidden className="hero-dots absolute inset-0 -z-10" />
-          {/* Orizontul: marginea de sus a cercului stă la 6rem (mobil) / 10rem (desktop) de jos. */}
-          <div
-            aria-hidden
-            className="hero-horizon absolute top-[calc(100%-6rem)] left-1/2 -z-10 aspect-square w-[300%] -translate-x-1/2 md:top-[calc(100%-10rem)] md:w-[160%]"
-          />
-          {/* „Soarele": un glow moale pe mijlocul orizontului, care respiră încet. */}
-          <div
-            aria-hidden
-            className="absolute top-[calc(100%-6rem)] left-1/2 -z-10 h-28 w-[80%] -translate-x-1/2 -translate-y-1/2 animate-breathe rounded-full bg-accent/25 blur-3xl md:top-[calc(100%-10rem)] md:h-36 md:w-[50%]"
-          />
+          <LiquidShader className="absolute inset-0 -z-10" />
 
-          {/* „creos" uriaș, pe „suprafața planetei": începe puțin sub linia orizontului și e tăiat de marginea
-              de jos a cardului, deci nu trece niciodată pe sub titlu. Vine după orizont în DOM, ca să stea peste el. */}
+          {/* „creos" uriaș, jos: tăiat de marginea de jos a cardului, sub butoane, deci nu trece niciodată pe sub titlu. */}
           <div
             aria-hidden
             className="hero-letters-sink pointer-events-none absolute inset-x-0 top-[calc(100%-6rem+0.75rem)] -z-10 flex justify-center md:top-[calc(100%-10rem+1.5rem)]"
