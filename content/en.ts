@@ -215,9 +215,9 @@ export const en: SiteContent = {
   stats: {
     items: [
       { ...ro.stats.items[0], label: "So far", text: "Projects delivered" },
-      { ...ro.stats.items[1], label: "On the content we worked on", value: "[X]M+", text: "Views" },
-      { ...ro.stats.items[2], label: "We reply within", value: "[X] hours", text: "Response time" },
-      { ...ro.stats.items[3], label: "First system", value: "[X] days", text: "From analysis to launch" },
+      { ...ro.stats.items[1], label: "On the content we worked on", value: "50M+", text: "Views" },
+      { ...ro.stats.items[2], label: "We reply within", value: "2 hours", text: "Response time" },
+      { ...ro.stats.items[3], label: "First system", value: "7 days", text: "From analysis to launch" },
     ],
   },
 
@@ -272,7 +272,7 @@ export const en: SiteContent = {
         submit: "Send request",
       },
       duration: "Takes 10 seconds.",
-      success: "Thank you! We'll get back to you within [X] hours.",
+      success: "Thank you! We'll get back to you within 2 hours.",
     },
     alternative: "or",
   },

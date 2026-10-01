@@ -396,18 +396,17 @@ export type Stat = {
   text: string;
 };
 
+/**
+ * DE VERIFICAT înainte de lansare: cifrele trebuie să fie reale (pe site, o cifră care nu e adevărată
+ * e reclamă înșelătoare). Proiectele livrate țin pasul cu „300+ clienți" din testimoniale,
+ * iar timpul de răspuns e același cu cel din mesajul de după formular (offer.form.success).
+ */
 export const stats = {
   items: [
-    { placeholder: true, icon: FolderCheck, label: "Până acum", value: "[X]+", text: "Proiecte livrate" },
-    {
-      placeholder: true,
-      icon: Eye,
-      label: "Pe conținutul lucrat",
-      value: "[X] mil.+",
-      text: "Vizualizări",
-    },
-    { placeholder: true, icon: Timer, label: "Îți răspundem în", value: "[X] ore", text: "Timp de răspuns" },
-    { placeholder: true, icon: Rocket, label: "Primul sistem", value: "[X] zile", text: "De la analiză la lansare" },
+    { icon: FolderCheck, label: "Până acum", value: "350+", text: "Proiecte livrate" },
+    { icon: Eye, label: "Pe conținutul lucrat", value: "50M+", text: "Vizualizări" },
+    { icon: Timer, label: "Îți răspundem în", value: "2 ore", text: "Timp de răspuns" },
+    { icon: Rocket, label: "Primul sistem", value: "7 zile", text: "De la analiză la lansare" },
   ] satisfies Stat[],
 };
 
@@ -466,7 +465,7 @@ export const offer = {
       submit: "Trimite cererea",
     },
     duration: "Durează 10 secunde.",
-    success: "Mulțumim! Te contactăm în cel mult [X] ore.",
+    success: "Mulțumim! Te contactăm în cel mult 2 ore.",
   },
   /** Sub card: „sau" + telefon și email. */
   alternative: "sau",

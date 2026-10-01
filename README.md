@@ -112,11 +112,11 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 - Pozele celorlalți sunt pozele de profil publice de pe Instagram, de 100×100 px (`public/testimoniale/`). Dacă aveți variante mai mari, le înlocuiți cu același nume.
 - Numărul de urmăritori (`followers`) e cel de pe Instagram la 1 octombrie 2026. Trebuie actualizat din când în când.
 
-**Cifre** (4 carduri)
-- Etichetele `[ETICHETĂ]` și valorile `[X]+`, `[X] mil.+`, `[X] ore`, `[X] zile`. O valoare care începe cu un număr (ex. `120+`) face automat count-up.
+**Cifre** (4 carduri, completate)
+- 350+ proiecte livrate, 50M+ vizualizări, răspuns în 2 ore, primul sistem în 7 zile. **De verificat înainte de lansare:** trebuie să fie reale. Le schimbați în `stats` (și în engleză, în `content/en.ts`). O valoare care începe cu un număr face automat count-up.
 
 **Analiză gratuită și contact**
-- Mesajul de succes: „Te contactăm în cel mult `[X]` ore".
+- Mesajul de succes: „Te contactăm în cel mult 2 ore". Trebuie să fie același cu timpul de răspuns din cifre.
 - Telefon `[TELEFON]` și email `[EMAIL]`: `contact.phone` (text și `tel:`) și `contact.email` (text și `mailto:`).
 - WhatsApp `[NUMĂR]`: format internațional, fără + și spații (ex. `40712345678`).
 
