@@ -33,8 +33,10 @@ export const introTimeline = {
   iris: [0.5, 0.6],
   /** Camera zboară prin deschidere. */
   zoom: [0.55, 0.88],
-  /** Hero-ul crește la mărimea lui (și urcă la locul lui) în timp ce camera se apropie. */
-  heroScale: [0.55, 0.86],
+  /** Pe telefon (hero mai scurt decât ecranul), hero-ul urcă din mijlocul ecranului la locul lui. */
+  heroRise: [0.55, 0.86],
+  /** Punctele și luminile de pe margini dispar cât camera trece prin portal. */
+  sidesOut: [0.55, 0.78],
   /** Scena dispare după ce deschiderea a acoperit tot ecranul. */
   sceneOut: [0.82, 0.9],
   /** Header-ul revine și site-ul primește click-uri. */

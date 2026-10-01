@@ -68,10 +68,10 @@ Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „cr
 
 ## Intro-ul 3D
 
-Prima pagină începe cu un intro 3D, pe care îl parcurgi derulând. Submark-ul Creos, cu C-ul cromat și punctul în accent, se formează: C-ul se întoarce spre față, iar punctul face un arc peste el și intră în deschidere. Apoi în mijlocul C-ului se deschide un portal prin care se vede site-ul, iar camera zboară prin el. Jos, o pilulă („Derulează pentru a intra pe site") are un inel care se umple pe măsură ce derulezi.
+Prima pagină începe cu un intro 3D, pe care îl parcurgi derulând. Submark-ul Creos, cu C-ul alb și punctul în accent, se formează: C-ul se întoarce spre față, iar punctul face un arc peste el și intră în deschidere. Apoi în mijlocul C-ului se deschide un portal prin care se vede site-ul, iar camera zboară prin el. Jos, o pilulă („Derulează pentru a intra pe site") are un inel care se umple pe măsură ce derulezi. Pe margini se văd rețeaua de puncte din hero și două lumini în accent care plutesc încet; mijlocul rămâne curat.
 
 - **Componenta:** `components/sections/Intro.tsx`. Ține hero-ul fixat sub intro și îl dezvăluie la final. În `app/[lang]/page.tsx` învelește `<Hero />`; dacă scoți `<Intro>`, pagina începe direct cu hero-ul.
-- **Scena 3D:** `lib/intro-scene.ts`, cu three.js. Se încarcă abia după ce pagina e afișată, într-un fișier separat, și se pregătește pe mai multe cadre, ca pagina să nu se blocheze. Culorile vin din tokens (`--color-foreground`, `--color-accent`, `--color-background`), forma din `components/brand/logo-shapes.ts`.
+- **Scena 3D:** `lib/intro-scene.ts`, cu three.js. E simplă intenționat, ca să meargă fluid pe telefon: fără texturi, fără reflexii, două lumini fixe. Se încarcă abia după ce pagina e afișată, într-un fișier separat, și se pregătește pe mai multe cadre, ca pagina să nu se blocheze. Culorile vin din tokens (`--color-foreground`, `--color-accent`, `--color-background`), forma din `components/brand/logo-shapes.ts`.
 - **Momentele animației:** `lib/intro-timeline.ts`, ca progres al scroll-ului (0–1).
 - **Distanța de scroll:** tokenul `--spacing-intro` din `app/globals.css`.
 - **Textul pilulei:** `ui.intro.hint`.

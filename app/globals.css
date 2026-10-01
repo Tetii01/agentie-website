@@ -101,6 +101,16 @@
   --animate-dialog-in: dialog-in 350ms var(--ease-smooth) both; /* fereastra de detalii a proiectelor */
   --animate-word-in: word-in 700ms var(--ease-smooth) both; /* hero: acțiunea nouă intră de jos */
   --animate-scroll-hint: scroll-hint 1.6s var(--ease-smooth) infinite; /* intro: săgeata din indicația de scroll */
+  --animate-intro-drift: intro-drift 14s ease-in-out infinite alternate; /* intro: luminile de pe margini */
+
+  @keyframes intro-drift {
+    from {
+      transform: translate3d(-3%, 2%, 0) scale(1);
+    }
+    to {
+      transform: translate3d(3%, -2%, 0) scale(1.08);
+    }
+  }
 
   @keyframes scroll-hint {
     50% {
@@ -271,6 +281,28 @@
 /* ==========================================================================
    INTRO 3D (components/sections/Intro.tsx, scena în lib/intro-scene.ts)
    ========================================================================== */
+
+/* Marginile intro-ului: două lumini moi în accent, la stânga și la dreapta (mijlocul rămâne curat). */
+@utility intro-side-glow {
+  background-image:
+    radial-gradient(
+      ellipse 38% 55% at 4% 40%,
+      color-mix(in oklab, var(--color-accent) 32%, transparent) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 34% 50% at 96% 62%,
+      color-mix(in oklab, var(--color-accent) 24%, transparent) 0%,
+      transparent 70%
+    );
+}
+
+/* Marginile intro-ului: rețeaua de puncte din hero (hero-dots), vizibilă doar spre margini. */
+@utility intro-side-dots {
+  background-image: radial-gradient(rgb(255 255 255 / 0.12) 1px, transparent 1.5px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 35%, black 95%);
+}
 
 /* Lumina discretă în accent din spatele logo-ului (se stinge când logo-ul e complet). */
 @utility intro-glow {

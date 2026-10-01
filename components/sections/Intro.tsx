@@ -32,14 +32,15 @@ const SCENE_FADE_IN = 600;
  * Cum funcționează:
  * - hero-ul (children) stă `sticky` sus, iar sub el un spațiu gol (`intro-spacer`, înălțimea
  *   tokenului --spacing-intro) dă distanța de scroll a animației. La finalul ei, pagina curge normal;
- * - peste tot stă un strat fix (`intro-overlay`): fundalul închis cu o lumină în accent, scena 3D
- *   (încărcată la nevoie) și, jos, indicația de scroll, al cărei inel se umple pe măsură ce derulezi;
+ * - peste tot stă un strat fix (`intro-overlay`): fundalul închis cu o lumină în accent în mijloc, scena 3D
+ *   (încărcată la nevoie), pe margini rețeaua de puncte din hero și două lumini care plutesc, iar jos
+ *   indicația de scroll, al cărei inel se umple pe măsură ce derulezi;
  * - progresul (0–1) = cât din spațiul gol s-a derulat, citit o dată pe cadru. Lenis netezește deja
  *   scroll-ul, iar pe telefon scroll-ul nativ e fluid, deci nu mai e netezit încă o dată (ar rămâne în urmă);
  * - header-ul se ascunde cât rulează intro-ul (`html[data-intro="playing"]` în app/globals.css).
  *
- * Fluiditate: în fiecare cadru se scrie în pagină doar ce s-a schimbat; hero-ul e pregătit ca strat separat
- * (`will-change`) cât timp e mărit/mutat, ca să nu fie redesenat la fiecare cadru; stratul 3D are înălțimea
+ * Fluiditate: în fiecare cadru se scrie în pagină doar ce s-a schimbat; hero-ul doar se mută (nu se mărește)
+ * și e strat separat (`will-change`) cât timp se mișcă, ca să nu fie redesenat la fiecare cadru; stratul 3D are înălțimea
  * fixă a ecranului mare (lvh), ca bara browserului de pe telefon să nu-l redimensioneze în timpul scroll-ului.
  *
  * Fără JavaScript, la prefers-reduced-motion sau fără WebGL, intro-ul nu apare deloc.
@@ -52,6 +53,7 @@ export function Intro({ hint, children }: IntroProps) {
   const stageRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
+  const sidesRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<SVGCircleElement>(null);
@@ -66,10 +68,13 @@ export function Intro({ hint, children }: IntroProps) {
     const stage = stageRef.current;
     const backdrop = backdropRef.current;
     const glowElement = glowRef.current;
+    const sides = sidesRef.current;
     const canvas = canvasRef.current;
     const hintElement = hintRef.current;
     const ring = ringRef.current;
-    if (!reveal || !spacer || !stage || !backdrop || !glowElement || !canvas || !hintElement || !ring) return;
+    if (!reveal || !spacer || !stage || !backdrop || !glowElement || !sides || !canvas || !hintElement || !ring) {
+      return;
+    }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const root = document.documentElement;
@@ -117,15 +122,13 @@ export function Intro({ hint, children }: IntroProps) {
         setStyle(backdrop, "opacity", fixed(1 - revealed));
         setStyle(reveal, "opacity", fixed(revealed));
       }
-      // Hero-ul crește la mărimea lui și urcă la locul lui cât camera trece prin portal.
-      const scale = easeInOut(range(progress, timeline.heroScale));
-      setStyle(
-        reveal,
-        "transform",
-        scale < 1 ? `translate3d(0, ${fixed(centerOffset * (1 - scale), 2)}px, 0) scale(${fixed(0.88 + 0.12 * scale, 4)})` : "none",
-      );
+      // Hero-ul urcă la locul lui cât camera trece prin portal. Doar mutat, nu și mărit: o mărire
+      // l-ar face pe Safari (iPhone) să-l redeseneze la fiecare cadru, cu tot cu glow-urile lui.
+      const rise = easeInOut(range(progress, timeline.heroRise));
+      setStyle(reveal, "transform", rise < 1 ? `translate3d(0, ${fixed(centerOffset * (1 - rise), 1)}px, 0)` : "none");
       setStyle(reveal, "pointer-events", progress < timeline.done ? "none" : "auto");
       setStyle(glowElement, "opacity", fixed(1 - range(progress, timeline.glowOut)));
+      setStyle(sides, "opacity", fixed(1 - easeInOut(range(progress, timeline.sidesOut))));
       setStyle(canvas, "opacity", fixed(sceneFade * (1 - range(progress, timeline.sceneOut))));
       // Indicația: inelul se umple până când logo-ul e gata, apoi indicația dispare.
       setStyle(ring, "stroke-dashoffset", fixed(1 - range(progress, [0, timeline.hintOut[0]])));
@@ -142,7 +145,7 @@ export function Intro({ hint, children }: IntroProps) {
       // Hero-ul e strat separat cât timp intro-ul rulează; după ce scroll-ul s-a oprit la final,
       // e redesenat o singură dată, clar (nu în timpul scroll-ului, ca să nu sacadeze).
       const settled = progress >= 1 && now - lastScrollAt > 250;
-      setStyle(reveal, "will-change", settled ? "auto" : "transform, opacity");
+      setStyle(reveal, "will-change", settled ? "auto" : "transform");
       apply(progress, sceneFade);
       if (scene && progress < timeline.sceneOut[1]) scene.render(progress, now / 1000);
 
@@ -233,6 +236,12 @@ export function Intro({ hint, children }: IntroProps) {
         <div ref={backdropRef} className="absolute inset-0 bg-background" />
         <div ref={glowRef} className="intro-glow absolute inset-0" />
         <canvas ref={canvasRef} className="absolute inset-0 size-full opacity-0" />
+        {/* Marginile: rețeaua de puncte din hero și două lumini în accent care plutesc încet; mijlocul rămâne
+            curat. Deasupra scenei, ca să rămână și peste fundalul portalului (dispar cât camera trece prin el). */}
+        <div ref={sidesRef} className="absolute inset-0 overflow-hidden">
+          <div className="intro-side-glow absolute inset-[-10%] animate-intro-drift" />
+          <div className="intro-side-dots absolute inset-0" />
+        </div>
       </div>
 
       {/* Indicația de scroll: o pilulă ca restul butoanelor de pe site, cu un inel care se umple.
