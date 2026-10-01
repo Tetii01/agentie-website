@@ -319,37 +319,61 @@ export type Testimonial = {
   quote: string;
   /** Opțional: contul de social media, afișat jos, în accent (ex. „@nume"). */
   handle?: string;
+  /** Profilul sau site-ul, afișat jos ca domeniu cu săgeată. Gol = fără link. */
   url: string;
   avatar: ImageRef;
-};
-
-const testimonialPlaceholder: Testimonial = {
-  placeholder: true,
-  name: "[NUME]",
-  role: "[ROL]",
-  followers: "[X] urmăritori",
-  verified: true,
-  quote: "[CITAT] **[PARTE ÎNGROȘATĂ]** [CITAT]",
-  handle: "[@CONT]",
-  url: "[URL PROFIL SAU SITE]",
-  avatar: null,
 };
 
 export const testimonials = {
   label: "Au lucrat cu noi",
   /** Cardul din stânga rândului: nota + un rând scurt; partea dintre ** ** apare în accent. */
   rating: {
-    placeholder: true,
-    value: "[X.X]",
-    text: "**[X]+ clienți** [TEXT]",
+    value: "5.0",
+    text: "de la **300+ clienți**",
   },
   avatarPlaceholderLabel: "Avatar",
   items: [
-    { ...testimonialPlaceholder },
-    { ...testimonialPlaceholder },
-    { ...testimonialPlaceholder },
-    { ...testimonialPlaceholder },
-  ] satisfies Testimonial[],
+    {
+      name: "Swae Lee",
+      role: "Artist",
+      verified: true,
+      quote: "Absolutely killed the graphics for my europe tour, **everything came out crazy**. 🔥🔥",
+      url: "",
+      avatar: null,
+    },
+    {
+      name: "Rich The Kid",
+      role: "Artist",
+      verified: true,
+      quote: "Smooth to work with, **in love with the results** too. Def gon keep in touch for the next projects 💯💯",
+      url: "",
+      avatar: null,
+    },
+    {
+      name: "X Sweets and Coffee",
+      role: "Cafenea și cofetărie, Sibiu",
+      quote:
+        "Site-ul arată exact ca locul nostru, iar **chatbotul le răspunde clienților pe loc**. Recomandăm cu drag! ☕",
+      url: "https://xsweetsandcoffee.ro",
+      avatar: null,
+    },
+    {
+      name: "AT Transport",
+      role: "Firmă de transport",
+      quote:
+        "Aplicația ne-a ușurat mult treaba. **Văd toată flota într-un singur loc**, iar șoferii raportează în câteva secunde. Mulțumim!",
+      url: "",
+      avatar: null,
+    },
+    {
+      name: "Worldstar",
+      role: "Platformă media",
+      verified: true,
+      quote: "Big shoutout for the designs on our exclusive **Beach, Please! merch drop** 🏝️",
+      url: "",
+      avatar: null,
+    },
+  ] satisfies Testimonial[] as Testimonial[],
 };
 
 /* ───────────────────────── 5.8 Cifre ───────────────────────── */

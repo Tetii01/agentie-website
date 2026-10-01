@@ -95,12 +95,13 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 **Hero**
 - Fără imagine: fundalul (orizontul și rețeaua de puncte) e din CSS (`hero-*` în `app/globals.css`). Acțiunile care se schimbă în titlu: `hero.actions`.
 
-**Proiecte** (6 carduri; primul, X Sweets and Coffee, e completat)
-- `[TITLU PROIECT 2]` … `[TITLU PROIECT 6]`, `[DESCRIERE SCURTĂ]`, `[URL PROIECT]`, `image`. Imaginile stau în `public/proiecte/`. Cât timp `url` e placeholder, butonul rotund spre site apare estompat, fără link.
+**Proiecte** (6 carduri; primele patru sunt completate)
+- Proiectele 5 și 6: `[TITLU PROIECT …]`, `[DESCRIERE SCURTĂ]`, `[URL PROIECT]`, `image`. Imaginile stau în `public/proiecte/`. Un `url` gol înseamnă fără buton spre site.
+- La toate: textul `[REZULTAT]` din detaliile proiectului.
 - Categoriile sunt cele date ca exemplu în spec. Le ajustezi după proiectele reale.
 
-**Testimoniale** (4 carduri)
-- `[NUME]`, `[ROL]`, `[X] urmăritori` (opțional: poate fi șters), `[CITAT] **[PARTE ÎNGROȘATĂ]** [CITAT]`, `[URL PROFIL SAU SITE]`, `avatar`.
+**Testimoniale** (5 carduri, completate)
+- Lipsesc pozele (`avatar`, acum un cerc gol) și, opțional, contul (`handle`, ex. „@nume"), linkul spre profil (`url`) și numărul de urmăritori (`followers`).
 
 **Cifre** (4 carduri)
 - Etichetele `[ETICHETĂ]` și valorile `[X]+`, `[X] mil.+`, `[X] ore`, `[X] zile`. O valoare care începe cu un număr (ex. `120+`) face automat count-up.

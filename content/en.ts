@@ -75,6 +75,22 @@ const projectTexts = [
   { title: "[PROJECT TITLE 6]", category: "Website" },
 ];
 
+/** Testimonialele, în aceeași ordine ca în română: rolurile traduse și citatele în română traduse. */
+const testimonialTexts = [
+  { role: "Artist" },
+  { role: "Artist" },
+  {
+    role: "Café and patisserie, Sibiu",
+    quote: "The website looks exactly like our place, and **the chatbot answers customers instantly**. Warmly recommended! ☕",
+  },
+  {
+    role: "Transport company",
+    quote:
+      "The app made our work so much easier. **I see the whole fleet in one place**, and drivers report in seconds. Thank you!",
+  },
+  { role: "Media platform" },
+];
+
 const detailsPlaceholder = [
   { title: "[TITLE]", text: "[TEXT]" },
   { title: "[TITLE]", text: "[TEXT]" },
@@ -191,16 +207,9 @@ export const en: SiteContent = {
   testimonials: {
     ...ro.testimonials,
     label: "They worked with us",
-    rating: { ...ro.testimonials.rating, text: "**[X]+ clients** [TEXT]" },
-    items: ro.testimonials.items.map((item) => ({
-      ...item,
-      name: "[NAME]",
-      role: "[ROLE]",
-      followers: "[X] followers",
-      quote: "[QUOTE] **[BOLD PART]** [QUOTE]",
-      handle: "[@HANDLE]",
-      url: "[PROFILE OR WEBSITE URL]",
-    })),
+    rating: { ...ro.testimonials.rating, text: "across **300+ clients**" },
+    // Citatele în engleză rămân ca atare; cele în română sunt traduse.
+    items: ro.testimonials.items.map((item, index) => ({ ...item, ...testimonialTexts[index] })),
   },
 
   stats: {
