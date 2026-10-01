@@ -16,7 +16,7 @@ export async function Problems() {
       <div className="grid gap-grid-mobile md:gap-grid lg:grid-cols-3">
         <FadeIn className="lg:row-span-2">
           <Card className="flex h-full flex-col justify-between gap-6 md:gap-10 lg:p-10">
-            <h2 id="probleme-titlu" className="text-h2-mobile font-bold text-balance md:text-h2">
+            <h2 id="probleme-titlu" className="text-h2-mobile font-bold text-balance md:text-h2 text-metal">
               {problems.title}
             </h2>
             <p className="text-h3-mobile font-semibold text-balance text-muted md:text-h3">{problems.closing}</p>

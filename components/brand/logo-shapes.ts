@@ -22,3 +22,6 @@ export const logoDot = { cx: 395.242, cy: 215.848, r: 47.652 };
 
 /** Doar simbolul (orbita + punctul), pentru iconițe. */
 export const symbolViewBox = { width: 442.894, height: 431.697 };
+
+/** Doar textul „creos" (formele 1–5 din logoShapes), decupat strâns: literele uriașe din hero. */
+export const lettersViewBox = { x: 543.2, y: 100.6, width: 1111.3, height: 230.5 };

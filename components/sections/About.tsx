@@ -26,7 +26,7 @@ export async function About() {
             <div aria-hidden className="pointer-events-none absolute right-6 -bottom-16 -z-10 select-none md:right-8">
               <Submark size="display" variant="outline" />
             </div>
-            <h2 id="despre-titlu" className="text-h2-mobile font-bold text-balance md:text-h2">
+            <h2 id="despre-titlu" className="text-h2-mobile font-bold text-balance md:text-h2 text-metal">
               {about.title}
             </h2>
             <p className="mt-4 text-base font-medium tracking-tight text-pretty text-muted md:mt-6 md:text-xl">

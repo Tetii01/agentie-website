@@ -1,17 +1,23 @@
 import { ArrowRight } from "lucide-react";
+import { logoShapes, lettersViewBox } from "@/components/brand/logo-shapes";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { LanguageSwitch } from "@/components/ui/LanguageSwitch";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { RotatingText, RotationProvider } from "@/components/ui/RotatingText";
 import { getContent } from "@/content";
 
 /**
  * Hero: un card mare (mai scurt decât ecranul, ca să se vadă că pagina continuă). Sus, un „cer"
- * întunecat cu o rețea fină de puncte; jos, un orizont care se aprinde în accent.
+ * întunecat cu o rețea fină de puncte; jos, un orizont care se aprinde în accent, cu o lumină care „respiră".
+ * În spatele orizontului, „creos" în litere uriașe, care urcă la încărcare.
  * Deasupra orizontului, în stânga: titlul pe două rânduri (acțiunea AI-ului se schimbă singură), butonul
- * principal și, lângă el, butonul discret de schimbare a limbii (RO / EN).
- * Stilurile: hero-frame, hero-dots, hero-horizon în app/globals.css.
+ * principal și, lângă el, butonul discret de schimbare a limbii (RO / EN). Amândouă sunt magnetice.
+ *
+ * Mișcarea (preluată din „motion footer"): titlul și butoanele urcă unul după altul la încărcare; la scroll,
+ * restul paginii urcă peste hero ca o cortină (app/[lang]/page.tsx), iar hero-ul se retrage și literele
+ * coboară înapoi după orizont (hero-recede, hero-letters-sink). Stilurile: app/globals.css.
  */
 export async function Hero() {
   const { hero, ui } = await getContent();
@@ -20,17 +26,39 @@ export async function Hero() {
   return (
     <section className="pt-[calc(var(--spacing-header-mobile)+0.5rem)] md:pt-[calc(var(--spacing-header)+0.75rem)]">
       <Container>
-        <div className="hero-frame relative isolate flex min-h-[26rem] flex-col justify-end overflow-hidden rounded-card md:min-h-[clamp(36rem,calc(100svh-var(--spacing-header)-6rem),44rem)]">
+        <div className="hero-frame hero-recede relative isolate flex min-h-[26rem] flex-col justify-end overflow-hidden rounded-card md:min-h-[clamp(36rem,calc(100svh-var(--spacing-header)-6rem),44rem)]">
           <div aria-hidden className="hero-dots absolute inset-0 -z-10" />
+          {/* „creos" uriaș: baza literelor stă puțin sub orizont, care o acoperă (orizontul vine după, în DOM). */}
+          <div
+            aria-hidden
+            className="hero-letters-sink pointer-events-none absolute inset-x-0 bottom-[calc(6rem-1.5rem)] -z-10 flex justify-center md:bottom-[calc(10rem-3rem)]"
+          >
+            <div className="w-[94%] animate-letters-rise">
+              <svg
+                viewBox={`${lettersViewBox.x} ${lettersViewBox.y} ${lettersViewBox.width} ${lettersViewBox.height}`}
+                className="hero-letters block h-auto w-full"
+              >
+                <defs>
+                  <linearGradient id="hero-letters-fill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stopColor="currentColor" stopOpacity="0.14" />
+                    <stop offset="0.7" stopColor="currentColor" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                {logoShapes.slice(1).map((d) => (
+                  <path key={d} d={d} fill="url(#hero-letters-fill)" vectorEffect="non-scaling-stroke" />
+                ))}
+              </svg>
+            </div>
+          </div>
           {/* Orizontul: marginea de sus a cercului stă la 6rem (mobil) / 10rem (desktop) de jos. */}
           <div
             aria-hidden
             className="hero-horizon absolute top-[calc(100%-6rem)] left-1/2 -z-10 aspect-square w-[300%] -translate-x-1/2 md:top-[calc(100%-10rem)] md:w-[160%]"
           />
-          {/* „Soarele": un glow moale pe mijlocul orizontului. */}
+          {/* „Soarele": un glow moale pe mijlocul orizontului, care respiră încet. */}
           <div
             aria-hidden
-            className="absolute top-[calc(100%-6rem)] left-1/2 -z-10 h-28 w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/25 blur-3xl md:top-[calc(100%-10rem)] md:h-36 md:w-[50%]"
+            className="absolute top-[calc(100%-6rem)] left-1/2 -z-10 h-28 w-[80%] -translate-x-1/2 -translate-y-1/2 animate-breathe rounded-full bg-accent/25 blur-3xl md:top-[calc(100%-10rem)] md:h-36 md:w-[50%]"
           />
 
           <RotationProvider items={hero.actions}>
@@ -41,28 +69,29 @@ export async function Hero() {
                     <span className="sr-only">
                       {hero.title} {hero.highlight}
                     </span>
-                    <span aria-hidden className="block">
+                    <span aria-hidden className="block text-metal">
                       {hero.title}
                     </span>
-                    <span aria-hidden className="whitespace-nowrap">
+                    <span aria-hidden className="whitespace-nowrap text-metal">
                       {hero.subject}{" "}
                     </span>
                     <RotatingText className="text-accent" />
                   </h1>
                 </FadeIn>
 
-                <FadeIn eager delay={120} className="mt-6 flex flex-wrap items-center gap-2.5 md:mt-10 md:gap-3">
-                  <Button href={primaryCta.href} variant="light" size="cta">
-                    {primaryCta.label}
-                    <span className="grid size-9 place-items-center rounded-full bg-accent text-accent-foreground md:size-12">
-                      <ArrowRight aria-hidden className="size-4 md:size-5" />
-                    </span>
-                  </Button>
-                  <LanguageSwitch {...ui.languageSwitch} />
+                <FadeIn eager delay={150} className="mt-6 flex flex-wrap items-center gap-2.5 md:mt-10 md:gap-3">
+                  <Magnetic>
+                    <Button href={primaryCta.href} variant="light" size="cta">
+                      {primaryCta.label}
+                      <span className="grid size-9 place-items-center rounded-full bg-accent text-accent-foreground md:size-12">
+                        <ArrowRight aria-hidden className="size-4 md:size-5" />
+                      </span>
+                    </Button>
+                  </Magnetic>
+                  <Magnetic>
+                    <LanguageSwitch {...ui.languageSwitch} />
+                  </Magnetic>
                 </FadeIn>
-                {/* Marcaj pentru CTA-ul plutitor: apare după ce linia de sub buton trece de header.
-                    Stă în afara FadeIn, ca animația (care coboară butonul 20px) să nu-l miște. */}
-                <div data-floating-cta-trigger aria-hidden className="h-px w-full" />
               </div>
             </div>
           </RotationProvider>

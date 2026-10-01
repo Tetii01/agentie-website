@@ -8,7 +8,7 @@ export function LegalDocument({ doc }: { doc: LegalDocumentData }) {
     <article className="pt-32 pb-section-mobile md:pt-44 md:pb-section">
       <Container>
         <div className="mx-auto max-w-legal">
-          <h1 className="text-h2-mobile font-bold text-balance md:text-h2">{doc.title}</h1>
+          <h1 className="text-h2-mobile font-bold text-balance md:text-h2 text-metal">{doc.title}</h1>
           <p className="mt-4 text-sm text-muted">
             {legal.updatedLabel} {doc.updated}
           </p>

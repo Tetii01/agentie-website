@@ -17,7 +17,7 @@ export async function FinalCtaCard({ className }: { className?: string }) {
     <Card className={className}>
       <div className="flex h-full flex-col items-center justify-center gap-6 text-center">
         <Submark />
-        <h2 id="cta-final-titlu" className="text-h3-mobile font-bold text-balance md:text-h3">
+        <h2 id="cta-final-titlu" className="text-h3-mobile font-bold text-balance md:text-h3 text-metal">
           {finalCta.title}
         </h2>
         <div className="flex flex-wrap items-center justify-center gap-3">

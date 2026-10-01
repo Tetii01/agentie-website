@@ -538,6 +538,8 @@ export const about = {
 /* ───────────────────────── 5.12 Footer ───────────────────────── */
 
 export const footer = {
+  /** Titlurile coloanelor din footer. */
+  headings: { navigation: "Navigare", contact: "Contact", legal: "Legal", social: "Social" },
   /** Afișat ca: „© {brand.name}. {rights} {anul curent}." */
   rights: "Toate drepturile rezervate",
   legalLinks: [
@@ -847,8 +849,6 @@ export const ui = {
   close: "Închide",
   /** Butonul de limbă din hero: duce la varianta în engleză. */
   languageSwitch: { label: "EN", name: "English", href: "/en", lang: "en" },
-  /** Indicația de jos din intro-ul 3D (prima pagină): o pilulă cu un inel care se umple pe măsură ce derulezi. */
-  intro: { hint: "Derulează pentru a intra pe site" },
   carousel: {
     previous: "Înapoi",
     next: "Înainte",

@@ -89,7 +89,7 @@ async function TestimonialCard({ item }: { item: Testimonial }) {
   const { testimonials, ui } = await getContent();
 
   return (
-    <article className="card-surface flex h-full flex-col gap-4 rounded-card-sm p-5 md:min-h-72 md:gap-5 md:px-6 md:py-6.5">
+    <article className="card-surface relative flex h-full flex-col gap-4 rounded-card-sm p-5 md:min-h-72 md:gap-5 md:px-6 md:py-6.5">
       <div className="flex items-center gap-4">
         <Media
           image={item.avatar}

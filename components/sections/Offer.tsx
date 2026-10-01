@@ -39,7 +39,7 @@ export async function Offer() {
                 <Sparkles aria-hidden className="size-3.5 text-accent" />
                 {offer.eyebrow}
               </p>
-              <h2 id="analiza-titlu" className="mt-5 text-h2-mobile font-bold text-balance md:text-h2">
+              <h2 id="analiza-titlu" className="mt-5 text-h2-mobile font-bold text-balance md:text-h2 text-metal">
                 <RichText text={offer.title} strongClassName="font-bold text-accent" />
               </h2>
               <p className="mt-3 max-w-md text-sm text-pretty text-muted md:mt-4 md:text-base">{offer.subtitle}</p>

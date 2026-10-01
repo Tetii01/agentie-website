@@ -25,7 +25,7 @@ export async function Services() {
         <FadeIn as="li" className="col-span-2 md:col-span-1">
           <Card className="flex h-full flex-col justify-between gap-6 md:gap-10 lg:p-10">
             <div>
-              <h2 id="servicii-titlu" className="text-h2-mobile font-bold text-balance md:text-h2">
+              <h2 id="servicii-titlu" className="text-h2-mobile font-bold text-balance md:text-h2 text-metal">
                 {services.title}
               </h2>
               <p className="mt-3 text-sm text-pretty text-muted md:mt-4 md:text-lg">{services.subtitle}</p>

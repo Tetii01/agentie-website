@@ -316,6 +316,7 @@ export const en: SiteContent = {
 
   footer: {
     ...ro.footer,
+    headings: { navigation: "Navigation", contact: "Contact", legal: "Legal", social: "Social" },
     rights: "All rights reserved",
     legalLinks: [
       { label: "Privacy policy (RO)", href: ro.footer.legalLinks[0].href },
@@ -342,7 +343,6 @@ export const en: SiteContent = {
     projectDetails: "Project details",
     close: "Close",
     languageSwitch: { label: "RO", name: "Română", href: "/", lang: "ro" },
-    intro: { hint: "Scroll to enter the website" },
     carousel: {
       previous: "Previous",
       next: "Next",

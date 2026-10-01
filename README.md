@@ -66,16 +66,24 @@ Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „cr
 - **Iconița iOS:** `app/apple-icon.tsx`. Doar simbolul: orbita și punctul.
 - **Favicon:** `app/icon.svg`. Doar simbolul, cu forma și culorile copiate direct, pentru că e un fișier static.
 
-## Intro-ul 3D
+## Mișcarea și stilul „liquid metal"
 
-Prima pagină începe cu un intro 3D, pe care îl parcurgi derulând. Submark-ul Creos, cu C-ul alb și punctul în accent, se formează: C-ul se întoarce spre față, iar punctul face un arc peste el și intră în deschidere. Apoi în mijlocul C-ului se deschide un portal prin care se vede site-ul, iar camera zboară prin el. Jos, o pilulă („Derulează pentru a intra pe site") are un inel care se umple pe măsură ce derulezi. Pe margini se văd rețeaua de puncte din hero și două lumini în accent care plutesc încet; mijlocul rămâne curat.
+**Hero** (`components/sections/Hero.tsx`). Animația e preluată din „Motion Footer" (21st.dev, Hossain Jahed) și întoarsă pentru partea de sus a paginii:
+- **La încărcare:** titlul și butoanele urcă unul după altul. Din spatele orizontului urcă „creos" în litere uriașe, doar contur, cu un gradient care se stinge. Lumina de pe orizont „respiră" încet.
+- **Cortina:** hero-ul stă fixat (`sticky`, în `app/[lang]/page.tsx`), iar restul paginii urcă peste el, cu marginea de sus rotunjită (utilitatea `hero-curtain`). Cât e acoperit, hero-ul se micșorează și se estompează, iar literele coboară înapoi după orizont. Merge din CSS (scroll-driven animations, `hero-recede` și `hero-letters-sink`), fără JavaScript, deci e fluid și pe telefon. Browserele fără suport păstrează hero-ul static.
+- **Butoane magnetice:** butoanele din hero urmăresc cursorul și revin elastic (`components/ui/Magnetic.tsx`). Doar cu mouse/trackpad.
+- **Momentele:** tokenurile `--animate-letters-rise`, `--animate-breathe`, `--ease-elastic` și blocul „HERO LA SCROLL" din `app/globals.css`.
 
-- **Componenta:** `components/sections/Intro.tsx`. Ține hero-ul fixat sub intro și îl dezvăluie la final. În `app/[lang]/page.tsx` învelește `<Hero />`; dacă scoți `<Intro>`, pagina începe direct cu hero-ul.
-- **Scena 3D:** `lib/intro-scene.ts`, cu three.js. E simplă intenționat, ca să meargă fluid pe telefon: fără texturi, fără reflexii, două lumini fixe. Se încarcă abia după ce pagina e afișată, într-un fișier separat, și se pregătește pe mai multe cadre, ca pagina să nu se blocheze. Culorile vin din tokens (`--color-foreground`, `--color-accent`, `--color-background`), forma din `components/brand/logo-shapes.ts`.
-- **Momentele animației:** `lib/intro-timeline.ts`, ca progres al scroll-ului (0–1).
-- **Distanța de scroll:** tokenul `--spacing-intro` din `app/globals.css`.
-- **Textul pilulei:** `ui.intro.hint`.
-- **Când nu apare deloc:** fără JavaScript, fără WebGL și când utilizatorul a cerut mai puține animații (`prefers-reduced-motion`).
+**Footer** (`components/sections/Footer.tsx`), după „Footer Section" (21st.dev, efferd), adaptat la site:
+- **Aspect:** colțuri mari sus, o linie care strălucește pe margine și o lumină moale care cade din mijloc.
+- **Conținut:** logo, © și datele firmei, apoi patru coloane: navigare, contact, legal, social. Titlurile coloanelor sunt în `footer.headings`.
+- **Apariție:** fiecare bloc apare dintr-un blur, unul după altul (`FadeIn` cu `variant="blur"`).
+
+**Liquid metal** (după „Liquid Metal Button", 21st.dev, johuniq), pe tot site-ul. Varianta e din CSS, fără WebGL, ca să rămână ușoară pe telefon:
+- **Butoanele principale** (`Button` `primary` și `light`, CTA-ul plutitor): un interior închis cu un inel cromat care curge încet (utilitatea `liquid-metal`, gradientul `--gradient-metal`). Apăsare și hover cu „arc" (`--ease-overshoot`).
+- **Butoanele secundare și controalele** (săgeți, buline, limba): contur metalic static (`metal-border`, `--gradient-control-border`).
+- **Cardurile și hero-ul:** muchii care prind lumina (`--gradient-card-border`).
+- **Titlurile mari:** text metalic, alb care se stinge spre jos (`text-metal`).
 
 ## Placeholder-e → conținut real
 

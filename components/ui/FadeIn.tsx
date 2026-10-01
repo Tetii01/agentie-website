@@ -12,6 +12,8 @@ type FadeInProps = {
    * fără să aștepte JavaScript-ul. După aceea se comportă ca oricare FadeIn.
    */
   eager?: boolean;
+  /** `blur`: coboară puțin și se clarifică (footer). Implicit: urcă. */
+  variant?: "rise" | "blur";
   as?: "div" | "li" | "span";
   className?: string;
 };
@@ -45,7 +47,7 @@ function targetFor(element: HTMLElement) {
   return group && window.matchMedia("(max-width: 47.99rem)").matches ? group : element;
 }
 
-export function FadeIn({ children, delay = 0, eager = false, as = "div", className }: FadeInProps) {
+export function FadeIn({ children, delay = 0, eager = false, variant = "rise", as = "div", className }: FadeInProps) {
   const ref = useRef<HTMLElement>(null);
   const Tag = as as "div";
 
@@ -73,7 +75,7 @@ export function FadeIn({ children, delay = 0, eager = false, as = "div", classNa
   return (
     <Tag
       ref={ref as RefObject<HTMLDivElement>}
-      className={cn("fade-in-section", eager && "fade-in-eager is-visible", className)}
+      className={cn("fade-in-section", eager && "fade-in-eager is-visible", variant === "blur" && "fade-in-blur", className)}
       style={delay ? ({ "--fade-delay": `${delay}ms` } as CSSProperties) : undefined}
     >
       {children}

@@ -14,8 +14,9 @@ type FloatingCtaProps = {
 
 /**
  * Pilulă fixată jos pe centru care duce la formularul de analiză.
- * Apare abia după ce butoanele din hero ies din ecran pe sus (marcajul `data-floating-cta-trigger`
- * de sub ele trece de header), și se ascunde cât timp secțiunea formularului e vizibilă.
+ * Apare abia după ce restul paginii a acoperit hero-ul (marcajul `data-floating-cta-trigger` de la
+ * începutul „cortinei", în app/[lang]/page.tsx, trece de header), și se ascunde cât timp secțiunea
+ * formularului e vizibilă. Stil liquid metal, ca butoanele principale.
  * Apariția folosește aceeași durată și același easing ca fade-in-ul (duration-fade, ease-fade).
  * Textele vin prin props din content/site.ts (floatingCta).
  */
@@ -28,7 +29,7 @@ export function FloatingCta({ line1, line2, href }: FloatingCtaProps) {
 
     const trigger = document.querySelector("[data-floating-cta-trigger]");
     if (trigger) {
-      // „A ieșit din ecran" = marcajul de sub butoanele din hero a trecut pe sus de header.
+      // „A ieșit din ecran" = marcajul de la începutul cortinei a trecut pe sus de header.
       const headerHeight = document.querySelector<HTMLElement>("[data-site-header]")?.offsetHeight ?? 0;
       const io = new IntersectionObserver(
         ([entry]) =>
@@ -60,7 +61,7 @@ export function FloatingCta({ line1, line2, href }: FloatingCtaProps) {
       inert={hidden}
       className={cn(
         "fixed bottom-[2%] left-1/2 z-40 flex w-[calc(100%-24px)] -translate-x-1/2 items-center justify-between gap-4",
-        "rounded-pill border border-accent bg-accent/10 py-2 pr-2 pl-5 backdrop-blur-xl",
+        "liquid-metal rounded-pill py-2 pr-2 pl-5",
         "transition-[opacity,translate] duration-fade ease-fade motion-reduce:transition-none",
         "md:bottom-[4%] md:w-auto md:gap-6 md:pl-6",
         hidden && "pointer-events-none translate-y-5 opacity-0",

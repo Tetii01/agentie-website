@@ -31,6 +31,8 @@
   --color-control: #161616; /* săgețile și bara cu buline de sub carusele */
   --color-dot: rgba(224, 224, 226, 0.1); /* bulinele inactive */
   --color-dot-active: #e0e0e2; /* bulina activă, săgețile la hover */
+  --color-metal-from: #202022; /* interiorul butoanelor liquid metal: sus... */
+  --color-metal-to: #050506; /* ...și jos */
 
   /* Raze de colț */
   --radius-card: 34px;
@@ -38,6 +40,8 @@
   --radius-inner: 22px; /* imagini în interiorul cardurilor (raza cardului − padding) */
   --radius-card-sm: 27px; /* cardurile din interiorul unui container (testimoniale) */
   --radius-field: 16px; /* câmpurile din formular */
+  --radius-curtain: 2.5rem; /* marginea de sus a „cortinei" care urcă peste hero */
+  --radius-footer: 3rem; /* colțurile de sus ale footer-ului */
 
   /* Tipografie. Titlurile: bold, litere strânse. Textul: 16–19px, rânduri aerisite. */
   /* Titlul din hero crește cu ecranul, cât încape cel mai lung rând („AI-ul citește emailurile."),
@@ -87,7 +91,6 @@
   --spacing-header: 4.5rem; /* înălțimea header-ului */
   --spacing-header-mobile: 4rem;
   --spacing-marquee: 3.5rem; /* distanța dintre elementele din logo loop */
-  --spacing-intro: 140svh; /* cât derulezi prin intro-ul 3D până apare site-ul (components/sections/Intro.tsx) */
 
   /* Animații */
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -95,28 +98,44 @@
   --transition-duration-fade: 800ms; /* fade-in la scroll și apariția CTA-ului plutitor */
   --transition-duration-slide: 600ms; /* un pas în carusele (săgeți, buline), cu --ease-smooth */
   --ease-fade: ease-in-out; /* easing-ul fade-in-ului */
+  --ease-out-strong: cubic-bezier(0.16, 1, 0.3, 1); /* hero: titlul, butoanele și literele mari urcă la încărcare */
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1); /* butoanele liquid metal: apăsare și hover cu „arc" */
+  /* Revenirea elastică a butoanelor magnetice (ca elastic.out(1, 0.3) din GSAP). */
+  --ease-elastic: linear(0, 0.216, 0.518, 0.832, 1.097, 1.279, 1.364, 1.363, 1.296, 1.193, 1.081, 0.982, 0.912, 0.875, 0.87, 0.889, 0.924, 0.964, 1, 1.027, 1.043, 1.047, 1.041, 1.03, 1.016, 1.002, 0.992, 0.986, 0.984, 0.985, 0.989, 0.993, 0.998, 1.002, 1.005, 1.006, 1.006, 1.004, 1.003, 1.001, 0.999, 0.998, 0.998, 0.998, 0.998, 0.999, 1, 1, 1);
+  --transition-duration-spring: 800ms; /* butoanele liquid metal */
+  --transition-duration-magnet: 1200ms; /* revenirea butoanelor magnetice */
+  --animate-metal-flow: metal-flow 6s linear infinite; /* inelul cromat al butoanelor liquid metal */
+  --animate-breathe: breathe 8s ease-in-out infinite alternate; /* hero: lumina de pe orizont „respiră" */
+  --animate-letters-rise: letters-rise 1.8s var(--ease-out-strong) 0.25s both; /* hero: „creos" urcă din spatele orizontului */
+
+  @keyframes metal-flow {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  @keyframes breathe {
+    from {
+      scale: 1;
+      opacity: 0.6;
+    }
+    to {
+      scale: 1.1;
+      opacity: 1;
+    }
+  }
+
+  @keyframes letters-rise {
+    from {
+      transform: translateY(45%) scale(0.85);
+      opacity: 0;
+    }
+  }
   --animate-marquee: marquee 45s linear infinite; /* viteza logo loop-ului */
   --animate-step-next: step-in-next 450ms var(--ease-smooth) both; /* formular: pasul următor */
   --animate-step-back: step-in-back 450ms var(--ease-smooth) both; /* formular: înapoi */
   --animate-dialog-in: dialog-in 350ms var(--ease-smooth) both; /* fereastra de detalii a proiectelor */
   --animate-word-in: word-in 700ms var(--ease-smooth) both; /* hero: acțiunea nouă intră de jos */
-  --animate-scroll-hint: scroll-hint 1.6s var(--ease-smooth) infinite; /* intro: săgeata din indicația de scroll */
-  --animate-intro-drift: intro-drift 14s ease-in-out infinite alternate; /* intro: luminile de pe margini */
-
-  @keyframes intro-drift {
-    from {
-      transform: translate3d(-3%, 2%, 0) scale(1);
-    }
-    to {
-      transform: translate3d(3%, -2%, 0) scale(1.08);
-    }
-  }
-
-  @keyframes scroll-hint {
-    50% {
-      transform: translateY(3px);
-    }
-  }
 
   @keyframes dialog-in {
     from {
@@ -179,24 +198,46 @@
     --radius-card-sm: 20px;
     --radius-inner: 16px;
     --spacing-marquee: 2rem;
+    --radius-curtain: 1.75rem;
+    --radius-footer: 2rem;
   }
 }
 
-/* Contururile în gradient (lumină care cade din stânga-sus), folosite de utilitățile de mai jos. */
+/* Contururile metalice (lumină care cade din stânga-sus, ca pe un metal lustruit), folosite de utilitățile de mai jos. */
 :root {
   --gradient-card-border: linear-gradient(
     140deg,
-    rgb(255 255 255 / 0.15) 0%,
-    rgb(31 31 31 / 0.8) 24%,
-    rgb(255 255 255 / 0.13) 80%,
+    rgb(255 255 255 / 0.3) 0%,
+    rgb(31 31 31 / 0.8) 22%,
+    rgb(255 255 255 / 0.08) 50%,
+    rgb(255 255 255 / 0.22) 78%,
     rgb(31 31 31 / 0) 100%
   );
+  /* Controalele mici (săgeți, buline, limba, butoanele secundare): crom static. */
   --gradient-control-border: linear-gradient(
-    45deg,
-    rgb(102 102 102 / 0.3) 0%,
-    rgb(73 73 73 / 0.3) 33%,
-    rgb(171 171 171 / 0.3) 70%,
-    rgb(255 255 255 / 0.3) 100%
+    135deg,
+    rgb(255 255 255 / 0.55) 0%,
+    rgb(120 120 128 / 0.25) 28%,
+    rgb(255 255 255 / 0.4) 55%,
+    rgb(90 90 98 / 0.25) 78%,
+    rgb(255 255 255 / 0.45) 100%
+  );
+  /* Inelul cromat animat al butoanelor principale (liquid metal): benzi de argint, cu o urmă de accent. */
+  --gradient-metal: conic-gradient(
+    from 0deg,
+    #1b1b1f 0%,
+    #f5f5f8 7%,
+    #6e6e76 13%,
+    #e9e9ef 20%,
+    #18181b 30%,
+    #a9a9b3 40%,
+    #fbfbff 47%,
+    color-mix(in oklab, var(--color-accent) 55%, white) 52%,
+    #3b3b42 60%,
+    #dcdce3 70%,
+    #222226 80%,
+    #f1f1f6 90%,
+    #1b1b1f 100%
   );
 }
 
@@ -224,36 +265,102 @@
   background-image: var(--gradient-control-border);
 }
 
-/* Butonul principal: pilulă lucioasă în culoarea de accent, cu glow discret. */
-@utility button-glossy {
-  color: var(--color-accent-foreground);
+/*
+ * Liquid metal (butoanele principale): un inel cromat care curge încet în jurul unui interior închis.
+ * Inelul e un gradient conic rotit doar din transform (::before), deci se mișcă fără să fie redesenat;
+ * interiorul (::after) acoperă tot în afară de marginea de --metal-ring. Hover: metalul se aprinde puțin.
+ * Elementul trebuie să fie poziționat (relative, fixed...), ca cele două straturi să stea în el.
+ */
+@utility liquid-metal {
+  --metal-ring: 1.5px;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--color-foreground);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.35),
+    0 9px 9px rgb(0 0 0 / 0.12),
+    0 2px 5px rgb(0 0 0 / 0.15);
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    top: 50%;
+    left: 50%;
+    width: max(160%, 6rem);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    background: var(--gradient-metal);
+    animation: var(--animate-metal-flow);
+    transition: filter var(--transition-duration-base) var(--ease-smooth);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: var(--metal-ring);
+    border-radius: inherit;
+    background: linear-gradient(180deg, var(--color-metal-from) 0%, var(--color-metal-to) 100%);
+  }
+
+  &:hover::before {
+    filter: brightness(1.25);
+  }
+}
+
+/* Contur metalic static, de 1px, pe un fundal închis (butoanele secundare). */
+@utility metal-border {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, var(--color-surface-2) 0%, var(--color-control) 100%) padding-box,
+    var(--gradient-control-border) border-box;
+}
+
+/* Text metalic: alb care se stinge spre jos, ca un metal lustruit (titlurile mari). */
+@utility text-metal {
   background-image: linear-gradient(
     180deg,
-    color-mix(in oklab, var(--color-accent) 45%, white) 0%,
-    var(--color-accent) 48%,
-    color-mix(in oklab, var(--color-accent) 82%, black) 100%
+    var(--color-foreground) 0%,
+    color-mix(in oklab, var(--color-foreground) 62%, transparent) 100%
   );
-  box-shadow:
-    inset 0 -0.3px 0 1px color-mix(in oklab, var(--color-accent) 55%, white),
-    -1px 3px 20px 0 color-mix(in oklab, var(--color-accent) 35%, transparent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ==========================================================================
    HERO (components/sections/Hero.tsx)
    Un card mare, curat: sus un cer întunecat cu o rețea fină de puncte, jos un
    „orizont" (marginea unei planete) care se aprinde în accent. Textul stă aliniat
-   la stânga, deasupra orizontului.
+   la stânga, deasupra orizontului; în spatele orizontului, „creos" în litere uriașe.
+   Restul paginii urcă peste hero ca o cortină (hero-curtain).
    ========================================================================== */
 
 @utility hero-frame {
-  border: 1px solid rgb(255 255 255 / 0.08);
-  background-color: #0b0b0d;
-  background-image: linear-gradient(
-    180deg,
-    transparent 30%,
-    color-mix(in oklab, var(--color-accent) 7%, transparent) 70%,
-    transparent 100%
-  );
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, transparent 30%, color-mix(in oklab, var(--color-accent) 7%, transparent) 70%, transparent 100%)
+      padding-box,
+    linear-gradient(#0b0b0d, #0b0b0d) padding-box,
+    var(--gradient-card-border) border-box;
+}
+
+/* Literele uriașe „creos" din spatele orizontului: doar contur fin și un gradient care se stinge în jos. */
+@utility hero-letters {
+  color: var(--color-foreground);
+  stroke: color-mix(in oklab, var(--color-foreground) 9%, transparent);
+  stroke-width: 1px;
+}
+
+/* Cortina: restul paginii, care urcă peste hero. Margine de sus rotunjită, cu o linie metalică și o umbră în sus. */
+@utility hero-curtain {
+  border-radius: var(--radius-curtain) var(--radius-curtain) 0 0;
+  background-color: var(--color-background);
+  background-image: radial-gradient(40% 120px at 50% 0%, rgb(255 255 255 / 0.05), transparent);
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.08),
+    0 -30px 60px -20px rgb(0 0 0 / 0.9);
 }
 
 /* Rețeaua de puncte din „cer", care se estompează spre margini. */
@@ -279,38 +386,14 @@
 }
 
 /* ==========================================================================
-   INTRO 3D (components/sections/Intro.tsx, scena în lib/intro-scene.ts)
+   FOOTER (components/sections/Footer.tsx): colțuri mari sus, o linie fină pe
+   margine și o lumină moale care cade din mijlocul marginii de sus.
    ========================================================================== */
 
-/* Marginile intro-ului: două lumini moi în accent, la stânga și la dreapta (mijlocul rămâne curat). */
-@utility intro-side-glow {
-  background-image:
-    radial-gradient(
-      ellipse 38% 55% at 4% 40%,
-      color-mix(in oklab, var(--color-accent) 32%, transparent) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 34% 50% at 96% 62%,
-      color-mix(in oklab, var(--color-accent) 24%, transparent) 0%,
-      transparent 70%
-    );
-}
-
-/* Marginile intro-ului: rețeaua de puncte din hero (hero-dots), vizibilă doar spre margini. */
-@utility intro-side-dots {
-  background-image: radial-gradient(rgb(255 255 255 / 0.12) 1px, transparent 1.5px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 35%, black 95%);
-}
-
-/* Lumina discretă în accent din spatele logo-ului (se stinge când logo-ul e complet). */
-@utility intro-glow {
-  background-image: radial-gradient(
-    circle at 50% 50%,
-    color-mix(in oklab, var(--color-accent) 12%, transparent) 0%,
-    transparent 55%
-  );
+@utility footer-surface {
+  border-radius: var(--radius-footer) var(--radius-footer) 0 0;
+  background-image: radial-gradient(35% 128px at 50% 0%, rgb(255 255 255 / 0.07), transparent);
+  box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.1);
 }
 
 /* ==========================================================================
@@ -403,18 +486,43 @@ html.lenis body {
   }
 
   /* Varianta pentru hero: pornește din CSS la încărcare, fără să aștepte
-     JavaScript-ul, ca titlul să nu întârzie LCP. După încărcare, toggle-ul
-     la scroll funcționează la fel ca la restul. */
+     JavaScript-ul, ca titlul să nu întârzie LCP. Urcă mai mult și mai hotărât
+     decât restul (ca în „motion footer"), una după alta. */
   .fade-in-section.fade-in-eager {
-    animation: fade-in-up var(--transition-duration-fade) var(--ease-fade) backwards;
+    animation: fade-in-up 1s var(--ease-out-strong) backwards;
     animation-delay: var(--fade-delay, 0ms);
   }
 
   @keyframes fade-in-up {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(50px);
     }
+  }
+
+  /* Varianta „blur" (footer): coboară puțin și se clarifică. */
+  .fade-in-section.fade-in-blur {
+    transform: translateY(-8px);
+    filter: blur(4px);
+    transition:
+      opacity var(--transition-duration-fade) var(--ease-fade),
+      transform var(--transition-duration-fade) var(--ease-fade),
+      filter var(--transition-duration-fade) var(--ease-fade);
+    transition-delay: var(--fade-delay, 0ms);
+  }
+
+  .fade-in-section.fade-in-blur.is-visible {
+    transform: none;
+    filter: none;
+  }
+
+  /* Butoane magnetice (components/ui/Magnetic.tsx): urmăresc cursorul și revin elastic. */
+  .magnetic {
+    transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .magnetic[data-magnet="release"] {
+    transition: transform var(--transition-duration-magnet) var(--ease-elastic);
   }
 
   /* Bandă infinită (components/ui/LogoLoop.tsx) */
@@ -452,45 +560,68 @@ html.lenis body {
   stroke-width: 1px;
 }
 
-/* Intro-ul 3D: header-ul se ascunde cât rulează și coboară la loc când apare site-ul.
-   În afara @layer, ca să bată tranziția din clasele header-ului. */
-[data-site-header] {
-  transition:
-    opacity var(--transition-duration-fade) var(--ease-smooth),
-    translate var(--transition-duration-fade) var(--ease-smooth),
-    visibility 0s;
+/* ==========================================================================
+   HERO LA SCROLL (scroll-driven animations, direct din CSS)
+   Cât cortina urcă peste hero, hero-ul se retrage (mai mic, mai estompat), iar
+   „creos" coboară înapoi după orizont. Animațiile urmează scroll-ul în browser,
+   fără JavaScript, deci sunt fluide și pe telefon. Browserele fără suport
+   păstrează hero-ul static.
+   ========================================================================== */
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-recede {
+      transform-origin: 50% 30%;
+      animation: hero-recede linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 90svh;
+    }
+
+    .hero-letters-sink {
+      animation: hero-letters-sink linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 60svh;
+    }
+  }
 }
 
-html[data-intro="playing"] [data-site-header] {
-  opacity: 0;
-  translate: 0 -100%;
-  visibility: hidden;
-  transition:
-    opacity var(--transition-duration-base) var(--ease-smooth),
-    translate var(--transition-duration-base) var(--ease-smooth),
-    visibility 0s linear var(--transition-duration-base);
+@keyframes hero-recede {
+  to {
+    transform: scale(0.92);
+    opacity: 0.25;
+  }
 }
 
-/* Fără intro (fără WebGL): nici stratul de deasupra, nici distanța de scroll. */
-html[data-intro="off"] .intro-overlay,
-html[data-intro="off"] .intro-spacer {
-  display: none;
+@keyframes hero-letters-sink {
+  to {
+    transform: translateY(40%);
+    opacity: 0;
+  }
 }
 
 /* ==========================================================================
    PREFERS-REDUCED-MOTION: fără fade-in (elemente vizibile direct),
-   marquee oprit, fără intro 3D. Lenis nu pornește deloc (components/ui/SmoothScroll.tsx).
+   marquee oprit, metal și lumini nemișcate. Lenis nu pornește deloc (components/ui/SmoothScroll.tsx).
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   .fade-in-section,
   .fade-in-section.is-visible,
-  .fade-in-section.fade-in-eager {
+  .fade-in-section.fade-in-eager,
+  .fade-in-section.fade-in-blur {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
     animation: none;
     will-change: auto;
+  }
+
+  /* Metalul stă pe loc, lumina nu mai respiră, literele mari apar direct. */
+  .liquid-metal::before,
+  .animate-breathe,
+  .animate-letters-rise {
+    animation: none;
   }
 
   .marquee {
@@ -511,12 +642,6 @@ html[data-intro="off"] .intro-spacer {
   }
 
   .marquee-group[aria-hidden="true"] {
-    display: none;
-  }
-
-  /* Fără intro 3D: pagina începe direct cu hero-ul. */
-  .intro-overlay,
-  .intro-spacer {
     display: none;
   }
 }

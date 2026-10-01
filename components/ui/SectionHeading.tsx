@@ -37,7 +37,7 @@ export function SectionHeading({
       {eyebrow && wrap(0, <Eyebrow>{eyebrow}</Eyebrow>)}
       {wrap(
         eyebrow ? 80 : 0,
-        <h2 id={titleId} className="text-h2-mobile font-bold text-balance md:text-h2">
+        <h2 id={titleId} className="text-h2-mobile font-bold text-balance md:text-h2 text-metal">
           {title}
         </h2>,
       )}

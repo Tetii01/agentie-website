@@ -2,15 +2,18 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { SmartLink } from "./SmartLink";
 
+/** Apăsare și hover cu „arc" (ca butonul liquid metal). */
+const spring = "transition-[scale,box-shadow] duration-spring ease-overshoot hover:scale-[1.03] active:scale-[0.97]";
+
 const variants = {
-  /** Pilulă lucioasă în culoarea de accent (utilitatea button-glossy); glow mai puternic la hover. */
-  primary: "button-glossy hover:brightness-110",
-  /** Pilulă albă cu text închis (butonul din hero). */
-  light: "bg-foreground text-background hover:bg-foreground/90",
-  /** Pilulă închisă, cu contur fin. */
-  secondary: "border border-border bg-surface-2 text-foreground hover:border-foreground/30",
+  /** Liquid metal: interior închis cu un inel cromat care curge (utilitatea liquid-metal). */
+  primary: cn("liquid-metal relative", spring),
+  /** Butonul mare din hero: tot liquid metal, cu inelul puțin mai gros. */
+  light: cn("liquid-metal relative [--metal-ring:2px]", spring),
+  /** Pilulă închisă, cu contur metalic static (utilitatea metal-border). */
+  secondary: cn("metal-border text-foreground", spring),
   /** Link discret, fără fundal. */
-  ghost: "text-muted hover:text-foreground",
+  ghost: "text-muted transition-colors duration-base ease-smooth hover:text-foreground",
 };
 
 const sizes = {
@@ -38,7 +41,6 @@ export type ButtonProps = ButtonAsLink | ButtonAsButton;
 function buttonClasses(variant: CommonProps["variant"] = "primary", size: CommonProps["size"] = "md", className?: string) {
   return cn(
     "inline-flex shrink-0 items-center justify-center rounded-pill font-medium whitespace-nowrap",
-    "transition-[background-color,color,border-color,box-shadow,filter] duration-base ease-smooth",
     "disabled:pointer-events-none disabled:opacity-50",
     variants[variant],
     sizes[size],
