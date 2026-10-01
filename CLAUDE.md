@@ -37,4 +37,5 @@ Spec-ul complet e în [docs/SPEC.md](docs/SPEC.md). Citește-l înainte de orice
 - CSS care trebuie să bată o utilitate Tailwind (ex. pauza marquee-ului peste `animate-marquee`) stă în afara `@layer`.
 - CTA-ul plutitor apare după ce marcajul `data-floating-cta-trigger` de sub butoanele din hero trece de header.
 - `cn()` doar concatenează clase (fără tailwind-merge). Un `className` care contrazice o clasă de bază a componentei (ex. `hidden` peste `inline-flex` din Button) nu câștigă sigur: pune vizibilitatea / display-ul pe un element părinte.
-- Fără GSAP sau Framer Motion. Animațiile sunt din CSS + IntersectionObserver (`FadeIn`, `LogoLoop`).
+- Fără GSAP sau Framer Motion. Animațiile sunt din CSS + IntersectionObserver (`FadeIn`, `LogoLoop`). Singura excepție e intro-ul 3D de pe prima pagină: three.js, încărcat dinamic doar acolo.
+- Intro-ul 3D: `components/sections/Intro.tsx` învelește `<Hero />` (îl ține `sticky` și îl dezvăluie), scena e în `lib/intro-scene.ts`, momentele în `lib/intro-timeline.ts` (singurul fișier comun, fără three.js; nu importa `lib/intro-scene.ts` static, altfel three.js intră în bundle-ul principal). Cât rulează, `html[data-intro="playing"]` ascunde header-ul. `scrollToId("top")` duce la hero (după intro), nu la 0.

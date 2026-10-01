@@ -333,6 +333,7 @@ export const en: SiteContent = {
     projectDetails: "Project details",
     close: "Close",
     languageSwitch: { label: "RO", name: "Română", href: "/", lang: "ro" },
+    intro: { hint: "Scroll" },
     carousel: {
       previous: "Previous",
       next: "Next",

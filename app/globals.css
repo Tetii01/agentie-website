@@ -87,6 +87,7 @@
   --spacing-header: 4.5rem; /* înălțimea header-ului */
   --spacing-header-mobile: 4rem;
   --spacing-marquee: 3.5rem; /* distanța dintre elementele din logo loop */
+  --spacing-intro: 180svh; /* cât derulezi prin intro-ul 3D până apare site-ul (components/sections/Intro.tsx) */
 
   /* Animații */
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -99,6 +100,26 @@
   --animate-step-back: step-in-back 450ms var(--ease-smooth) both; /* formular: înapoi */
   --animate-dialog-in: dialog-in 350ms var(--ease-smooth) both; /* fereastra de detalii a proiectelor */
   --animate-word-in: word-in 700ms var(--ease-smooth) both; /* hero: acțiunea nouă intră de jos */
+  --animate-scroll-hint: scroll-hint 2.2s var(--ease-smooth) infinite; /* intro: linia de sub „Derulează" */
+
+  @keyframes scroll-hint {
+    from {
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    45% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+    55% {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+    to {
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
+  }
 
   @keyframes dialog-in {
     from {
@@ -261,6 +282,24 @@
 }
 
 /* ==========================================================================
+   INTRO 3D (components/sections/Intro.tsx, scena în lib/intro-scene.ts)
+   ========================================================================== */
+
+/* Lumina discretă în accent din spatele logo-ului (se stinge când logo-ul e complet). */
+@utility intro-glow {
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in oklab, var(--color-accent) 12%, transparent) 0%,
+    transparent 55%
+  );
+}
+
+/* Linia animată de sub „Derulează". */
+@utility intro-hint-line {
+  background-image: linear-gradient(180deg, var(--color-muted), transparent);
+}
+
+/* ==========================================================================
    BAZĂ
    ========================================================================== */
 
@@ -399,9 +438,34 @@ html.lenis body {
   stroke-width: 1px;
 }
 
+/* Intro-ul 3D: header-ul se ascunde cât rulează și coboară la loc când apare site-ul.
+   În afara @layer, ca să bată tranziția din clasele header-ului. */
+[data-site-header] {
+  transition:
+    opacity var(--transition-duration-fade) var(--ease-smooth),
+    translate var(--transition-duration-fade) var(--ease-smooth),
+    visibility 0s;
+}
+
+html[data-intro="playing"] [data-site-header] {
+  opacity: 0;
+  translate: 0 -100%;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-duration-base) var(--ease-smooth),
+    translate var(--transition-duration-base) var(--ease-smooth),
+    visibility 0s linear var(--transition-duration-base);
+}
+
+/* Fără intro (fără WebGL): nici stratul de deasupra, nici distanța de scroll. */
+html[data-intro="off"] .intro-overlay,
+html[data-intro="off"] .intro-spacer {
+  display: none;
+}
+
 /* ==========================================================================
    PREFERS-REDUCED-MOTION: fără fade-in (elemente vizibile direct),
-   marquee oprit. Lenis nu pornește deloc (components/ui/SmoothScroll.tsx).
+   marquee oprit, fără intro 3D. Lenis nu pornește deloc (components/ui/SmoothScroll.tsx).
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -433,6 +497,12 @@ html.lenis body {
   }
 
   .marquee-group[aria-hidden="true"] {
+    display: none;
+  }
+
+  /* Fără intro 3D: pagina începe direct cu hero-ul. */
+  .intro-overlay,
+  .intro-spacer {
     display: none;
   }
 }

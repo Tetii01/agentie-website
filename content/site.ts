@@ -823,6 +823,8 @@ export const ui = {
   close: "Închide",
   /** Butonul de limbă din hero: duce la varianta în engleză. */
   languageSwitch: { label: "EN", name: "English", href: "/en", lang: "en" },
+  /** Indicația de jos din intro-ul 3D (prima pagină), care dispare la primul scroll. */
+  intro: { hint: "Derulează" },
   carousel: {
     previous: "Înapoi",
     next: "Înainte",
