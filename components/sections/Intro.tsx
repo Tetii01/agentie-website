@@ -237,9 +237,10 @@ export function Intro({ hint, children }: IntroProps) {
         <div ref={glowRef} className="intro-glow absolute inset-0" />
         <canvas ref={canvasRef} className="absolute inset-0 size-full opacity-0" />
         {/* Marginile: rețeaua de puncte din hero și două lumini în accent care plutesc încet; mijlocul rămâne
-            curat. Deasupra scenei, ca să rămână și peste fundalul portalului (dispar cât camera trece prin el). */}
+            curat. Deasupra scenei, ca să rămână și peste fundalul portalului (dispar cât camera trece prin el).
+            Luminile plutesc doar de la tabletă în sus; pe telefon stau pe loc (mai puțin de lucru pentru telefon). */}
         <div ref={sidesRef} className="absolute inset-0 overflow-hidden">
-          <div className="intro-side-glow absolute inset-[-10%] animate-intro-drift" />
+          <div className="intro-side-glow absolute inset-[-10%] md:animate-intro-drift" />
           <div className="intro-side-dots absolute inset-0" />
         </div>
       </div>

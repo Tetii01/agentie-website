@@ -12,13 +12,15 @@ function pageTop() {
 
 /**
  * Scroll la secțiunea cu id-ul dat („top" = începutul paginii, adică hero-ul, după intro).
- * Folosește Lenis când e pornit, altfel scroll nativ instant (prefers-reduced-motion).
+ * Folosește Lenis când e pornit (desktop). Altfel scroll nativ: lin pe telefon, instant la prefers-reduced-motion.
  * Întoarce false dacă secțiunea nu există pe pagina curentă.
  */
 export function scrollToId(id: string, lenis: Lenis | null): boolean {
+  const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
   if (id === "top") {
     if (lenis) lenis.scrollTo(pageTop());
-    else window.scrollTo({ top: pageTop() });
+    else window.scrollTo({ top: pageTop(), behavior });
     return true;
   }
 
@@ -29,7 +31,7 @@ export function scrollToId(id: string, lenis: Lenis | null): boolean {
   if (lenis) {
     lenis.scrollTo(target, { offset });
   } else {
-    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY + offset });
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY + offset, behavior });
   }
   return true;
 }
