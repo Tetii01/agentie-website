@@ -7,6 +7,8 @@ const variants = {
   solid: "text-foreground",
   /** Doar contur, foarte transparent (tokenul --color-logo-outline). */
   outline: "logo-outline",
+  /** Tot logo-ul în culoarea de accent (copiile „glitch" din intro). */
+  accent: "text-accent",
 };
 
 type Variant = keyof typeof variants;
@@ -27,7 +29,7 @@ function LogoSvg({
       role="img"
       aria-label={brand.name}
       viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
-      className={cn("block w-auto shrink-0", variants[variant], className)}
+      className={cn("block shrink-0", variants[variant], className)}
     >
       {shapes.map((d) => (
         <path key={d} d={d} fill="currentColor" vectorEffect="non-scaling-stroke" />
@@ -44,7 +46,9 @@ function LogoSvg({
 
 const logoSizes = {
   /** Header, footer. */
-  md: "h-6 md:h-7",
+  md: "h-6 w-auto md:h-7",
+  /** Intro: cât lățimea elementului părinte. */
+  fill: "h-auto w-full",
 };
 
 type LogoProps = {
@@ -63,9 +67,9 @@ export function Logo({ size = "md", variant = "solid", className }: LogoProps) {
 
 const submarkSizes = {
   /** CTA final. */
-  md: "h-10 md:h-12",
+  md: "h-10 w-auto md:h-12",
   /** Conturul decorativ mare din „Despre". */
-  display: "h-[44vw] lg:h-[17rem]",
+  display: "h-[44vw] w-auto lg:h-[17rem]",
 };
 
 type SubmarkProps = {

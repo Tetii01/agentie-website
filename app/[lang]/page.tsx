@@ -1,6 +1,7 @@
 import { About } from "@/components/sections/About";
 import { FloatingCta } from "@/components/sections/FloatingCta";
 import { Hero } from "@/components/sections/Hero";
+import { Intro } from "@/components/sections/Intro";
 import { Offer } from "@/components/sections/Offer";
 import { Problems } from "@/components/sections/Problems";
 import { Projects } from "@/components/sections/Projects";
@@ -12,6 +13,7 @@ import { getContent } from "@/content";
  * Ordinea paginii: hero → proiecte (carusel) → testimoniale (cu tool-urile integrate) →
  * grid-uri de carduri: probleme, servicii, analiza gratuită (cu cifrele), despre (cu CTA-ul final).
  *
+ * Intro (Intro.tsx): loader-ul de la prima intrare, după lircle.co.
  * Cortina (efectul din „motion footer", întors pentru partea de sus a paginii): hero-ul stă fixat
  * (`sticky`), iar restul paginii urcă peste el, cu marginea de sus rotunjită (hero-curtain).
  */
@@ -20,6 +22,7 @@ export default async function Home() {
 
   return (
     <div className="relative">
+      <Intro />
       <div className="sticky top-0">
         <Hero />
       </div>

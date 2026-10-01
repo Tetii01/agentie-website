@@ -36,7 +36,8 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
   const { ui } = await getContent();
 
   return (
-    <html lang={locale} className={geistSans.variable}>
+    // suppressHydrationWarning: scriptul intro-ului pune atributul data-intro pe <html> înainte de hidratare.
+    <html lang={locale} className={geistSans.variable} suppressHydrationWarning>
       <body className="bg-background font-sans text-foreground">
         {/* Fără JavaScript, elementele cu fade-in rămân vizibile. */}
         <noscript>

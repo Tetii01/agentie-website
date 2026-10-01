@@ -68,6 +68,12 @@ Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „cr
 
 ## Mișcarea și stilul „liquid metal"
 
+**Intro** (`components/sections/Intro.tsx`), după loader-ul de pe lircle.co, în stilul nostru:
+- **Ce face:** la prima intrare pe site, o bandă de lumină metalică trece peste ecran și dezvăluie logo-ul (cu două copii „glitch" în accent). Apoi apar o linie și două etichete jos (`ui.intro`), logo-ul pulsează și zboară exact pe logo-ul din header, iar panoul pleacă și apare site-ul. Durează ~4 secunde.
+- **Când apare:** o singură dată pe sesiune. Nu apare la prefers-reduced-motion, când adresa duce direct la o secțiune (`/#analiza`) și fără JavaScript.
+- **Se poate sări:** orice scroll, atingere sau tastă îl închide imediat.
+- **Cum e făcut:** mișcarea e din CSS (blocul „INTRO" din `app/globals.css`). Un script mic rulează înainte de prima afișare, decide dacă intro-ul apare, măsoară unde aterizează logo-ul și îl închide. Pentru a schimba durata, se modifică și `LANDED` / `DONE` din `Intro.tsx`.
+
 **Hero** (`components/sections/Hero.tsx`). Animația e preluată din „Motion Footer" (21st.dev, Hossain Jahed) și întoarsă pentru partea de sus a paginii:
 - **La încărcare:** titlul și butoanele urcă unul după altul. Jos urcă „creos" în litere uriașe, doar contur, cu un gradient care se stinge, tăiat de marginea de jos (nu trece pe sub titlu).
 - **Fundalul:** o „membrană" de lichid luminos care se deformează încet, sus-dreapta pe desktop și sus pe telefon (`components/ui/LiquidShader.tsx`, shader-ul preluat din „liquid shader", 21st.dev, dhileepkumargm). E WebGL direct, fără three.js, la rezoluție redusă și 30 de cadre pe secundă. Se oprește când cortina acoperă hero-ul. La prefers-reduced-motion e un singur cadru nemișcat, iar fără WebGL rămâne o lumină din CSS (`liquid-fallback`). Culorile, poziția și mărimea sunt sus în fișier (`DEEP`, `GLOW`, `INTENSITY`) și în `resize()`.

@@ -19,7 +19,8 @@ export async function Header() {
       className="fixed inset-x-0 top-0 z-50 border-b border-glass-border bg-glass backdrop-blur-[50px] transition-colors duration-base"
     >
       <Container className="flex h-header-mobile items-center justify-between gap-6 md:grid md:h-header md:grid-cols-[1fr_auto_1fr]">
-        <SmartLink href="#top" aria-label={brand.name} className="justify-self-start rounded-pill">
+        {/* data-intro-target: aici aterizează logo-ul din intro (components/sections/Intro.tsx). */}
+        <SmartLink href="#top" aria-label={brand.name} data-intro-target className="justify-self-start rounded-pill">
           <Logo />
         </SmartLink>
 

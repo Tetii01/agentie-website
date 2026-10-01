@@ -344,6 +344,7 @@ export const en: SiteContent = {
     projectDetails: "Project details",
     close: "Close",
     languageSwitch: { label: "RO", name: "Română", href: "/", lang: "ro" },
+    intro: { left: "AI agency", right: "Sibiu · Romania" },
     carousel: {
       previous: "Previous",
       next: "Next",
