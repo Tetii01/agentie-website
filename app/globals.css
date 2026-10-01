@@ -439,17 +439,6 @@ html[data-intro="playing"] [data-site-header] {
     visibility 0s linear var(--transition-duration-base);
 }
 
-/* Varianta `land` (?intro=2): logo-ul 3D aterizează pe logo-ul din header, deci header-ul rămâne
-   la locul lui (doar invizibil) și apare treptat, după scroll (--intro-header, din Intro.tsx). */
-html[data-intro-variant="land"][data-intro] [data-site-header] {
-  translate: none;
-}
-
-html[data-intro-variant="land"][data-intro="done"] [data-site-header] {
-  opacity: var(--intro-header, 1);
-  transition: none;
-}
-
 /* Fără intro (fără WebGL): nici stratul de deasupra, nici distanța de scroll. */
 html[data-intro="off"] .intro-overlay,
 html[data-intro="off"] .intro-spacer {

@@ -1,40 +1,48 @@
 import {
   AdditiveBlending,
+  CanvasTexture,
   Color,
   DirectionalLight,
+  ExtrudeGeometry,
   Group,
   Mesh,
-  MeshPhysicalMaterial,
   MeshStandardMaterial,
+  NeutralToneMapping,
   PerspectiveCamera,
   PlaneGeometry,
+  PMREMGenerator,
   PointLight,
   Scene,
   ShaderMaterial,
   SphereGeometry,
   Sprite,
   SpriteMaterial,
+  SRGBColorSpace,
+  WebGLRenderer,
 } from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
+import { toCreasedNormals } from "three/addons/utils/BufferGeometryUtils.js";
 import { logoDot, logoShapes, symbolViewBox } from "@/components/brand/logo-shapes";
-import { createEnvironment, createGlowTexture, createRenderer, extrudeLogoPath, UNIT } from "@/lib/intro-three";
-import {
-  easeInOut,
-  type IntroColors,
-  type IntroScene,
-  lerp,
-  portalTimeline as timeline,
-  range,
-} from "@/lib/intro-timeline";
+import { easeInOut, type IntroColors, type IntroScene, introTimeline as timeline, lerp, range } from "@/lib/intro-timeline";
 
 /**
- * Varianta `portal` a intro-ului 3D (components/sections/Intro.tsx): submark-ul Creos.
+ * Scena 3D din intro (components/sections/Intro.tsx): submark-ul Creos.
  * Orbita (C-ul) e un inel cromat, punctul e o sferă luminoasă în culoarea de accent.
- * Totul depinde de progresul scroll-ului (0–1), după momentele din lib/intro-timeline.ts (portalTimeline):
+ * Totul depinde de progresul scroll-ului (0–1), după momentele din lib/intro-timeline.ts:
  * C-ul se rotește spre față, punctul face un arc peste el și intră în deschidere;
  * apoi în mijlocul C-ului se deschide un „portal" prin care se vede site-ul, iar camera zboară prin el.
  * Doar în browser, încărcat la nevoie (import dinamic).
+ *
+ * Performanță (contează pe telefon): pregătirea e împărțită pe mai multe cadre și shaderele se compilează
+ * înainte de prima afișare; un cadru se desenează doar când s-a schimbat ceva; dacă telefonul nu ține
+ * ritmul, rezoluția scade singură.
  */
 
+/** Unitățile SVG ale logo-ului → unitățile scenei. */
+const UNIT = 0.01;
+/** Grosimea orbitei, în unitățile SVG. */
+const DEPTH = 55;
 /** Centrul inelului, în unitățile SVG (simbolul are înălțimea = diametrul inelului). */
 const RING_CENTER = symbolViewBox.height / 2;
 /** Raza interioară a inelului (143 în SVG), plus puțin, ca marginea portalului să stea ascunsă după inel. */
@@ -52,6 +60,41 @@ const FRAME_LOCK = 3.4;
 /** Unde ajunge camera: în fața inelului, cu portalul acoperind tot ecranul. */
 const CAMERA_END = 0.6;
 const FOV = 35;
+
+/** Lasă browserul să deseneze un cadru (pregătirea scenei nu blochează pagina dintr-o bucată). */
+const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+/** Inelul: forma orbitei din SVG, extrudată, cu margini rotunjite, centrată pe centrul inelului. */
+function createRingGeometry() {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg"><path d="${logoShapes[0]}"/></svg>`;
+  const shapes = new SVGLoader().parse(svg).paths.flatMap((path) => SVGLoader.createShapes(path));
+  const geometry = new ExtrudeGeometry(shapes, {
+    depth: DEPTH,
+    curveSegments: 32,
+    bevelEnabled: true,
+    bevelThickness: 7,
+    bevelSize: 5,
+    bevelSegments: 5,
+  });
+  geometry.translate(-RING_CENTER, -RING_CENTER, -DEPTH / 2);
+  // Normale netede pe curbe și pe margini, dar muchii drepte la capetele C-ului.
+  return toCreasedNormals(geometry, Math.PI / 5);
+}
+
+/** Halo-ul moale din jurul punctului (un gradient radial pe un sprite). */
+function createGlowTexture() {
+  const size = 128;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = size;
+  const context = canvas.getContext("2d")!;
+  const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+  gradient.addColorStop(0, "rgba(255,255,255,0.9)");
+  gradient.addColorStop(0.25, "rgba(255,255,255,0.35)");
+  gradient.addColorStop(1, "rgba(255,255,255,0)");
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, size, size);
+  return new CanvasTexture(canvas);
+}
 
 /**
  * Portalul: un plan uriaș în culoarea fundalului, în planul inelului, cu o gaură rotundă în centru.
@@ -85,16 +128,31 @@ function createPortalMaterial(color: Color) {
   });
 }
 
-export function createIntroScene(canvas: HTMLCanvasElement, colors: IntroColors): IntroScene | null {
-  const renderer = createRenderer(canvas);
-  if (!renderer) return null;
+export async function createIntroScene(canvas: HTMLCanvasElement, colors: IntroColors): Promise<IntroScene | null> {
+  let renderer: WebGLRenderer;
+  try {
+    renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
+  } catch {
+    return null;
+  }
+
+  // Pe telefon, rezoluție puțin mai mică: ecranul e dens, diferența nu se vede, dar se simte în fluiditate.
+  const phone = window.matchMedia("(pointer: coarse)").matches;
+  let pixelRatio = Math.min(window.devicePixelRatio, phone ? 1.5 : 1.75);
+  renderer.setPixelRatio(pixelRatio);
+  renderer.outputColorSpace = SRGBColorSpace;
+  renderer.toneMapping = NeutralToneMapping;
+  renderer.setClearColor(0x000000, 0);
 
   const scene = new Scene();
-  const environment = createEnvironment(renderer);
-  scene.environment = environment.texture;
-  scene.environmentIntensity = 0.9;
-
   const camera = new PerspectiveCamera(FOV, 1, 0.05, 100);
+
+  await nextFrame();
+  const pmrem = new PMREMGenerator(renderer);
+  const environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  pmrem.dispose();
+  scene.environment = environment;
+  scene.environmentIntensity = 0.9;
 
   const foreground = new Color().setStyle(colors.foreground);
   const accent = new Color().setStyle(colors.accent);
@@ -107,25 +165,19 @@ export function createIntroScene(canvas: HTMLCanvasElement, colors: IntroColors)
   rim.position.set(5, -2, -4);
   scene.add(key, rim);
 
+  await nextFrame();
   const logo = new Group();
   scene.add(logo);
 
-  const ringGeometry = extrudeLogoPath(logoShapes[0]);
-  ringGeometry.translate(-RING_CENTER, -RING_CENTER, 0);
-  const ringMaterial = new MeshPhysicalMaterial({
-    color: foreground,
-    metalness: 1,
-    roughness: 0.22,
-    clearcoat: 0.4,
-    clearcoatRoughness: 0.2,
-  });
+  const ringGeometry = createRingGeometry();
+  const ringMaterial = new MeshStandardMaterial({ color: foreground, metalness: 1, roughness: 0.2 });
   const ring = new Mesh(ringGeometry, ringMaterial);
   // Y negativ: SVG-ul are axa Y în jos.
   ring.scale.set(UNIT, -UNIT, UNIT);
   logo.add(ring);
 
   const dot = new Group();
-  const sphereGeometry = new SphereGeometry(DOT_RADIUS, 64, 32);
+  const sphereGeometry = new SphereGeometry(DOT_RADIUS, 48, 24);
   const sphereMaterial = new MeshStandardMaterial({
     color: accent,
     emissive: accent,
@@ -157,7 +209,6 @@ export function createIntroScene(canvas: HTMLCanvasElement, colors: IntroColors)
   const portalMaterial = createPortalMaterial(background);
   const portal = new Mesh(portalGeometry, portalMaterial);
   portal.renderOrder = 1;
-  portal.visible = false;
   scene.add(portal);
 
   /** Distanța camerei la care un obiect cu jumătatea de mărime `half` încape pe ecran (pe înălțime și pe lățime). */
@@ -166,19 +217,53 @@ export function createIntroScene(canvas: HTMLCanvasElement, colors: IntroColors)
     return half / tan / Math.min(1, camera.aspect);
   };
 
+  let width = 0;
+  let height = 0;
   const resize = () => {
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    if (!width || !height) return;
+    const nextWidth = canvas.clientWidth;
+    const nextHeight = canvas.clientHeight;
+    // Redimensionarea refăcută doar când chiar s-a schimbat mărimea (e scumpă).
+    if (!nextWidth || !nextHeight || (nextWidth === width && nextHeight === height)) return false;
+    width = nextWidth;
+    height = nextHeight;
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    return true;
   };
   resize();
+
+  // Shaderele se compilează acum, nu la primul cadru afișat (altfel prima mișcare sacadează).
+  await renderer.compileAsync(scene, camera);
+  portal.visible = false;
+
+  // Dacă telefonul nu ține ritmul, rezoluția scade (o dată sau de două ori).
+  let lastRender = 0;
+  const slowFrames: number[] = [];
+  const adapt = (time: number) => {
+    const interval = time - lastRender;
+    lastRender = time;
+    if (interval > 0.1 || pixelRatio <= 1) return; // pauze, nu sacadări
+    slowFrames.push(interval);
+    if (slowFrames.length < 45) return;
+    const sorted = [...slowFrames].sort((a, b) => a - b);
+    slowFrames.length = 0;
+    if (sorted[Math.floor(sorted.length / 2)] > 0.021) {
+      pixelRatio = Math.max(1, pixelRatio - 0.25);
+      renderer.setPixelRatio(pixelRatio);
+      renderer.setSize(width, height, false);
+    }
+  };
+
+  let lastProgress = -1;
 
   const render = (progress: number, time: number) => {
     const assembly = easeInOut(range(progress, timeline.assemble));
     const settle = 1 - assembly;
+    // Logo-ul așezat și scroll-ul oprit: cadrul ar fi identic, nu-l mai desenăm.
+    if (progress === lastProgress && settle === 0) return;
+    lastProgress = progress;
+    adapt(time);
 
     // C-ul: din trei-sferturi spre față, cu o mișcare lentă cât timp nu s-a așezat.
     logo.rotation.set(
@@ -212,18 +297,22 @@ export function createIntroScene(canvas: HTMLCanvasElement, colors: IntroColors)
     renderer.render(scene, camera);
   };
 
-  const dispose = () => {
-    ringGeometry.dispose();
-    ringMaterial.dispose();
-    sphereGeometry.dispose();
-    sphereMaterial.dispose();
-    glowTexture.dispose();
-    glowMaterial.dispose();
-    portalGeometry.dispose();
-    portalMaterial.dispose();
-    environment.dispose();
-    renderer.dispose();
+  return {
+    render,
+    resize: () => {
+      if (resize()) lastProgress = -1;
+    },
+    dispose: () => {
+      ringGeometry.dispose();
+      ringMaterial.dispose();
+      sphereGeometry.dispose();
+      sphereMaterial.dispose();
+      glowTexture.dispose();
+      glowMaterial.dispose();
+      portalGeometry.dispose();
+      portalMaterial.dispose();
+      environment.dispose();
+      renderer.dispose();
+    },
   };
-
-  return { render, resize, dispose };
 }
