@@ -77,8 +77,8 @@ const projectTexts = [
 
 /** Testimonialele, în aceeași ordine ca în română: rolurile traduse și citatele în română traduse. */
 const testimonialTexts = [
-  { role: "Artist" },
-  { role: "Artist" },
+  { role: "Artist", followers: "12M followers" },
+  { role: "Artist", followers: "11M followers" },
   {
     role: "Café and patisserie, Sibiu",
     quote: "The website looks exactly like our place, and **the chatbot answers customers instantly**. Warmly recommended! ☕",
@@ -88,7 +88,7 @@ const testimonialTexts = [
     quote:
       "The app made our work so much easier. **I see the whole fleet in one place**, and drivers report in seconds. Thank you!",
   },
-  { role: "Media platform" },
+  { role: "Media platform", followers: "44M followers" },
 ];
 
 const detailsPlaceholder = [
@@ -338,6 +338,7 @@ export const en: SiteContent = {
     mainNav: "Main navigation",
     footerNav: "Legal information",
     socialLinks: "Social media",
+    onInstagram: "on Instagram",
     externalLink: "(opens in a new tab)",
     visitSite: "Visit website",
     projectDetails: "Project details",

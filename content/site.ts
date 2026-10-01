@@ -317,9 +317,9 @@ export type Testimonial = {
   verified?: boolean;
   /** Partea dintre ** ** apare îngroșată. */
   quote: string;
-  /** Opțional: contul de social media, afișat jos, în accent (ex. „@nume"). */
+  /** Opțional: contul de Instagram (ex. „@nume"). Cu `url`, apare jos ca link spre profil. */
   handle?: string;
-  /** Profilul sau site-ul, afișat jos ca domeniu cu săgeată. Gol = fără link. */
+  /** Profilul de Instagram (cu `handle`) sau site-ul (afișat ca domeniu cu săgeată). Gol = fără link. */
   url: string;
   avatar: ImageRef;
 };
@@ -336,26 +336,31 @@ export const testimonials = {
     {
       name: "Swae Lee",
       role: "Artist",
+      followers: "12M urmăritori",
       verified: true,
       quote: "Absolutely killed the graphics for my europe tour, **everything came out crazy**. 🔥🔥",
-      url: "",
-      avatar: null,
+      handle: "@swaelee",
+      url: "https://www.instagram.com/swaelee/",
+      avatar: { src: "/testimoniale/swaelee.jpg", alt: "" },
     },
     {
       name: "Rich The Kid",
       role: "Artist",
+      followers: "11M urmăritori",
       verified: true,
       quote: "Smooth to work with, **in love with the results** too. Def gon keep in touch for the next projects 💯💯",
-      url: "",
-      avatar: null,
+      handle: "@richthekid",
+      url: "https://www.instagram.com/richthekid/",
+      avatar: { src: "/testimoniale/richthekid.jpg", alt: "" },
     },
     {
       name: "X Sweets and Coffee",
       role: "Cafenea și cofetărie, Sibiu",
       quote:
         "Site-ul arată exact ca locul nostru, iar **chatbotul le răspunde clienților pe loc**. Recomandăm cu drag! ☕",
-      url: "https://xsweetsandcoffee.ro",
-      avatar: null,
+      handle: "@xsweetsandcoffee",
+      url: "https://www.instagram.com/xsweetsandcoffee/",
+      avatar: { src: "/testimoniale/xsweetsandcoffee.jpg", alt: "" },
     },
     {
       name: "AT Transport",
@@ -368,10 +373,12 @@ export const testimonials = {
     {
       name: "Worldstar",
       role: "Platformă media",
+      followers: "44M urmăritori",
       verified: true,
       quote: "Big shoutout for the designs on our exclusive **Beach, Please! merch drop** 🏝️",
-      url: "",
-      avatar: null,
+      handle: "@worldstar",
+      url: "https://www.instagram.com/worldstar/",
+      avatar: { src: "/testimoniale/worldstar.jpg", alt: "" },
     },
   ] satisfies Testimonial[] as Testimonial[],
 };
@@ -841,6 +848,8 @@ export const ui = {
   mainNav: "Navigare principală",
   footerNav: "Informații legale",
   socialLinks: "Rețele sociale",
+  /** Linkul de jos din cardurile de testimonial: „{@cont} pe Instagram". */
+  onInstagram: "pe Instagram",
   externalLink: "(se deschide într-un tab nou)",
   /** Butonul rotund cu săgeată de pe cardurile de proiect; urmat de numele proiectului. */
   visitSite: "Vezi site-ul",

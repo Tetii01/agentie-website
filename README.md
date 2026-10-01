@@ -69,10 +69,9 @@ Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „cr
 ## Mișcarea și stilul „liquid metal"
 
 **Hero** (`components/sections/Hero.tsx`). Animația e preluată din „Motion Footer" (21st.dev, Hossain Jahed) și întoarsă pentru partea de sus a paginii:
-- **La încărcare:** titlul și butoanele urcă unul după altul. Din spatele orizontului urcă „creos" în litere uriașe, doar contur, cu un gradient care se stinge. Lumina de pe orizont „respiră" încet.
-- **Cortina:** hero-ul stă fixat (`sticky`, în `app/[lang]/page.tsx`), iar restul paginii urcă peste el, cu marginea de sus rotunjită (utilitatea `hero-curtain`). Cât e acoperit, hero-ul se micșorează și se estompează, iar literele coboară înapoi după orizont. Merge din CSS (scroll-driven animations, `hero-recede` și `hero-letters-sink`), fără JavaScript, deci e fluid și pe telefon. Browserele fără suport păstrează hero-ul static.
-- **Butoane magnetice:** butoanele din hero urmăresc cursorul și revin elastic (`components/ui/Magnetic.tsx`). Doar cu mouse/trackpad.
-- **Momentele:** tokenurile `--animate-letters-rise`, `--animate-breathe`, `--ease-elastic` și blocul „HERO LA SCROLL" din `app/globals.css`.
+- **La încărcare:** titlul și butoanele urcă unul după altul. Sub linia orizontului urcă „creos" în litere uriașe, doar contur, cu un gradient care se stinge, tăiat de marginea de jos (nu trece pe sub titlu). Lumina de pe orizont „respiră" încet.
+- **Cortina:** hero-ul stă fixat (`sticky`, în `app/[lang]/page.tsx`), iar restul paginii urcă peste el, cu marginea de sus rotunjită (utilitatea `hero-curtain`). Cât e acoperit, hero-ul se micșorează și se estompează, iar literele coboară și dispar. Merge din CSS (scroll-driven animations, `hero-recede` și `hero-letters-sink`), fără JavaScript, deci e fluid și pe telefon. Browserele fără suport păstrează hero-ul static.
+- **Momentele:** tokenurile `--animate-letters-rise`, `--animate-breathe` și blocul „HERO LA SCROLL" din `app/globals.css`.
 
 **Footer** (`components/sections/Footer.tsx`), după „Footer Section" (21st.dev, efferd), adaptat la site:
 - **Aspect:** colțuri mari sus, o linie care strălucește pe margine și o lumină moale care cade din mijloc.
@@ -80,7 +79,7 @@ Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „cr
 - **Apariție:** fiecare bloc apare dintr-un blur, unul după altul (`FadeIn` cu `variant="blur"`).
 
 **Liquid metal** (după „Liquid Metal Button", 21st.dev, johuniq), pe tot site-ul. Varianta e din CSS, fără WebGL, ca să rămână ușoară pe telefon:
-- **Butoanele principale** (`Button` `primary` și `light`, CTA-ul plutitor): un interior închis cu un inel cromat care curge încet (utilitatea `liquid-metal`, gradientul `--gradient-metal`). Apăsare și hover cu „arc" (`--ease-overshoot`).
+- **Butoanele principale** (`Button` `primary` și `light`, CTA-ul plutitor): un interior închis cu un inel cromat care curge încet (utilitatea `liquid-metal`, gradientul `--gradient-metal`). Butoanele nu se mută și nu cresc la hover; doar metalul se aprinde puțin. La apăsare au un mic „arc" (`--ease-overshoot`).
 - **Butoanele secundare și controalele** (săgeți, buline, limba): contur metalic static (`metal-border`, `--gradient-control-border`).
 - **Cardurile și hero-ul:** muchii care prind lumina (`--gradient-card-border`).
 - **Titlurile mari:** text metalic, alb care se stinge spre jos (`text-metal`).
@@ -109,7 +108,9 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 - Categoriile sunt cele date ca exemplu în spec. Le ajustezi după proiectele reale.
 
 **Testimoniale** (5 carduri, completate)
-- Lipsesc pozele (`avatar`, acum un cerc gol) și, opțional, contul (`handle`, ex. „@nume"), linkul spre profil (`url`) și numărul de urmăritori (`followers`).
+- AT Transport: lipsesc poza (`avatar`, acum un cerc gol) și contul de Instagram (`handle` + `url`).
+- Pozele celorlalți sunt pozele de profil publice de pe Instagram, de 100×100 px (`public/testimoniale/`). Dacă aveți variante mai mari, le înlocuiți cu același nume.
+- Numărul de urmăritori (`followers`) e cel de pe Instagram la 1 octombrie 2026. Trebuie actualizat din când în când.
 
 **Cifre** (4 carduri)
 - Etichetele `[ETICHETĂ]` și valorile `[X]+`, `[X] mil.+`, `[X] ore`, `[X] zile`. O valoare care începe cu un număr (ex. `120+`) face automat count-up.

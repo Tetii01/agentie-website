@@ -99,11 +99,8 @@
   --transition-duration-slide: 600ms; /* un pas în carusele (săgeți, buline), cu --ease-smooth */
   --ease-fade: ease-in-out; /* easing-ul fade-in-ului */
   --ease-out-strong: cubic-bezier(0.16, 1, 0.3, 1); /* hero: titlul, butoanele și literele mari urcă la încărcare */
-  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1); /* butoanele liquid metal: apăsare și hover cu „arc" */
-  /* Revenirea elastică a butoanelor magnetice (ca elastic.out(1, 0.3) din GSAP). */
-  --ease-elastic: linear(0, 0.216, 0.518, 0.832, 1.097, 1.279, 1.364, 1.363, 1.296, 1.193, 1.081, 0.982, 0.912, 0.875, 0.87, 0.889, 0.924, 0.964, 1, 1.027, 1.043, 1.047, 1.041, 1.03, 1.016, 1.002, 0.992, 0.986, 0.984, 0.985, 0.989, 0.993, 0.998, 1.002, 1.005, 1.006, 1.006, 1.004, 1.003, 1.001, 0.999, 0.998, 0.998, 0.998, 0.998, 0.999, 1, 1, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1); /* butoanele liquid metal: apăsare cu „arc" */
   --transition-duration-spring: 800ms; /* butoanele liquid metal */
-  --transition-duration-magnet: 1200ms; /* revenirea butoanelor magnetice */
   --animate-metal-flow: metal-flow 6s linear infinite; /* inelul cromat al butoanelor liquid metal */
   --animate-breathe: breathe 8s ease-in-out infinite alternate; /* hero: lumina de pe orizont „respiră" */
   --animate-letters-rise: letters-rise 1.8s var(--ease-out-strong) 0.25s both; /* hero: „creos" urcă din spatele orizontului */
@@ -514,15 +511,6 @@ html.lenis body {
   .fade-in-section.fade-in-blur.is-visible {
     transform: none;
     filter: none;
-  }
-
-  /* Butoane magnetice (components/ui/Magnetic.tsx): urmăresc cursorul și revin elastic. */
-  .magnetic {
-    transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .magnetic[data-magnet="release"] {
-    transition: transform var(--transition-duration-magnet) var(--ease-elastic);
   }
 
   /* Bandă infinită (components/ui/LogoLoop.tsx) */

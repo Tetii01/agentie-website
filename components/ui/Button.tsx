@@ -2,8 +2,8 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { SmartLink } from "./SmartLink";
 
-/** Apăsare și hover cu „arc" (ca butonul liquid metal). */
-const spring = "transition-[scale,box-shadow] duration-spring ease-overshoot hover:scale-[1.03] active:scale-[0.97]";
+/** Apăsare cu „arc" (ca butonul liquid metal). Butonul nu se mută și nu crește la hover. */
+const spring = "transition-[scale,box-shadow] duration-spring ease-overshoot active:scale-[0.97]";
 
 const variants = {
   /** Liquid metal: interior închis cu un inel cromat care curge (utilitatea liquid-metal). */

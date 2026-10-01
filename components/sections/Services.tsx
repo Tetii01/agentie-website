@@ -50,8 +50,7 @@ export async function Services() {
           >
             <Card className="flex h-full flex-col justify-between gap-6 md:min-h-96 md:gap-10">
               <div>
-                <p className="text-label font-medium text-accent tabular-nums">{String(index + 1).padStart(2, "0")}</p>
-                <h3 className="mt-2 text-h3-mobile font-bold text-balance md:mt-3 md:text-h3">{service.title}</h3>
+                <h3 className="text-h3-mobile font-bold text-balance md:text-h3">{service.title}</h3>
                 <p className={cn("mt-3 text-sm text-pretty text-muted md:mt-4 md:text-lg", index === 0 && "max-w-xl")}>
                   {service.description}
                 </p>

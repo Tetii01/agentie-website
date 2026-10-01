@@ -1,4 +1,5 @@
 import { BadgeCheck, Star } from "lucide-react";
+import { siInstagram } from "simple-icons";
 import { BrandIcon } from "@/components/ui/BrandIcon";
 import { Carousel } from "@/components/ui/Carousel";
 import { ExternalLink } from "@/components/ui/ExternalLink";
@@ -7,8 +8,10 @@ import { LogoLoop } from "@/components/ui/LogoLoop";
 import { Media } from "@/components/ui/Media";
 import { RichText } from "@/components/ui/RichText";
 import { Section } from "@/components/ui/Section";
+import { ArrowCircle } from "@/components/ui/VisitLink";
 import { getContent } from "@/content";
 import type { Testimonial } from "@/content/site";
+import { displayDomain } from "@/lib/url";
 
 /**
  * Testimoniale, într-un singur container mare:
@@ -84,7 +87,10 @@ async function RatingCard() {
   );
 }
 
-/** Un testimonial: avatar, nume (+ bifă), urmăritori / rol, citatul, contul și linkul. */
+/**
+ * Un testimonial: avatar, nume (+ bifă), urmăritori / rol, citatul, iar jos (după o linie fină)
+ * contul de Instagram, cu tot rândul ca link spre profil. Fără cont: doar site-ul, dacă există.
+ */
 async function TestimonialCard({ item }: { item: Testimonial }) {
   const { testimonials, ui } = await getContent();
 
@@ -125,10 +131,31 @@ async function TestimonialCard({ item }: { item: Testimonial }) {
         </p>
       </blockquote>
 
-      <div className="mt-auto flex items-center justify-between gap-4 text-sm">
-        {item.handle && <span className="text-accent">{item.handle}</span>}
-        <ExternalLink url={item.url} newTabLabel={ui.externalLink} className="ml-auto" />
-      </div>
+      {item.handle && displayDomain(item.url) ? (
+        <a
+          href={item.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group mt-auto flex items-center justify-between gap-4 border-t border-border pt-4 md:pt-5"
+        >
+          <span className="flex min-w-0 items-center gap-2.5 text-sm font-medium">
+            <BrandIcon icon={siInstagram} className="size-4 shrink-0 text-foreground" />
+            <span className="truncate text-accent transition-colors duration-base ease-smooth group-hover:text-foreground">
+              {item.handle}
+            </span>
+            <span className="sr-only">
+              {ui.onInstagram} {ui.externalLink}
+            </span>
+          </span>
+          <ArrowCircle />
+        </a>
+      ) : (
+        displayDomain(item.url) && (
+          <div className="mt-auto flex justify-end border-t border-border pt-4 md:pt-5">
+            <ExternalLink url={item.url} newTabLabel={ui.externalLink} />
+          </div>
+        )
+      )}
     </article>
   );
 }
