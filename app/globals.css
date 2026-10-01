@@ -87,7 +87,7 @@
   --spacing-header: 4.5rem; /* înălțimea header-ului */
   --spacing-header-mobile: 4rem;
   --spacing-marquee: 3.5rem; /* distanța dintre elementele din logo loop */
-  --spacing-intro: 180svh; /* cât derulezi prin intro-ul 3D până apare site-ul (components/sections/Intro.tsx) */
+  --spacing-intro: 140svh; /* cât derulezi prin intro-ul 3D până apare site-ul (components/sections/Intro.tsx) */
 
   /* Animații */
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -100,24 +100,11 @@
   --animate-step-back: step-in-back 450ms var(--ease-smooth) both; /* formular: înapoi */
   --animate-dialog-in: dialog-in 350ms var(--ease-smooth) both; /* fereastra de detalii a proiectelor */
   --animate-word-in: word-in 700ms var(--ease-smooth) both; /* hero: acțiunea nouă intră de jos */
-  --animate-scroll-hint: scroll-hint 2.2s var(--ease-smooth) infinite; /* intro: linia de sub „Derulează" */
+  --animate-scroll-hint: scroll-hint 1.6s var(--ease-smooth) infinite; /* intro: săgeata din indicația de scroll */
 
   @keyframes scroll-hint {
-    from {
-      transform: scaleY(0);
-      transform-origin: top;
-    }
-    45% {
-      transform: scaleY(1);
-      transform-origin: top;
-    }
-    55% {
-      transform: scaleY(1);
-      transform-origin: bottom;
-    }
-    to {
-      transform: scaleY(0);
-      transform-origin: bottom;
+    50% {
+      transform: translateY(3px);
     }
   }
 
@@ -294,11 +281,6 @@
   );
 }
 
-/* Linia animată de sub „Derulează". */
-@utility intro-hint-line {
-  background-image: linear-gradient(180deg, var(--color-muted), transparent);
-}
-
 /* ==========================================================================
    BAZĂ
    ========================================================================== */
@@ -455,6 +437,17 @@ html[data-intro="playing"] [data-site-header] {
     opacity var(--transition-duration-base) var(--ease-smooth),
     translate var(--transition-duration-base) var(--ease-smooth),
     visibility 0s linear var(--transition-duration-base);
+}
+
+/* Varianta `land` (?intro=2): logo-ul 3D aterizează pe logo-ul din header, deci header-ul rămâne
+   la locul lui (doar invizibil) și apare treptat, după scroll (--intro-header, din Intro.tsx). */
+html[data-intro-variant="land"][data-intro] [data-site-header] {
+  translate: none;
+}
+
+html[data-intro-variant="land"][data-intro="done"] [data-site-header] {
+  opacity: var(--intro-header, 1);
+  transition: none;
 }
 
 /* Fără intro (fără WebGL): nici stratul de deasupra, nici distanța de scroll. */

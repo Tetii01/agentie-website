@@ -68,13 +68,18 @@ Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „cr
 
 ## Intro-ul 3D
 
-Prima pagină începe cu un intro: submark-ul Creos în 3D (C-ul cromat și punctul în accent) se formează pe măsură ce derulezi. Apoi în mijlocul C-ului se deschide un portal prin care se vede site-ul, iar camera zboară prin el.
+Prima pagină începe cu un intro 3D cromat, pe care îl parcurgi derulând. Jos, o pilulă („Derulează pentru a intra pe site") are un inel care se umple pe măsură ce derulezi. Sunt două variante, de comparat:
+
+- **Portal** (implicită, `/`): submark-ul Creos se formează (C-ul se întoarce spre față, punctul face un arc peste el și intră în deschidere). Apoi în mijlocul C-ului se deschide un portal prin care se vede site-ul, iar camera zboară prin el.
+- **Aterizare** (`/?intro=2`): logo-ul întreg „creos" pornește din piese care plutesc și se așază una după alta. Logo-ul complet zboară apoi în header și devine logo-ul de acolo, iar site-ul apare.
+
+După ce alegeți una, cealaltă se șterge (fișierul ei de scenă, timeline-ul ei și citirea `?intro=2` din `Intro.tsx`).
 
 - **Componenta:** `components/sections/Intro.tsx`. Ține hero-ul fixat sub intro și îl dezvăluie la final. În `app/[lang]/page.tsx` învelește `<Hero />`; dacă scoți `<Intro>`, pagina începe direct cu hero-ul.
-- **Scena 3D:** `lib/intro-scene.ts`, cu three.js. Se încarcă abia după ce pagina e afișată, într-un fișier separat. Culorile vin din tokens (`--color-foreground`, `--color-accent`, `--color-background`), forma din `components/brand/logo-shapes.ts`.
-- **Momentele animației:** `lib/intro-timeline.ts`, ca progres al scroll-ului (0–1).
+- **Scenele 3D:** `lib/intro-scene.ts` (portal), `lib/intro-scene-land.ts` (aterizare) și piesele comune din `lib/intro-three.ts`. Folosesc three.js, care se încarcă abia după ce pagina e afișată, într-un fișier separat. Culorile vin din tokens (`--color-foreground`, `--color-accent`, `--color-background`), formele din `components/brand/logo-shapes.ts`.
+- **Momentele animației:** `lib/intro-timeline.ts` (`portalTimeline`, `landTimeline`), ca progres al scroll-ului (0–1).
 - **Distanța de scroll:** tokenul `--spacing-intro` din `app/globals.css`.
-- **Textul de jos („Derulează"):** `ui.intro.hint`.
+- **Textul pilulei:** `ui.intro.hint`.
 - **Când nu apare deloc:** fără JavaScript, fără WebGL și când utilizatorul a cerut mai puține animații (`prefers-reduced-motion`).
 
 ## Placeholder-e → conținut real
