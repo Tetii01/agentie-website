@@ -227,8 +227,8 @@ export const projects = {
       description: "Site nou pentru restaurant, cu chatboți AI integrați care răspund clienților pe loc.",
       url: "https://xsweetsandcoffee.ro",
       image: {
-        src: "/proiecte/x-sweets-and-coffee-laptop.webp",
-        alt: "Site-ul X Sweets and Coffee pe un laptop, între forme de sticlă neagră",
+        src: "/proiecte/x-sweets-and-coffee-piedestal.jpg",
+        alt: "Site-ul X Sweets and Coffee pe un laptop așezat pe un piedestal întunecat",
       },
       details: [
         { title: "Clientul", text: "Restaurant din Păltiniș, Sibiu." },
