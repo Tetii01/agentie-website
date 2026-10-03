@@ -513,9 +513,10 @@ export type Founder = {
   placeholder?: boolean;
   name: string;
   role: string;
-  /** Roluri scurte; partea dintre ** ** apare îngroșată. */
-  highlights: string[];
+  /** Poza rotundă din card (se decupează pătrat, din centru). */
   photo: ImageRef;
+  /** Contul de Instagram: iconița de sub rol (linkul se deschide în tab nou). `handle` e citit de cititoarele de ecran. */
+  instagram: { handle: string; url: string };
 };
 
 export const about = {
@@ -525,17 +526,17 @@ export const about = {
   founders: [
     {
       placeholder: true,
-      name: "Teti",
+      name: "TETI",
       role: "Tehnic și implementare",
-      highlights: ["**Agenți** AI", "**Aplicații** la comandă"],
       photo: null,
+      instagram: { handle: "@____t.e.t.i____", url: "https://www.instagram.com/____t.e.t.i____/" },
     },
     {
       placeholder: true,
-      name: "David",
+      name: "DAVID",
       role: "Design și direcție creativă",
-      highlights: ["**Design** grafic", "**Video** și producție"],
       photo: null,
+      instagram: { handle: "@david.37._", url: "https://www.instagram.com/david.37._/" },
     },
   ] satisfies Founder[],
   text: {

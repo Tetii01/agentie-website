@@ -57,11 +57,13 @@ Toate valorile vizuale sunt tokens în `app/globals.css`, în blocul `@theme`. C
 
 Excepții, care nu pot citi tokens: `app/icon.svg` (favicon) și `themeColor` din `app/[lang]/layout.tsx` au culorile scrise direct. Le schimbi manual odată cu brandul.
 
+**Secțiunea „Despre" are culorile ei de text.** E componenta „Team Section" de pe 21st.dev, așezată într-un card standard al site-ului. Titlul are stilul celorlalte secțiuni; restul textelor și efectele de hover păstrează valorile din preview-ul lor pe dark, prin tokens-urile `--color-team-*` și `--radius-team-card` din `globals.css`, care diferă intenționat de restul site-ului. Nu se schimbă odată cu brandul.
+
 ## Logo-ul
 
 Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „creos" și punctul) sunt în `components/brand/logo-shapes.ts`, și le folosesc toate locurile de mai jos. Pentru un logo nou, înlocuiești formele de acolo (atributele `d` din SVG) și dimensiunile din `logoViewBox`.
 
-- **Pe site:** `components/brand/Logo.tsx`, cu două componente. `Logo` e logo-ul întreg (header, footer). `Submark` e doar simbolul, orbita și punctul (cardul CTA final, plus conturul mare din „Despre", cu `variant="outline"`, tokenul `--color-logo-outline`). Orbita și literele iau culoarea textului, punctul ia culoarea de accent (`--color-accent`). Numele din `brand.name` rămâne textul accesibil.
+- **Pe site:** `components/brand/Logo.tsx`, cu două componente. `Logo` e logo-ul întreg (header, footer, secțiunea „Despre"). `Submark` e doar simbolul, orbita și punctul; îl folosea cardul CTA final (`components/sections/FinalCta.tsx`), care acum nu mai apare în pagină. Orbita și literele iau culoarea textului, punctul ia culoarea de accent (`--color-accent`). Numele din `brand.name` rămâne textul accesibil.
 - **Imaginea de share:** `app/opengraph-image.tsx`.
 - **Iconița iOS:** `app/apple-icon.tsx`. Doar simbolul: orbita și punctul.
 - **Favicon:** `app/icon.svg`. Doar simbolul, cu forma și culorile copiate direct, pentru că e un fișier static.
@@ -127,8 +129,9 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 - WhatsApp `[NUMĂR]`: format internațional, fără + și spații (ex. `40712345678`).
 
 **Despre**
-- Pozele fondatorilor: `photo`.
-- Rolurile scurte (`highlights`): acum sunt exemplele din spec.
+- Pozele fondatorilor: `photo`. Apar rotunde (136 px), decupate pătrat din centru, deci fața trebuie să fie în mijlocul pozei.
+- Conturile de Instagram ale fondatorilor: `instagram` (`handle` + `url`), iconița de sub rol.
+- Iconița de Instagram a firmei ia linkul din footer (`footer.social`). Cât linkul e placeholder, iconița apare fără link.
 - Paragraful (`about.text`), pe care urmează să-l rescrieți.
 
 **Footer și datele firmei**

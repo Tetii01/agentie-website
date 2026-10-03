@@ -11,7 +11,7 @@ import { getContent } from "@/content";
 
 /**
  * Ordinea paginii: hero → proiecte (carusel) → testimoniale (cu tool-urile integrate) →
- * grid-uri de carduri: probleme, servicii, analiza gratuită (cu cifrele), despre (cu CTA-ul final).
+ * grid-uri de carduri: probleme, servicii, analiza gratuită (cu cifrele) → despre (echipa, componenta de pe 21st.dev).
  *
  * Intro (Intro.tsx): loader-ul de la prima intrare, după lircle.co.
  * Cortina (efectul din „motion footer", întors pentru partea de sus a paginii): hero-ul stă fixat

@@ -34,6 +34,13 @@
   --color-metal-from: #202022; /* interiorul butoanelor liquid metal: sus... */
   --color-metal-to: #050506; /* ...și jos */
 
+  /* Secțiunea „Despre": culorile exacte din preview-ul dark al componentei „Team Section" de pe 21st.dev
+     (ravikatiyar162/team-section-1). Excepție cerută de Teti: diferă intenționat de culorile site-ului. */
+  --color-team-background: oklch(14.5% 0 0); /* fundalul din spatele pozei (la 20%) */
+  --color-team-foreground: oklch(98.5% 0 0); /* numele membrilor */
+  --color-team-muted-foreground: oklch(70.8% 0 0); /* paragraful, rolurile, iconițele */
+  --color-team-primary: oklch(92.2% 0 0); /* la hover: conturul pozei, gradientul și iconițele */
+
   /* Raze de colț */
   --radius-card: 34px;
   --radius-pill: 9999px;
@@ -42,6 +49,7 @@
   --radius-field: 16px; /* câmpurile din formular */
   --radius-curtain: 2.5rem; /* marginea de sus a „cortinei" care urcă peste hero */
   --radius-footer: 3rem; /* colțurile de sus ale footer-ului */
+  --radius-team-card: 0.875rem; /* 14px, cardurile de membri din „Despre" (ca în preview-ul de pe 21st.dev) */
 
   /* Tipografie. Titlurile: bold, litere strânse. Textul: 16–19px, rânduri aerisite. */
   /* Titlul din hero crește cu ecranul, cât încape cel mai lung rând („AI-ul citește emailurile."),

@@ -296,16 +296,8 @@ export const en: SiteContent = {
     title: "Who we are",
     photoPlaceholderLabel: "Founder photo",
     founders: [
-      {
-        ...ro.about.founders[0],
-        role: "Tech and implementation",
-        highlights: ["**AI** agents", "**Custom** apps"],
-      },
-      {
-        ...ro.about.founders[1],
-        role: "Design and creative direction",
-        highlights: ["**Graphic** design", "**Video** and production"],
-      },
+      { ...ro.about.founders[0], role: "Tech and implementation" },
+      { ...ro.about.founders[1], role: "Design and creative direction" },
     ],
     text: {
       ...ro.about.text,
