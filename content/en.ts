@@ -138,7 +138,7 @@ export const en: SiteContent = {
       {
         icon: ro.problems.items[2].icon,
         title: "The same tasks, every day",
-        text: "Emails, spreadsheets, reports, the same messages sent dozens of times. Work that could run on its own.",
+        text: "Emails, spreadsheets, reports, the same messages sent dozens of times. Work that could get done on its own.",
       },
       {
         icon: ro.problems.items[3].icon,
@@ -207,7 +207,7 @@ export const en: SiteContent = {
   testimonials: {
     ...ro.testimonials,
     label: "They worked with us",
-    rating: { ...ro.testimonials.rating, text: "across **300+ clients**" },
+    rating: { ...ro.testimonials.rating, text: "across **25+ clients**" },
     // Citatele în engleză rămân ca atare; cele în română sunt traduse.
     items: ro.testimonials.items.map((item, index) => ({ ...item, ...testimonialTexts[index] })),
   },
@@ -226,7 +226,7 @@ export const en: SiteContent = {
     eyebrow: "First step",
     title: "Free **analysis**",
     subtitle:
-      "Tell us how you work, and in 20 minutes we'll show you what can be automated or built for your business, and what it would change. Explained simply, no jargon.",
+      "Tell us how you work, and in 20 minutes we'll show you what can be automated or built for your business, and what it would change.",
     benefits: [
       "About your business, not general theory",
       "See clearly where you lose time and clients",

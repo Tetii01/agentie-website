@@ -139,7 +139,7 @@ export const problems = {
     {
       icon: Repeat,
       title: "Aceleași task-uri, zi de zi",
-      text: "Emailuri, tabele, rapoarte, aceleași mesaje trimise de zeci de ori. Muncă ce poate merge singură.",
+      text: "Emailuri, tabele, rapoarte, aceleași mesaje trimise de zeci de ori. Muncă ce se poate face singură.",
     },
     {
       icon: Shuffle,
@@ -329,7 +329,7 @@ export const testimonials = {
   /** Cardul din stânga rândului: nota + un rând scurt; partea dintre ** ** apare în accent. */
   rating: {
     value: "5.0",
-    text: "de la **300+ clienți**",
+    text: "de la **25+ clienți**",
   },
   avatarPlaceholderLabel: "Avatar",
   items: [
@@ -398,12 +398,12 @@ export type Stat = {
 
 /**
  * DE VERIFICAT înainte de lansare: cifrele trebuie să fie reale (pe site, o cifră care nu e adevărată
- * e reclamă înșelătoare). Proiectele livrate țin pasul cu „300+ clienți" din testimoniale,
+ * e reclamă înșelătoare). Proiectele livrate țin pasul cu „25+ clienți" din testimoniale,
  * iar timpul de răspuns e același cu cel din mesajul de după formular (offer.form.success).
  */
 export const stats = {
   items: [
-    { icon: FolderCheck, label: "Până acum", value: "350+", text: "Proiecte livrate" },
+    { icon: FolderCheck, label: "Până acum", value: "25+", text: "Proiecte livrate" },
     { icon: Eye, label: "Pe conținutul lucrat", value: "50M+", text: "Vizualizări" },
     { icon: Timer, label: "Îți răspundem în", value: "2 ore", text: "Timp de răspuns" },
     { icon: Rocket, label: "Primul sistem", value: "7 zile", text: "De la analiză la lansare" },
@@ -418,7 +418,7 @@ export const offer = {
   /** Partea dintre ** ** apare în culoarea de accent. */
   title: "Analiză **gratuită**",
   subtitle:
-    "Ne povestești cum lucrezi, iar în 20 de minute îți arătăm ce se poate automatiza sau construi pentru firma ta și ce ar schimba. Explicat simplu, fără jargon.",
+    "Ne povestești cum lucrezi, iar în 20 de minute îți arătăm ce se poate automatiza sau construi pentru firma ta și ce ar schimba.",
   benefits: [
     "Pe firma ta, nu teorie generală",
     "Vezi clar unde pierzi timp și clienți",
