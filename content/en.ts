@@ -26,7 +26,7 @@ const projectTexts = [
     title: "X Sweets and Coffee",
     category: "Website + AI chatbots",
     description: "A new website for a restaurant, with built-in AI chatbots that answer customers instantly.",
-    alt: "The X Sweets and Coffee website on a laptop resting on a dark pedestal",
+    alt: "The X Sweets and Coffee website on a laptop, with desserts in front",
     details: [
       { title: "The client", text: "Restaurant in Păltiniș, Sibiu." },
       { title: "Website", text: "Showcase website with menu, gallery and reservations." },
@@ -39,7 +39,7 @@ const projectTexts = [
     category: "Internal app",
     description:
       "An app for a freight transport company with over 14 vehicles: drivers send their mileage and fuel every day, and the app keeps track of the fleet and works out the service dates by itself.",
-    alt: "The AT Transport admin panel on a phone, surrounded by dark glass shapes",
+    alt: "The AT Transport admin panel on a phone, next to a truck with the company logo",
     details: [
       { title: "The client", text: "Freight transport company with over 14 vehicles." },
       { title: "The app", text: "Drivers send their mileage and fuel from their phone every day, in seconds." },
