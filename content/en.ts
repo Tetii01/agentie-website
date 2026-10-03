@@ -25,13 +25,13 @@ const projectTexts = [
   {
     title: "X Sweets and Coffee",
     category: "Website + AI chatbots",
-    description: "A new website for a café, with built-in AI chatbots that answer customers instantly.",
+    description: "A new website for a restaurant, with built-in AI chatbots that answer customers instantly.",
     alt: "The X Sweets and Coffee website on a laptop, with desserts in front",
     details: [
-      { title: "The client", text: "Café and patisserie in Păltiniș, Sibiu." },
+      { title: "The client", text: "Restaurant in Păltiniș, Sibiu." },
       { title: "Website", text: "Showcase website with menu, gallery and reservations." },
       { title: "AI chatbots", text: "Built-in chatbots that instantly answer customer questions." },
-      { title: "Result", text: "[RESULT]" },
+      { title: "Result", text: "Reservations straight through WhatsApp and instant answers, around the clock." },
     ],
   },
   {
@@ -80,7 +80,7 @@ const testimonialTexts = [
   { role: "Artist", followers: "12M followers" },
   { role: "Artist", followers: "11M followers" },
   {
-    role: "Café and patisserie, Sibiu",
+    role: "Restaurant, Sibiu",
     quote: "The website looks exactly like our place, and **the chatbot answers customers instantly**. Warmly recommended! ☕",
   },
   {

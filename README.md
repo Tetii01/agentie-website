@@ -111,7 +111,7 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 
 **Proiecte** (6 carduri; primele patru sunt completate)
 - Proiectele 5 și 6: `[TITLU PROIECT …]`, `[DESCRIERE SCURTĂ]`, `[URL PROIECT]`, `image`. Imaginile stau în `public/proiecte/`. Un `url` gol înseamnă fără buton spre site.
-- La toate: textul `[REZULTAT]` din detaliile proiectului.
+- La proiectele 2, 3 și 4: textul `[REZULTAT]` din detaliile proiectului.
 - Categoriile sunt cele date ca exemplu în spec. Le ajustezi după proiectele reale.
 
 **Testimoniale** (5 carduri, completate)

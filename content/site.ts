@@ -220,17 +220,17 @@ export const projects = {
     {
       title: "X Sweets and Coffee",
       category: "Website + chatboți AI",
-      description: "Site nou pentru cafenea, cu chatboți AI integrați care răspund clienților pe loc.",
+      description: "Site nou pentru restaurant, cu chatboți AI integrați care răspund clienților pe loc.",
       url: "https://xsweetsandcoffee.ro",
       image: {
         src: "/proiecte/x-sweets-and-coffee-deserturi.webp",
         alt: "Site-ul X Sweets and Coffee pe un laptop, cu prăjituri în față",
       },
       details: [
-        { title: "Clientul", text: "Cafenea și cofetărie din Păltiniș, Sibiu." },
+        { title: "Clientul", text: "Restaurant din Păltiniș, Sibiu." },
         { title: "Website", text: "Site de prezentare cu meniu, galerie și rezervări." },
         { title: "Chatboți AI", text: "Chatboți integrați care răspund pe loc la întrebările clienților." },
-        { title: "Rezultat", text: "[REZULTAT]" },
+        { title: "Rezultat", text: "Rezervări direct pe WhatsApp și răspunsuri instant, la orice oră." },
       ],
     },
     {
@@ -355,7 +355,7 @@ export const testimonials = {
     },
     {
       name: "X Sweets and Coffee",
-      role: "Cafenea și cofetărie, Sibiu",
+      role: "Restaurant, Sibiu",
       quote:
         "Site-ul arată exact ca locul nostru, iar **chatbotul le răspunde clienților pe loc**. Recomandăm cu drag! ☕",
       handle: "@xsweetsandcoffee",
