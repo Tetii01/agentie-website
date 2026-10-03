@@ -37,13 +37,14 @@ const projectTexts = [
   {
     title: "AT Transport",
     category: "Internal app",
-    description: "An app for a vehicle fleet: drivers report daily, and the admin sees everything in one place.",
+    description:
+      "An app for a freight transport company with over 14 vehicles: drivers send their mileage and fuel every day, and the app keeps track of the fleet and works out the service dates by itself.",
     alt: "The AT Transport admin panel on a phone, next to a truck with the company logo",
     details: [
-      { title: "The client", text: "Transport company with a vehicle fleet." },
-      { title: "The app", text: "Drivers send their daily report from their phone in seconds." },
-      { title: "Alerts", text: "Flags upcoming services and vehicles that haven't reported in." },
-      { title: "Result", text: "[RESULT]" },
+      { title: "The client", text: "Freight transport company with over 14 vehicles." },
+      { title: "The app", text: "Drivers send their mileage and fuel from their phone every day, in seconds." },
+      { title: "Alerts", text: "The admin sees which services are coming up and which vehicles haven't sent their mileage." },
+      { title: "Result", text: "Every service is calculated automatically from the mileage the drivers send." },
     ],
   },
   {
@@ -55,7 +56,6 @@ const projectTexts = [
       { title: "The client", text: "Swae Lee, international artist." },
       { title: "The tour", text: "Materials for the Same Difference Tour, including access passes and VIP wristbands." },
       { title: "Social media", text: "Graphics for the artist's social media." },
-      { title: "Result", text: "[RESULT]" },
     ],
   },
   {
@@ -68,7 +68,7 @@ const projectTexts = [
       { title: "Waiters", text: "They see each table's orders and know when a dish is ready to serve." },
       { title: "Bar and kitchen", text: "Each sees only its own orders and marks them “in progress” or “ready”." },
       { title: "The manager", text: "Follows every order live, from the bar to the kitchen." },
-      { title: "Result", text: "[RESULT]" },
+      { title: "Result", text: "Orders reach the bar and kitchen instantly, with no paper slips and no wasted trips." },
     ],
   },
   { title: "[PROJECT TITLE 5]", category: "UI/UX Design" },
@@ -86,7 +86,7 @@ const testimonialTexts = [
   {
     role: "Transport company",
     quote:
-      "The app made our work so much easier. **I see the whole fleet in one place**, and drivers report in seconds. Thank you!",
+      "The app made our work so much easier. **I see the whole fleet in one place**, and drivers send their mileage and fuel in seconds. Thank you!",
   },
   { role: "Media platform", followers: "44M followers" },
 ];

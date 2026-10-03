@@ -110,7 +110,10 @@ async function ProjectCard({ project, id }: { project: Project; id: string }) {
   );
 }
 
-/** Conținutul ferestrei de detalii: imaginea, titlul, descrierea și cardurile cu detalii (2 pe rând). */
+/**
+ * Conținutul ferestrei de detalii: imaginea, titlul, descrierea și cardurile cu detalii (2 pe rând).
+ * La un număr impar de carduri (ex. un proiect fără „Rezultat"), ultimul se întinde pe toată lățimea.
+ */
 async function ProjectDetails({ project, titleId }: { project: Project; titleId: string }) {
   const { projects, ui } = await getContent();
 
@@ -134,7 +137,10 @@ async function ProjectDetails({ project, titleId }: { project: Project; titleId:
 
         <ul className="mt-6 grid gap-3 sm:grid-cols-2 md:mt-8">
           {project.details.map((detail, index) => (
-            <li key={index} className="rounded-card-sm border border-border bg-surface-2/60 p-5">
+            <li
+              key={index}
+              className="rounded-card-sm border border-border bg-surface-2/60 p-5 sm:last:odd:col-span-2"
+            >
               <p className="text-label font-medium text-accent">{detail.title}</p>
               <p className="mt-2 text-base text-pretty">{detail.text}</p>
             </li>

@@ -202,7 +202,11 @@ export type Project = {
   /** Linkul spre site (butonul rotund ↗). Gol = proiect fără site public, fără buton. */
   url: string;
   image: ImageRef;
-  /** Cardurile din fereastra de detalii (se deschide la click pe proiect). Scurte: 3–4 carduri, câte o frază. */
+  /**
+   * Cardurile din fereastra de detalii (se deschide la click pe proiect). Scurte: 3–4 carduri, câte o frază.
+   * Cardul „Rezultat" e opțional: un proiect fără rezultat nu îl are în listă (în ambele limbi).
+   * La un număr impar de carduri, ultimul se întinde pe toată lățimea.
+   */
   details: { title: string; text: string }[];
 };
 
@@ -236,7 +240,8 @@ export const projects = {
     {
       title: "AT Transport",
       category: "Aplicație internă",
-      description: "Aplicație pentru flota de mașini: șoferii raportează zilnic, iar administratorul vede totul într-un singur loc.",
+      description:
+        "Aplicație pentru o firmă de transport marfă cu peste 14 mașini: șoferii trimit zilnic kilometrii și combustibilul, iar aplicația ține evidența flotei și calculează singură reviziile.",
       /** Aplicație internă, fără site public: gol = fără butonul spre site. */
       url: "",
       image: {
@@ -244,10 +249,10 @@ export const projects = {
         alt: "Panoul de administrator al aplicației AT Transport pe un telefon, lângă un camion cu sigla firmei",
       },
       details: [
-        { title: "Clientul", text: "Firmă de transport cu o flotă de mașini." },
-        { title: "Aplicația", text: "Șoferii trimit raportul zilnic din telefon, în câteva secunde." },
-        { title: "Alerte", text: "Semnalează reviziile care se apropie și mașinile care nu au mai raportat." },
-        { title: "Rezultat", text: "[REZULTAT]" },
+        { title: "Clientul", text: "Firmă de transport marfă cu peste 14 mașini." },
+        { title: "Aplicația", text: "Șoferii trimit zilnic din telefon kilometrii și combustibilul, în câteva secunde." },
+        { title: "Alerte", text: "Administratorul vede ce revizii se apropie și ce mașini nu au mai trimis kilometrii." },
+        { title: "Rezultat", text: "Fiecare revizie se calculează automat din kilometrii trimiși de șoferi." },
       ],
     },
     {
@@ -263,7 +268,6 @@ export const projects = {
         { title: "Clientul", text: "Swae Lee, artist internațional." },
         { title: "Turneul", text: "Materialele pentru Same Difference Tour, inclusiv ecusoanele de acces și brățările VIP." },
         { title: "Social media", text: "Grafică pentru rețelele de socializare ale artistului." },
-        { title: "Rezultat", text: "[REZULTAT]" },
       ],
     },
     {
@@ -280,7 +284,7 @@ export const projects = {
         { title: "Ospătarii", text: "Văd comenzile fiecărei mese și știu când un preparat e gata de servit." },
         { title: "Bar și bucătărie", text: "Fiecare vede doar comenzile lui și le marchează „în lucru” sau „gata”." },
         { title: "Managerul", text: "Urmărește live toate comenzile, de la bar până la bucătărie." },
-        { title: "Rezultat", text: "[REZULTAT]" },
+        { title: "Rezultat", text: "Comenzile ajung instant la bar și bucătărie, fără bilețele și drumuri inutile." },
       ],
     },
     {
@@ -366,7 +370,7 @@ export const testimonials = {
       name: "AT Transport",
       role: "Firmă de transport",
       quote:
-        "Aplicația ne-a ușurat mult treaba. **Văd toată flota într-un singur loc**, iar șoferii raportează în câteva secunde. Mulțumim!",
+        "Aplicația ne-a ușurat mult treaba. **Văd toată flota într-un singur loc**, iar șoferii trimit kilometrii și combustibilul în câteva secunde. Mulțumim!",
       url: "",
       avatar: null,
     },
