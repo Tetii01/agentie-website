@@ -39,7 +39,7 @@ const projectTexts = [
     category: "Internal app",
     description:
       "An app for a freight transport company with over 14 vehicles: drivers send their mileage and fuel every day, and the app keeps track of the fleet and works out the service dates by itself.",
-    alt: "The AT Transport admin panel on a phone, next to a truck with the company logo",
+    alt: "The AT Transport admin panel on a phone, surrounded by dark glass shapes",
     details: [
       { title: "The client", text: "Freight transport company with over 14 vehicles." },
       { title: "The app", text: "Drivers send their mileage and fuel from their phone every day, in seconds." },

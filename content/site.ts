@@ -245,8 +245,8 @@ export const projects = {
       /** Aplicație internă, fără site public: gol = fără butonul spre site. */
       url: "",
       image: {
-        src: "/proiecte/at-transport-camion.jpg",
-        alt: "Panoul de administrator al aplicației AT Transport pe un telefon, lângă un camion cu sigla firmei",
+        src: "/proiecte/at-transport-telefon.webp",
+        alt: "Panoul de administrator al aplicației AT Transport pe un telefon, între forme de sticlă neagră",
       },
       details: [
         { title: "Clientul", text: "Firmă de transport marfă cu peste 14 mașini." },
