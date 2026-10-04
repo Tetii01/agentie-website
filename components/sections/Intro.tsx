@@ -5,7 +5,7 @@ import { getContent } from "@/content";
 /**
  * Intro-ul de la prima intrare pe site (după loader-ul de pe lircle.co, în stilul nostru):
  * fundal închis cu linii fine și o lumină în accent → o bandă de lumină metalică trece peste ecran
- * și dezvăluie logo-ul (cu două copii „glitch" în accent) → o linie și două etichete jos → logo-ul
+ * și dezvăluie logo-ul → o linie și două etichete jos → logo-ul
  * pulsează → un panou acoperă fundalul → logo-ul zboară exact pe logo-ul din header → panoul pleacă
  * spre dreapta și apare site-ul, iar animația din hero pornește abia acum.
  *
@@ -74,9 +74,7 @@ export async function Intro() {
         {/* Logo-ul: zboară (intro-fly) → urcă și apare (intro-rise) → pulsează (intro-pulse) → se dezvăluie (intro-wipe). */}
         <div id="intro-logo" className="intro-fly">
           <div className="intro-rise">
-            <div className="intro-pulse relative">
-              <Logo size="fill" variant="accent" className="intro-ghost intro-ghost-a" />
-              <Logo size="fill" variant="accent" className="intro-ghost intro-ghost-b" />
+            <div className="intro-pulse">
               <Logo size="fill" className="intro-wipe" />
             </div>
           </div>

@@ -7,8 +7,6 @@ const variants = {
   solid: "text-foreground",
   /** Doar contur, foarte transparent (tokenul --color-logo-outline). */
   outline: "logo-outline",
-  /** Tot logo-ul în culoarea de accent (copiile „glitch" din intro). */
-  accent: "text-accent",
 };
 
 type Variant = keyof typeof variants;

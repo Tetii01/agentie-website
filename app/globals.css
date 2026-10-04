@@ -598,7 +598,7 @@ html.lenis body {
    Starea e pe <html data-intro> (o pune scriptul din Intro.tsx): playing →
    leaving (logo-ul a aterizat în header) → gol; „skip" dacă vizitatorul îl sare.
    Momentele (s): fundal 0–0.7 · bandă de lumină 0.3–1.35 · logo urcă 0.35 și se
-   dezvăluie 0.45–1.37 (cu copiile „glitch") · linie și etichete 1.05–1.8 · puls
+   dezvăluie 0.45–1.37 · linie și etichete 1.05–1.8 · puls
    1.75 · panou 2.2 · zbor în header 2.55–3.45 · panoul pleacă 3.3–4.05.
    Ca să schimbi durata, schimbă și LANDED / DONE din Intro.tsx.
    Doar transform, opacity și un clip-path mic: fluid și pe telefon.
@@ -740,22 +740,6 @@ html[data-intro="playing"] [data-intro-target] {
   animation: intro-wipe 0.92s cubic-bezier(0.77, 0, 0.175, 1) 0.45s both;
 }
 
-.intro-ghost {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-}
-
-.intro-ghost-a {
-  filter: blur(1px);
-  animation: intro-ghost-a 1.15s linear 0.45s both;
-}
-
-.intro-ghost-b {
-  filter: blur(5px);
-  animation: intro-ghost-b 1.15s linear 0.45s both;
-}
-
 @keyframes intro-field {
   from {
     opacity: 0;
@@ -813,30 +797,6 @@ html[data-intro="playing"] [data-intro-target] {
   }
   to {
     clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes intro-ghost-a {
-  0%,
-  55% {
-    opacity: 0.45;
-    transform: translateX(20px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-}
-
-@keyframes intro-ghost-b {
-  0%,
-  55% {
-    opacity: 0.28;
-    transform: translateX(-20px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-20px);
   }
 }
 
