@@ -83,6 +83,8 @@
   --text-stat-mobile: 2rem; /* 32px */
   --text-stat-mobile--line-height: 1.05;
   --text-stat-mobile--letter-spacing: -0.04em;
+  /* Umbră fină sub text, ca să se citească peste fundalul animat (textul roșu din hero). */
+  --text-shadow-legible: 0 1px 2px rgb(0 0 0 / 0.55), 0 2px 16px rgb(0 0 0 / 0.45);
 
   /* Layout */
   --container-site: 85.25rem; /* 1364px cu marginile: 1300px de conținut */

@@ -65,7 +65,7 @@ export async function Hero() {
                     <span aria-hidden className="whitespace-nowrap text-metal">
                       {hero.subject}{" "}
                     </span>
-                    <RotatingText className="text-accent" />
+                    <RotatingText className="text-accent text-shadow-legible" />
                   </h1>
                 </FadeIn>
 
