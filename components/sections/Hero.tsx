@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { logoShapes, lettersViewBox } from "@/components/brand/logo-shapes";
+import { wordmarkShapes, wordmarkViewBox } from "@/components/brand/logo-shapes";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/ui/FadeIn";
@@ -36,7 +36,7 @@ export async function Hero() {
           >
             <div className="w-[94%] animate-letters-rise">
               <svg
-                viewBox={`${lettersViewBox.x} ${lettersViewBox.y} ${lettersViewBox.width} ${lettersViewBox.height}`}
+                viewBox={`0 0 ${wordmarkViewBox.width} ${wordmarkViewBox.height}`}
                 className="hero-letters block h-auto w-full"
               >
                 <defs>
@@ -45,7 +45,7 @@ export async function Hero() {
                     <stop offset="0.7" stopColor="currentColor" stopOpacity="0" />
                   </linearGradient>
                 </defs>
-                {logoShapes.slice(1).map((d) => (
+                {wordmarkShapes.map((d) => (
                   <path key={d} d={d} fill="url(#hero-letters-fill)" vectorEffect="non-scaling-stroke" />
                 ))}
               </svg>

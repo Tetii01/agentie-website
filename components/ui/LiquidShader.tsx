@@ -66,9 +66,23 @@ const FRAGMENT = /* glsl */ `
   }
 `;
 
-/** Paleta lichidului: corp albastru-închis, margini care se aprind în lavanda accentului și puțin roz. */
-const DEEP = [0.12, 0.15, 0.36];
-const GLOW = [3.9, 3.1, 5.0];
+/**
+ * Paleta lichidului pornește din culoarea de accent (--color-accent), deci urmează brandul:
+ * corpul e accentul foarte închis, iar marginile se aprind în accent, puțin spre alb.
+ */
+const DEEP_SHADE = 0.34;
+const GLOW_STRENGTH = 5;
+const GLOW_WHITE = 0.15;
+/** Dacă accentul nu se poate citi: un roșu ca al brandului. */
+const FALLBACK_ACCENT = [1, 0.23, 0.31];
+
+/** „#ff3b4e" → [1, 0.23, 0.31]. */
+function parseHex(value: string) {
+  const match = value.trim().match(/^#([0-9a-f]{6})$/i);
+  if (!match) return null;
+  const n = parseInt(match[1], 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((channel) => channel / 255);
+}
 /** Cât de luminos e lichidul (sub 1: mai stins, ca titlul să rămână în prim-plan). */
 const INTENSITY = 0.82;
 /** Rezoluția față de pixelii ecranului (efectul e moale, deci nu se vede diferența). */
@@ -113,8 +127,16 @@ export function LiquidShader({ className }: { className?: string }) {
     const uTime = gl.getUniformLocation(program, "uTime");
     const uCenter = gl.getUniformLocation(program, "uCenter");
     const uScale = gl.getUniformLocation(program, "uScale");
-    gl.uniform3fv(gl.getUniformLocation(program, "uDeep"), DEEP);
-    gl.uniform3fv(gl.getUniformLocation(program, "uGlow"), GLOW);
+    const accent =
+      parseHex(getComputedStyle(document.documentElement).getPropertyValue("--color-accent")) ?? FALLBACK_ACCENT;
+    gl.uniform3fv(
+      gl.getUniformLocation(program, "uDeep"),
+      accent.map((channel) => channel * DEEP_SHADE),
+    );
+    gl.uniform3fv(
+      gl.getUniformLocation(program, "uGlow"),
+      accent.map((channel) => (channel * (1 - GLOW_WHITE) + GLOW_WHITE) * GLOW_STRENGTH),
+    );
     gl.uniform1f(gl.getUniformLocation(program, "uIntensity"), INTENSITY);
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

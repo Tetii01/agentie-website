@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { logoDot, logoShapes, logoViewBox } from "@/components/brand/logo-shapes";
+import { logoSymbolShapes, logoViewBox, logoWordmarkShapes } from "@/components/brand/logo-shapes";
 import { brand, hero } from "@/content/site";
 import { ogFonts, themeColors } from "@/lib/theme";
 
@@ -31,10 +31,12 @@ export default function OpengraphImage() {
           height={48}
           viewBox={`0 0 ${logoViewBox.width} ${logoViewBox.height}`}
         >
-          {logoShapes.map((d) => (
+          {logoWordmarkShapes.map((d) => (
             <path key={d} d={d} fill={colors.foreground} />
           ))}
-          <circle {...logoDot} fill={colors.accent} />
+          {logoSymbolShapes.map((d) => (
+            <path key={d} d={d} fill={colors.accent} />
+          ))}
         </svg>
         <div
           style={{

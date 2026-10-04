@@ -14,9 +14,10 @@ export function themeColors() {
 
   return {
     background: token("background", "#0d0d0d"),
+    surface: token("surface", "#141414"),
     foreground: token("foreground", "#ffffff"),
     muted: token("muted", "#909099"),
-    accent: token("accent", "#8b9cff"),
+    accent: token("accent", "#ff3b4e"),
     glow: token("glow", "rgba(255, 255, 255, 0.07)"),
   };
 }

@@ -16,7 +16,7 @@
   --color-border: rgba(255, 255, 255, 0.1);
   --color-foreground: #ffffff;
   --color-muted: #909099; /* text secundar */
-  --color-accent: #8b9cff; /* PROVIZORIU, va fi înlocuit de brand */
+  --color-accent: #ff3b4e; /* Roșu Creos, din brand kit (simbolul din logo) */
   --color-accent-foreground: #0d0d0d;
   --color-glass: rgba(13, 13, 14, 0.5); /* fundalul header-ului */
   --color-glass-border: rgba(198, 198, 198, 0.15); /* linia de sub header */
@@ -372,11 +372,10 @@
   }
 }
 
-/* Literele uriașe „creos" de jos: doar contur fin și un gradient care se stinge în jos. */
+/* Literele uriașe „creos" de jos (wordmark-ul din brand kit): doar un gradient care se stinge în jos.
+   Fără contur: literele din kit sunt construite din forme suprapuse, iar conturul le-ar arăta îmbinările. */
 @utility hero-letters {
   color: var(--color-foreground);
-  stroke: color-mix(in oklab, var(--color-foreground) 9%, transparent);
-  stroke-width: 1px;
 }
 
 /* Cortina: restul paginii, care urcă peste hero. Margine de sus rotunjită, cu o linie metalică și o umbră în sus. */

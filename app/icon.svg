@@ -1,8 +1,5 @@
-<!-- Favicon: simbolul Creos (orbita + punctul), din components/brand/logo-shapes.ts. Culorile sunt scrise direct (fișier static): fundalul și accentul din app/globals.css. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#0d0d0d"/>
-  <g transform="translate(6.000 6.253) scale(0.045158)">
-    <path fill="#ffffff" d="M328.53,303.864c-48.605,62.227-138.47,73.271-200.697,24.667s-73.215-138.47-24.611-200.697s138.414-73.215,200.641-24.611c9.194,7.176,17.491,15.417,24.667,24.611l57.406-44.849c-10.82-13.903-23.321-26.349-37.224-37.224C254.811-27.623,119.144-10.973,45.76,82.985c-73.383,93.902-56.733,229.569,37.224,302.952c93.902,73.383,229.569,56.733,302.952-37.224L328.53,303.864z"/>
-    <circle fill="#8b9cff" cx="395.242" cy="215.848" r="47.652"/>
-  </g>
+<!-- Favicon: simbolul Creos în roșu, pe fundal transparent, copiat din brand kit (iconite/favicon.svg). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <path fill="#FF3B4E" d="M70.64 65.71A40 40 0 1 1 69.73 13.23L50.4 30.63A14 14 0 1 0 50.72 49Z"/>
+  <path fill="#FF3B4E" d="M75.13 7.29L74.12 37.54L43.92 35.4Z"/>
 </svg>

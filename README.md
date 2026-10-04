@@ -51,7 +51,7 @@ Site-ul are două limbi: română la `/`, engleză la `/en`. Butonul de limbă s
 
 Toate valorile vizuale sunt tokens în `app/globals.css`, în blocul `@theme`. Componentele folosesc doar clasele generate din ele: `--color-accent` devine `bg-accent` și `text-accent`, `--radius-card` devine `rounded-card` și așa mai departe. Schimbi valoarea tokenului și se schimbă peste tot, inclusiv în imaginea de share și în iconița iOS, care citesc culorile din `globals.css` la build.
 
-- **Culoarea de accent:** `--color-accent` (și `--color-accent-foreground` pentru textul de pe butoane). Glow-ul butonului se calculează automat din accent.
+- **Culoarea de accent:** `--color-accent`, roșul Creos din brand kit (`#FF3B4E`), și `--color-accent-foreground` (negru) pentru textul și iconițele de pe roșu. Tot ce folosește accentul (simbolul din logo, cercul cu săgeată, textele evidențiate, inelul liquid metal, lichidul din hero, intro-ul) îl preia automat.
 - **Fontul:** Geist se încarcă în `app/[lang]/layout.tsx` prin `next/font`. Pentru alt font, schimbi importul de acolo; `--font-sans` din `globals.css` îl preia. Imaginea de share folosește fișierele din `assets/fonts/`.
 - **Tipografia:** `--text-h1`, `--text-h2`, `--text-lead`, `--text-stat` (plus variantele `-mobile`), fiecare cu line-height și letter-spacing proprii.
 
@@ -61,12 +61,17 @@ Excepții, care nu pot citi tokens: `app/icon.svg` (favicon) și `themeColor` di
 
 ## Logo-ul
 
-Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „creos" și punctul) sunt în `components/brand/logo-shapes.ts`, și le folosesc toate locurile de mai jos. Pentru un logo nou, înlocuiești formele de acolo (atributele `d` din SVG) și dimensiunile din `logoViewBox`.
+Logo-ul Creos („bucla": un C greu care se întoarce într-o săgeată) vine din brand kit (`Desktop/Creos brand kit`, cu README-ul lui pentru culori și reguli). Formele sunt în `components/brand/logo-shapes.ts`, și le folosesc toate locurile de mai jos:
+- logo-ul orizontal: simbolul (inelul și săgeata) și textul „creos";
+- simbolul singur, pe 80×80;
+- textul „creos" singur, pentru literele mari din hero.
 
-- **Pe site:** `components/brand/Logo.tsx`, cu două componente. `Logo` e logo-ul întreg (header, footer, secțiunea „Despre"). `Submark` e doar simbolul, orbita și punctul; îl folosea cardul CTA final (`components/sections/FinalCta.tsx`), care acum nu mai apare în pagină. Orbita și literele iau culoarea textului, punctul ia culoarea de accent (`--color-accent`). Numele din `brand.name` rămâne textul accesibil.
+Pentru un logo nou, înlocuiești formele de acolo (atributele `d` din SVG-urile kitului) și dimensiunile (`logoViewBox`, `symbolViewBox`, `wordmarkViewBox`).
+
+- **Pe site:** `components/brand/Logo.tsx`, cu două componente. `Logo` e logo-ul întreg (header, footer, secțiunea „Despre", intro-ul). `Submark` e doar simbolul; îl folosea cardul CTA final (`components/sections/FinalCta.tsx`), care acum nu mai apare în pagină. Simbolul ia culoarea de accent (`--color-accent`), textul ia culoarea textului. Numele din `brand.name` rămâne textul accesibil.
 - **Imaginea de share:** `app/opengraph-image.tsx`.
-- **Iconița iOS:** `app/apple-icon.tsx`. Doar simbolul: orbita și punctul.
-- **Favicon:** `app/icon.svg`. Doar simbolul, cu forma și culorile copiate direct, pentru că e un fișier static.
+- **Iconița iOS:** `app/apple-icon.tsx`. Simbolul în accent, pe fundalul cardurilor (`--color-surface`), ca `app-icon-negru-rosu` din kit.
+- **Favicon:** `app/icon.svg`, copiat din kit (`iconite/favicon.svg`): simbolul roșu, pe fundal transparent. Culorile sunt scrise direct, pentru că e un fișier static.
 
 ## Mișcarea și stilul „liquid metal"
 
@@ -78,7 +83,7 @@ Logo-ul Creos e SVG-ul exportat din Illustrator. Formele (orbita, literele „cr
 
 **Hero** (`components/sections/Hero.tsx`). Animația e preluată din „Motion Footer" (21st.dev, Hossain Jahed) și întoarsă pentru partea de sus a paginii:
 - **La încărcare:** titlul și butoanele urcă unul după altul. Jos urcă „creos" în litere uriașe, doar contur, cu un gradient care se stinge, tăiat de marginea de jos (nu trece pe sub titlu).
-- **Fundalul:** o „membrană" de lichid luminos care se deformează încet, sus-dreapta pe desktop și sus pe telefon (`components/ui/LiquidShader.tsx`, shader-ul preluat din „liquid shader", 21st.dev, dhileepkumargm). E WebGL direct, fără three.js, la rezoluție redusă și 30 de cadre pe secundă. Se oprește când cortina acoperă hero-ul. La prefers-reduced-motion e un singur cadru nemișcat, iar fără WebGL rămâne o lumină din CSS (`liquid-fallback`). Culorile, poziția și mărimea sunt sus în fișier (`DEEP`, `GLOW`, `INTENSITY`) și în `resize()`.
+- **Fundalul:** o „membrană" de lichid luminos care se deformează încet, sus-dreapta pe desktop și sus pe telefon (`components/ui/LiquidShader.tsx`, shader-ul preluat din „liquid shader", 21st.dev, dhileepkumargm). E WebGL direct, fără three.js, la rezoluție redusă și 30 de cadre pe secundă. Se oprește când cortina acoperă hero-ul. La prefers-reduced-motion e un singur cadru nemișcat, iar fără WebGL rămâne o lumină din CSS (`liquid-fallback`). Culorile pornesc din `--color-accent`, deci urmează brandul (cât de închis e corpul și cât de tare strălucesc marginile: `DEEP_SHADE`, `GLOW_STRENGTH`, `GLOW_WHITE`, `INTENSITY` sus în fișier). Poziția și mărimea sunt în `resize()`.
 - **Cortina:** hero-ul stă fixat (`sticky`, în `app/[lang]/page.tsx`), iar restul paginii urcă peste el, cu marginea de sus rotunjită (utilitatea `hero-curtain`). Cât e acoperit, hero-ul se micșorează și se estompează, iar literele coboară și dispar. Merge din CSS (scroll-driven animations, `hero-recede` și `hero-letters-sink`), fără JavaScript, deci e fluid și pe telefon. Browserele fără suport păstrează hero-ul static.
 - **Momentele:** tokenul `--animate-letters-rise` și blocul „HERO LA SCROLL" din `app/globals.css`.
 
@@ -106,7 +111,6 @@ Tot conținutul provizoriu are `placeholder: true` în `content/site.ts`. Caută
 Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 
 **Brand și general**
-- Culoarea de accent: `--color-accent` în `app/globals.css` e provizorie. Dacă o schimbi, actualizează și `app/icon.svg`.
 
 **Hero**
 - Fără imagine: fundalul e lichidul desenat de `LiquidShader` (vezi mai sus). Acțiunile care se schimbă în titlu: `hero.actions`.
