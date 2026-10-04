@@ -1,5 +1,4 @@
 import { Check, Sparkles } from "lucide-react";
-import { Submark } from "@/components/brand/Logo";
 import { Card } from "@/components/ui/Card";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { LogoLoop } from "@/components/ui/LogoLoop";
@@ -60,7 +59,7 @@ export async function Offer() {
             />
 
             <div className="mt-6 rounded-inner border border-border bg-background/60 p-4 md:mt-8 md:p-6">
-              <LeadForm texts={texts} mark={<Submark />} />
+              <LeadForm texts={texts} />
             </div>
 
             <p className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted">

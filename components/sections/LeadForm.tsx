@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, ArrowRight, Check, Clock, LoaderCircle, MessageCircle } from "lucide-react";
-import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { controlClasses, Field, FieldError } from "@/components/ui/Field";
 import type { offer, ui } from "@/content/site";
@@ -49,9 +49,8 @@ const focusId = (field: LeadField) => (field === "interests" ? "lead-interests-0
  * Formularul de analiză gratuită, în 2 pași, cu tranziție fade/slide între ei.
  * „Înapoi" păstrează tot ce s-a completat. Validare cu aceeași schemă ca pe server (lib/lead.ts).
  * Anti-spam: câmp capcană (hp) + timpul de la încărcarea paginii (verificat pe server).
- * `mark` (submark-ul, randat pe server în Offer.tsx) stă la pasul 1 în stânga butonului „Continuă", de la sm în sus.
  */
-export function LeadForm({ texts, mark }: { texts: LeadFormTexts; mark?: ReactNode }) {
+export function LeadForm({ texts }: { texts: LeadFormTexts }) {
   const { form, ui: t } = texts;
   const ideaOption = form.step1.idea.option;
   const schemas = useMemo(
@@ -348,9 +347,7 @@ export function LeadForm({ texts, mark }: { texts: LeadFormTexts; mark?: ReactNo
               {t.back}
             </Button>
           ) : (
-            <span aria-hidden className="hidden sm:block">
-              {mark}
-            </span>
+            <span aria-hidden />
           )}
           <Button type="submit" size="lg" disabled={submitting} aria-busy={submitting || undefined} className="w-full sm:w-auto">
             {step === 1 ? (
