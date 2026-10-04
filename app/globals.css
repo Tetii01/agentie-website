@@ -83,10 +83,9 @@
   --text-stat-mobile: 2rem; /* 32px */
   --text-stat-mobile--line-height: 1.05;
   --text-stat-mobile--letter-spacing: -0.04em;
-  /* Umbră sub text, ca să se citească peste fundalul animat (textul roșu din hero, peste lumina roșie).
-     În em, ca să crească odată cu textul: o margine închisă lipită de litere + un halou moale în jur. */
-  --text-shadow-legible:
-    0 0.01em 0.02em rgb(0 0 0 / 0.85), 0 0.02em 0.08em rgb(0 0 0 / 0.7), 0 0.03em 0.3em rgb(0 0 0 / 0.6);
+  /* Umbră fină sub text, ca să se citească peste fundalul animat (textul roșu din hero, peste lumina roșie).
+     În em, ca să crească odată cu textul. Fără halou mare: face o pată închisă în jurul cuvintelor. */
+  --text-shadow-legible: 0 0.01em 0.02em rgb(0 0 0 / 0.7), 0 0.02em 0.07em rgb(0 0 0 / 0.45);
 
   /* Layout */
   --container-site: 85.25rem; /* 1364px cu marginile: 1300px de conținut */
