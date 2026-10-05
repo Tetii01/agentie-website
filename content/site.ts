@@ -289,9 +289,9 @@ export const projects = {
     },
     {
       title: "Extaz Padel",
-      category: "Website + rezervări online",
+      category: "Branding + website + social media",
       description:
-        "Site pentru un club de padel din Sibiu, cu rezervări și plată online, abonamente, parteneri de joc și recompense pentru jucători.",
+        "Branding, site, social media și conținut pentru un club de padel din Sibiu. Site-ul are rezervări și plată online, abonamente, parteneri de joc și recompense pentru jucători.",
       url: "https://extazpadel.com",
       image: {
         src: "/proiecte/extaz-padel.webp",
@@ -300,12 +300,12 @@ export const projects = {
       details: [
         { title: "Clientul", text: "Club de padel cu 5 terenuri în Șelimbăr, lângă Sibiu." },
         {
-          title: "Rezervări",
-          text: "Jucătorii aleg terenul și ora, plătesc online și primesc confirmarea pe loc; abonamentele se cumpără la fel.",
+          title: "Branding și social media",
+          text: "Identitatea vizuală a clubului, administrarea rețelelor sociale și producția de conținut.",
         },
         {
-          title: "Joacă împreună",
-          text: "Jucătorii fără partener deschid o partidă la care se pot alătura alții, iar costul terenului se împarte.",
+          title: "Website",
+          text: "Rezervări și plată online cu confirmare pe loc, abonamente și partide deschise, la care costul terenului se împarte.",
         },
         {
           title: "Recompense",

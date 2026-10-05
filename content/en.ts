@@ -73,19 +73,19 @@ const projectTexts = [
   },
   {
     title: "Extaz Padel",
-    category: "Website + online booking",
+    category: "Branding + website + social media",
     description:
-      "A website for a padel club in Sibiu, with online booking and payment, memberships, playing partners and rewards for players.",
+      "Branding, website, social media and content for a padel club in Sibiu. The website has online booking and payment, memberships, playing partners and rewards for players.",
     alt: "The Extaz Padel website on a laptop, with a padel racket and a ball in front",
     details: [
       { title: "The client", text: "Padel club with 5 courts in Șelimbăr, near Sibiu." },
       {
-        title: "Booking",
-        text: "Players pick a court and a time, pay online and get an instant confirmation; memberships are bought the same way.",
+        title: "Branding and social media",
+        text: "The club's visual identity, social media management and content production.",
       },
       {
-        title: "Play together",
-        text: "Players without a partner open a game that others can join, and the court fee is split between them.",
+        title: "Website",
+        text: "Online booking and payment with instant confirmation, memberships and open games with a split court fee.",
       },
       {
         title: "Rewards",
