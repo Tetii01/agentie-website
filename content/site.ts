@@ -877,8 +877,6 @@ export const ui = {
   /** Click pe un card de proiect: „Detalii despre proiect: {nume}". */
   projectDetails: "Detalii despre proiect",
   close: "Închide",
-  /** Etichetele mici de jos din intro-ul de pe prima pagină (stânga, dreapta). */
-  intro: { left: "Agenție AI", right: "Sibiu · România" },
   /** Butonul de limbă din hero: duce la varianta în engleză. */
   languageSwitch: { label: "EN", name: "English", href: "/en", lang: "en" },
   carousel: {

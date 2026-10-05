@@ -75,8 +75,9 @@ Pentru un logo nou, înlocuiești formele de acolo (atributele `d` din SVG-urile
 
 ## Mișcarea și stilul „liquid metal"
 
-**Intro** (`components/sections/Intro.tsx`), după loader-ul de pe lircle.co, în stilul nostru:
-- **Ce face:** la prima intrare pe site, o bandă de lumină metalică trece peste ecran și dezvăluie logo-ul (cu două copii „glitch" în accent). Apoi apar o linie și două etichete jos (`ui.intro`), logo-ul pulsează și zboară exact pe logo-ul din header, iar panoul pleacă și apare site-ul. Durează ~4 secunde.
+**Intro** (`components/sections/Intro.tsx`), doar cu logo-ul, pe fundal închis:
+- **Ce face:** la prima intrare pe site, simbolul apare în centru, iar săgeata face un tur complet peste inelul estompat și se fixează la locul ei (inelul se umple, simbolul pulsează scurt). Apoi simbolul se mută la stânga, literele „creos" urcă pe rând, iar logo-ul zboară exact pe logo-ul din header, cât panoul se ridică și apare site-ul. Durează ~2,6 secunde.
+- **Formele:** inelul, săgeata și literele vin din `components/brand/logo-shapes.ts` (textul e salvat câte o formă pe literă, ca să poată urca separat).
 - **Când apare:** o singură dată pe sesiune. Nu apare la prefers-reduced-motion, când adresa duce direct la o secțiune (`/#analiza`) și fără JavaScript.
 - **Se poate sări:** orice scroll, atingere sau tastă îl închide imediat.
 - **Cum e făcut:** mișcarea e din CSS (blocul „INTRO" din `app/globals.css`). Un script mic rulează înainte de prima afișare, decide dacă intro-ul apare, măsoară unde aterizează logo-ul și îl închide. Pentru a schimba durata, se modifică și `LANDED` / `DONE` din `Intro.tsx`.

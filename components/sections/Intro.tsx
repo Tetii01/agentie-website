@@ -1,25 +1,25 @@
-import { Logo } from "@/components/brand/Logo";
+import type { CSSProperties } from "react";
+import { logoSymbolShapes, logoViewBox, logoWordmarkShapes } from "@/components/brand/logo-shapes";
 import { InlineScript } from "@/components/ui/InlineScript";
-import { getContent } from "@/content";
 
 /**
- * Intro-ul de la prima intrare pe site (după loader-ul de pe lircle.co, în stilul nostru):
- * fundal închis cu linii fine și o lumină în accent → o bandă de lumină metalică trece peste ecran
- * și dezvăluie logo-ul → o linie și două etichete jos → logo-ul
- * pulsează → un panou acoperă fundalul → logo-ul zboară exact pe logo-ul din header → panoul pleacă
- * spre dreapta și apare site-ul, iar animația din hero pornește abia acum.
+ * Intro-ul de la prima intrare pe site, scurt (~2,6 s), doar cu logo-ul pe fundal închis:
+ * simbolul apare în centru, săgeata face un tur complet peste inelul estompat și se fixează la locul ei,
+ * iar inelul se umple → simbolul se mută la stânga și literele „creos" urcă pe rând
+ * → logo-ul zboară exact pe logo-ul din header, panoul se ridică și apare site-ul, iar animația din
+ * hero pornește abia acum.
  *
- * Toată mișcarea e din CSS (blocul „INTRO" din app/globals.css). Scriptul de mai jos rulează înainte
- * de prima afișare și decide dacă intro-ul apare: doar o dată pe sesiune, nu la prefers-reduced-motion
- * și nu când adresa duce direct la o secțiune (#…). Tot el măsoară unde aterizează logo-ul și închide
- * intro-ul la final sau imediat ce vizitatorul derulează, atinge ecranul sau apasă o tastă.
- * Stările sunt pe <html data-intro>: playing → leaving (logo-ul a aterizat, hero-ul pornește) → gol.
- * Fără JavaScript, intro-ul nu apare deloc.
+ * Toată mișcarea e din CSS (blocul „INTRO" din app/globals.css), doar transform și opacity. Scriptul
+ * de mai jos rulează înainte de prima afișare și decide dacă intro-ul apare: doar o dată pe sesiune,
+ * nu la prefers-reduced-motion și nu când adresa duce direct la o secțiune (#…). Tot el măsoară unde
+ * aterizează logo-ul și închide intro-ul la final sau imediat ce vizitatorul derulează, atinge ecranul
+ * sau apasă o tastă. Stările sunt pe <html data-intro>: playing → leaving (logo-ul a aterizat, hero-ul
+ * pornește) → gol. Fără JavaScript, intro-ul nu apare deloc.
  */
 
 /** Când aterizează logo-ul și când a plecat tot (ms); la fel ca întârzierile din CSS. */
-const LANDED = 3450;
-const DONE = 4150;
+const LANDED = 2600;
+const DONE = 3000;
 const SKIP = 450;
 
 const SCRIPT = `(function(){try{
@@ -55,27 +55,51 @@ events.forEach(function(e){addEventListener(e,skip,{passive:true})});
 timers=[setTimeout(function(){d.setAttribute("data-intro","leaving")},${LANDED}),setTimeout(finish,${DONE})];
 }catch(e){}})();`;
 
-export async function Intro() {
-  const { ui } = await getContent();
+const { width, height } = logoViewBox;
+const [ring, arrow] = logoSymbolShapes;
 
+/**
+ * Geometria logo-ului, dată CSS-ului: proporția logo-ului și cât e mutat simbolul spre dreapta
+ * ca să stea în centru la început (în % din lățimea lui; simbolul e un pătrat cât înălțimea logo-ului).
+ */
+const geometry = {
+  aspectRatio: `${width} / ${height}`,
+  "--intro-mark-offset": `${((width / 2 - height / 2) / height) * 100}%`,
+} as CSSProperties;
+
+/** Simbolul e pătrat, cu centrul inelului în mijloc: săgeata se rotește în jurul lui. */
+const symbolBox = `0 0 ${height} ${height}`;
+
+export function Intro() {
   return (
     <>
       <div aria-hidden className="intro">
-        <div className="intro-panel">
-          <div className="intro-field" />
-          <div className="intro-glow" />
-          <div className="intro-scan" />
-          <div className="intro-line" />
-          <p className="intro-label left-6 text-muted md:left-14">{ui.intro.left}</p>
-          <p className="intro-label right-6 text-accent md:right-14">{ui.intro.right}</p>
-          <div className="intro-shutter" />
-        </div>
+        <div className="intro-panel" />
 
-        {/* Logo-ul: zboară (intro-fly) → urcă și apare (intro-rise) → pulsează (intro-pulse) → se dezvăluie (intro-wipe). */}
-        <div id="intro-logo" className="intro-fly">
-          <div className="intro-rise">
-            <div className="intro-pulse">
-              <Logo size="fill" className="intro-wipe" />
+        <div id="intro-logo" className="intro-fly" style={geometry}>
+          {/* Literele „creos": fiecare într-un SVG cât tot logo-ul, ca să urce separat (intro-letter). */}
+          <div className="intro-word text-foreground">
+            {logoWordmarkShapes.map((d, index) => (
+              <svg
+                key={d}
+                viewBox={`0 0 ${width} ${height}`}
+                className="intro-letter"
+                style={{ "--intro-letter": index } as CSSProperties}
+              >
+                <path d={d} fill="currentColor" />
+              </svg>
+            ))}
+          </div>
+
+          {/* Simbolul: se mută din centru la stânga (intro-mark) → apare și „pulsează" la aterizare (intro-pop). */}
+          <div className="intro-mark text-accent">
+            <div className="intro-pop">
+              <svg viewBox={symbolBox} className="intro-ring">
+                <path d={ring} fill="currentColor" />
+              </svg>
+              <svg viewBox={symbolBox} className="intro-arrow">
+                <path d={arrow} fill="currentColor" />
+              </svg>
             </div>
           </div>
         </div>
