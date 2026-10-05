@@ -544,10 +544,9 @@ export const about = {
   photoPlaceholderLabel: "Poză fondator",
   founders: [
     {
-      placeholder: true,
       name: "TETI",
       role: "Tehnic și implementare",
-      photo: null,
+      photo: { src: "/fondatori/teti.jpg", alt: "Portret Teti, într-o mașină" },
       instagram: { handle: "@____t.e.t.i____", url: "https://www.instagram.com/____t.e.t.i____/" },
     },
     {

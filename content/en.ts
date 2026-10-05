@@ -328,7 +328,11 @@ export const en: SiteContent = {
     title: "Who we are",
     photoPlaceholderLabel: "Founder photo",
     founders: [
-      { ...ro.about.founders[0], role: "Tech and implementation" },
+      {
+        ...ro.about.founders[0],
+        role: "Tech and implementation",
+        photo: { src: "/fondatori/teti.jpg", alt: "Portrait of Teti in a car" },
+      },
       {
         ...ro.about.founders[1],
         role: "Design and creative direction",
