@@ -210,12 +210,6 @@ export type Project = {
   details: { title: string; text: string }[];
 };
 
-const projectDetailsPlaceholder = [
-  { title: "[TITLU]", text: "[TEXT]" },
-  { title: "[TITLU]", text: "[TEXT]" },
-  { title: "[TITLU]", text: "[TEXT]" },
-];
-
 export const projects = {
   id: anchors.projects,
   title: "Proiecte",
@@ -314,13 +308,21 @@ export const projects = {
       ],
     },
     {
-      placeholder: true,
-      title: "[TITLU PROIECT 6]",
-      category: "Website",
-      description: "[DESCRIERE SCURTĂ]",
-      url: "[URL PROIECT]",
-      image: null,
-      details: projectDetailsPlaceholder,
+      title: "Worldstar, YouMadBro și Hot 97",
+      category: "Social media + design grafic",
+      description:
+        "Administrare social media și design grafic pentru YouMadBro, Worldstar și Hot 97, cu peste 1.500 de postări, plus merch în ediție specială pentru Worldstar.",
+      /** Trei conturi, fără un singur site: gol = fără butonul spre site. */
+      url: "",
+      image: {
+        src: "/proiecte/worldstar-youmadbro.webp",
+        alt: "Profilul de Instagram YouMadBro pe un telefon, lângă o șapcă Worldstar în ediție specială",
+      },
+      details: [
+        { title: "Clienții", text: "Trei branduri media: YouMadBro, Worldstar și Hot 97." },
+        { title: "Social media", text: "Administrarea conturilor și grafica postărilor: peste 1.500 de postări." },
+        { title: "Merch", text: "Merch în ediție specială pentru Worldstar." },
+      ],
     },
     // satisfies verifică fiecare proiect; `as` lasă tipul general, ca varianta în engleză să poată folosi alte texte.
   ] satisfies Project[] as Project[],

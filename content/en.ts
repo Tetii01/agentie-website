@@ -93,7 +93,18 @@ const projectTexts = [
       },
     ],
   },
-  { title: "[PROJECT TITLE 6]", category: "Website" },
+  {
+    title: "Worldstar, YouMadBro & Hot 97",
+    category: "Social media + graphic design",
+    description:
+      "Social media management and graphic design for YouMadBro, Worldstar and Hot 97, with over 1,500 posts, plus special edition merch for Worldstar.",
+    alt: "The YouMadBro Instagram profile on a phone, next to a special edition Worldstar cap",
+    details: [
+      { title: "The clients", text: "Three media brands: YouMadBro, Worldstar and Hot 97." },
+      { title: "Social media", text: "Account management and post graphics: over 1,500 posts." },
+      { title: "Merch", text: "Special edition merch for Worldstar." },
+    ],
+  },
 ];
 
 /** Testimonialele, în aceeași ordine ca în română: rolurile traduse și citatele în română traduse. */
