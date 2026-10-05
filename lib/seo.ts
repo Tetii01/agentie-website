@@ -27,10 +27,20 @@ export const homePath: Record<Locale, string> = { ro: "/", en: "/en" };
 
 const ogLocale: Record<Locale, string> = { ro: "ro_RO", en: "en_US" };
 
+/**
+ * Imaginea de share (app/opengraph-image.tsx). Se dă explicit peste tot: layout-ul rădăcină e
+ * app/[lang]/layout.tsx, iar imaginea din app/ nu ajunge singură în metadata primei pagini
+ * (fără ea, iMessage și WhatsApp aleg o poză oarecare din pagină).
+ */
+function shareImage(alt: string) {
+  return { url: "/opengraph-image", width: 1200, height: 630, alt };
+}
+
 /** Metadata pentru prima pagină, în limba dată (folosită în app/[lang]/layout.tsx). */
 export function rootMetadata(locale: Locale): Metadata {
   const { brand, seo } = contentFor(locale);
   const url = homePath[locale];
+  const image = shareImage(brand.name);
   return {
     metadataBase: new URL(siteUrl),
     title: { default: seo.title, template: `%s · ${brand.name}` },
@@ -38,8 +48,8 @@ export function rootMetadata(locale: Locale): Metadata {
     applicationName: brand.name,
     // Google află că /  și /en sunt aceeași pagină, în limbi diferite.
     alternates: { canonical: url, languages: { ro: homePath.ro, en: homePath.en, "x-default": homePath.ro } },
-    openGraph: { type: "website", locale: ogLocale[locale], siteName: brand.name, url, title: seo.title, description: seo.description },
-    twitter: { card: "summary_large_image", title: seo.title, description: seo.description },
+    openGraph: { type: "website", locale: ogLocale[locale], siteName: brand.name, url, title: seo.title, description: seo.description, images: [image] },
+    twitter: { card: "summary_large_image", title: seo.title, description: seo.description, images: [image] },
     // Moștenit de toate paginile.
     robots: { index: allowIndexing, follow: allowIndexing },
   };
@@ -51,9 +61,9 @@ export function rootMetadata(locale: Locale): Metadata {
  * inclusiv imaginea generată de app/opengraph-image.tsx.
  */
 export function pageMetadata({ title, description, route }: { title: string; description: string; route: string }): Metadata {
-  const { brand, seo } = ro;
+  const { brand } = ro;
   const fullTitle = `${title} · ${brand.name}`;
-  const image = { url: "/opengraph-image", width: 1200, height: 630, alt: seo.title };
+  const image = shareImage(brand.name);
   return {
     title,
     description,

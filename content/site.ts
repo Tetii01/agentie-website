@@ -50,7 +50,7 @@ export type ImageRef = { src: string; alt: string } | null;
 /* ───────────────────────── Brand și rute ───────────────────────── */
 
 export const brand = {
-  name: "Creos AI",
+  name: "Creos",
 };
 
 /** Id-urile secțiunilor, folosite de meniu și de butoanele care fac scroll. */

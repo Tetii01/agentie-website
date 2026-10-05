@@ -1,4 +1,4 @@
-# Site Creos AI
+# Site Creos
 
 Site one-page pentru agenție, plus 3 pagini legale. Next.js 16 (App Router), TypeScript, Tailwind CSS v4.
 Spec-ul complet e în [`docs/SPEC.md`](docs/SPEC.md).
@@ -224,7 +224,7 @@ Până la lansare, site-ul e online, dar nu apare în Google: `robots.txt` bloch
 3. Recomandat: adaugi și un `TXT` pentru DMARC, cu numele `_dmarc` și valoarea `v=DMARC1; p=none;`. Ajută la livrare.
 4. În Resend apeși Verify. Verificarea durează de la câteva minute la câteva ore, până când domeniul apare ca **Verified**.
 5. API Keys → Create API Key, cu permisiunea **Sending access** și restricționată la domeniul vostru. Copiezi cheia (se afișează o singură dată) în `RESEND_API_KEY` pe Vercel.
-6. Setezi `LEAD_FROM_EMAIL`, de exemplu `Site Creos AI <lead@domeniu.ro>`. Adresa nu trebuie să existe ca inbox; trebuie doar să fie pe domeniul verificat. Setezi și `LEAD_TO_EMAIL`, inbox-ul unde vreți lead-urile.
+6. Setezi `LEAD_FROM_EMAIL`, de exemplu `Site Creos <lead@domeniu.ro>`. Adresa nu trebuie să existe ca inbox; trebuie doar să fie pe domeniul verificat. Setezi și `LEAD_TO_EMAIL`, inbox-ul unde vreți lead-urile.
 7. Refaci deploy-ul și trimiți un test din formular. În Resend → Emails vezi fiecare email trimis și dacă a fost livrat.
 
 Emailurile au Reply-To pe adresa clientului: un „Reply" din inbox îi răspunde direct lui.
