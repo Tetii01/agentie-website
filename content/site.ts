@@ -549,13 +549,13 @@ export const about = {
       instagram: { handle: "@____t.e.t.i____", url: "https://www.instagram.com/____t.e.t.i____/" },
     },
     {
-      placeholder: true,
       name: "DAVID",
       role: "Design și direcție creativă",
-      photo: null,
+      photo: { src: "/fondatori/david-dj.jpg", alt: "David la pupitrul de DJ, într-un club" },
       instagram: { handle: "@david.37._", url: "https://www.instagram.com/david.37._/" },
     },
-  ] satisfies Founder[],
+    // satisfies verifică fiecare fondator; `as` lasă tipul general, ca varianta în engleză să poată folosi alte texte.
+  ] satisfies Founder[] as Founder[],
   text: {
     placeholder: true,
     value:

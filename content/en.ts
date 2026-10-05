@@ -318,7 +318,11 @@ export const en: SiteContent = {
     photoPlaceholderLabel: "Founder photo",
     founders: [
       { ...ro.about.founders[0], role: "Tech and implementation" },
-      { ...ro.about.founders[1], role: "Design and creative direction" },
+      {
+        ...ro.about.founders[1],
+        role: "Design and creative direction",
+        photo: { src: "/fondatori/david-dj.jpg", alt: "David at the DJ decks in a club" },
+      },
     ],
     text: {
       ...ro.about.text,
