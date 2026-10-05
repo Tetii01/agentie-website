@@ -4,8 +4,8 @@ import { InlineScript } from "@/components/ui/InlineScript";
 
 /**
  * Intro-ul de la prima intrare pe site, scurt (~2,6 s), doar cu logo-ul pe fundal închis:
- * simbolul apare în centru, săgeata face un tur complet peste inelul estompat și se fixează la locul ei,
- * iar inelul se umple → simbolul se mută la stânga și literele „creos" urcă pe rând
+ * simbolul (bucla cu săgeata) crește în centru, face un tur complet și se fixează la locul lui cu un mic
+ * recul → simbolul se mută la stânga și literele „creos" urcă pe rând
  * → logo-ul zboară exact pe logo-ul din header, panoul se ridică și apare site-ul, iar animația din
  * hero pornește abia acum.
  *
@@ -56,7 +56,6 @@ timers=[setTimeout(function(){d.setAttribute("data-intro","leaving")},${LANDED})
 }catch(e){}})();`;
 
 const { width, height } = logoViewBox;
-const [ring, arrow] = logoSymbolShapes;
 
 /**
  * Geometria logo-ului, dată CSS-ului: proporția logo-ului și cât e mutat simbolul spre dreapta
@@ -67,7 +66,7 @@ const geometry = {
   "--intro-mark-offset": `${((width / 2 - height / 2) / height) * 100}%`,
 } as CSSProperties;
 
-/** Simbolul e pătrat, cu centrul inelului în mijloc: săgeata se rotește în jurul lui. */
+/** Simbolul e pătrat, cu centrul inelului în mijloc: se rotește în jurul lui. */
 const symbolBox = `0 0 ${height} ${height}`;
 
 export function Intro() {
@@ -91,14 +90,13 @@ export function Intro() {
             ))}
           </div>
 
-          {/* Simbolul: se mută din centru la stânga (intro-mark) → apare și „pulsează" la aterizare (intro-pop). */}
+          {/* Simbolul: se mută din centru la stânga (intro-mark) → crește, face un tur și pulsează la aterizare (intro-pop). */}
           <div className="intro-mark text-accent">
             <div className="intro-pop">
-              <svg viewBox={symbolBox} className="intro-ring">
-                <path d={ring} fill="currentColor" />
-              </svg>
-              <svg viewBox={symbolBox} className="intro-arrow">
-                <path d={arrow} fill="currentColor" />
+              <svg viewBox={symbolBox} className="intro-symbol">
+                {logoSymbolShapes.map((d) => (
+                  <path key={d} d={d} fill="currentColor" />
+                ))}
               </svg>
             </div>
           </div>
