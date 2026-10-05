@@ -71,7 +71,28 @@ const projectTexts = [
       { title: "Result", text: "Orders reach the bar and kitchen instantly, with no paper slips and no wasted trips." },
     ],
   },
-  { title: "[PROJECT TITLE 5]", category: "UI/UX Design" },
+  {
+    title: "Extaz Padel",
+    category: "Website + online booking",
+    description:
+      "A website for a padel club in Sibiu, with online booking and payment, memberships, playing partners and rewards for players.",
+    alt: "The Extaz Padel website on a laptop, with a padel racket and a ball in front",
+    details: [
+      { title: "The client", text: "Padel club with 5 courts in Șelimbăr, near Sibiu." },
+      {
+        title: "Booking",
+        text: "Players pick a court and a time, pay online and get an instant confirmation; memberships are bought the same way.",
+      },
+      {
+        title: "Play together",
+        text: "Players without a partner open a game that others can join, and the court fee is split between them.",
+      },
+      {
+        title: "Rewards",
+        text: "Player accounts with levels, discounts unlocked by hours played, a live leaderboard and a daily prize wheel.",
+      },
+    ],
+  },
   { title: "[PROJECT TITLE 6]", category: "Website" },
 ];
 

@@ -288,13 +288,30 @@ export const projects = {
       ],
     },
     {
-      placeholder: true,
-      title: "[TITLU PROIECT 5]",
-      category: "UI/UX Design",
-      description: "[DESCRIERE SCURTĂ]",
-      url: "[URL PROIECT]",
-      image: null,
-      details: projectDetailsPlaceholder,
+      title: "Extaz Padel",
+      category: "Website + rezervări online",
+      description:
+        "Site pentru un club de padel din Sibiu, cu rezervări și plată online, abonamente, parteneri de joc și recompense pentru jucători.",
+      url: "https://extazpadel.com",
+      image: {
+        src: "/proiecte/extaz-padel.webp",
+        alt: "Site-ul Extaz Padel pe un laptop, cu o rachetă de padel și o minge în față",
+      },
+      details: [
+        { title: "Clientul", text: "Club de padel cu 5 terenuri în Șelimbăr, lângă Sibiu." },
+        {
+          title: "Rezervări",
+          text: "Jucătorii aleg terenul și ora, plătesc online și primesc confirmarea pe loc; abonamentele se cumpără la fel.",
+        },
+        {
+          title: "Joacă împreună",
+          text: "Jucătorii fără partener deschid o partidă la care se pot alătura alții, iar costul terenului se împarte.",
+        },
+        {
+          title: "Recompense",
+          text: "Cont de jucător cu niveluri, reduceri deblocate din orele jucate, clasament live și o roată a norocului zilnică.",
+        },
+      ],
     },
     {
       placeholder: true,
