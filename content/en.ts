@@ -10,7 +10,7 @@
 import { ro, type SiteContent } from "./site";
 
 const toSection = (id: string) => `#${id}`;
-const { anchors, brand, company } = ro;
+const { anchors, brand } = ro;
 
 const hero = {
   title: "You run the business.",
@@ -355,7 +355,6 @@ export const en: SiteContent = {
       { label: "Cookie policy (RO)", href: ro.footer.legalLinks[1].href },
       { label: "Terms and conditions (RO)", href: ro.footer.legalLinks[2].href },
     ],
-    companyLine: `${company.legalName} · Tax ID (CUI) ${company.cui} · Trade Reg. No. ${company.regCom} · Sibiu, Romania`,
   },
 
   floatingCta: {

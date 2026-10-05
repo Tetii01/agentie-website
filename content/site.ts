@@ -496,7 +496,7 @@ export const offer = {
 
 /* ───────────────────────── Datele firmei ───────────────────────── */
 
-/** Folosite în footer și în paginile legale. */
+/** Folosite în paginile legale. */
 export const company = {
   placeholder: true,
   legalName: "[DENUMIRE FIRMĂ] S.R.L.",
@@ -509,7 +509,7 @@ export const company = {
 /* ───────────────────────── Date de contact ───────────────────────── */
 
 export const contact = {
-  phone: { label: "[TELEFON]", href: "tel:[TELEFON]" },
+  phone: { label: "+40 749 312 509", href: "tel:+40749312509" },
   email: { label: "[EMAIL]", href: "mailto:[EMAIL]" },
   whatsapp: {
     /** Număr în format internațional, fără + și spații (ex. 40712345678). */
@@ -584,8 +584,6 @@ export const footer = {
     { placeholder: true, name: "Instagram", href: "[URL INSTAGRAM]", icon: siInstagram },
     { placeholder: true, name: "TikTok", href: "[URL TIKTOK]", icon: siTiktok },
   ] satisfies { placeholder?: boolean; name: string; href: string; icon: SimpleIcon }[],
-  /** „[DENUMIRE FIRMĂ] S.R.L. · CUI [ ] · Nr. Reg. Com. [ ] · Sibiu, România" (din `company`). */
-  companyLine: `${company.legalName} · CUI ${company.cui} · Nr. Reg. Com. ${company.regCom} · ${company.city}`,
 };
 
 /* ───────────────────────── 5.13 CTA plutitor ───────────────────────── */

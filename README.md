@@ -90,7 +90,7 @@ Pentru un logo nou, înlocuiești formele de acolo (atributele `d` din SVG-urile
 
 **Footer** (`components/sections/Footer.tsx`), după „Footer Section" (21st.dev, efferd), adaptat la site:
 - **Aspect:** colțuri mari sus, o linie care strălucește pe margine și o lumină moale care cade din mijloc.
-- **Conținut:** logo, © și datele firmei, apoi patru coloane: navigare, contact, legal, social. Titlurile coloanelor sunt în `footer.headings`.
+- **Conținut:** logo și ©, apoi patru coloane: navigare, contact (telefon și WhatsApp), legal, social. Titlurile coloanelor sunt în `footer.headings`.
 - **Apariție:** fiecare bloc apare dintr-un blur, unul după altul (`FadeIn` cu `variant="blur"`).
 
 **Liquid metal** (după „Liquid Metal Button", 21st.dev, johuniq), pe tot site-ul. Varianta e din CSS, fără WebGL, ca să rămână ușoară pe telefon:
@@ -130,7 +130,7 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 
 **Analiză gratuită și contact**
 - Mesajul de succes: „Te contactăm în cel mult 2 ore". Trebuie să fie același cu timpul de răspuns din cifre.
-- Telefon `[TELEFON]` și email `[EMAIL]`: `contact.phone` (text și `tel:`) și `contact.email` (text și `mailto:`).
+- Email `[EMAIL]`: `contact.email` (text și `mailto:`). Telefonul (`contact.phone`) e completat; emailul nu mai apare în footer, doar sub formular și în paginile legale.
 - WhatsApp `[NUMĂR]`: format internațional, fără + și spații (ex. `40712345678`).
 
 **Despre**
@@ -140,7 +140,7 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 - Paragraful (`about.text`), pe care urmează să-l rescrieți.
 
 **Footer și datele firmei**
-- `company`: `[DENUMIRE FIRMĂ] S.R.L.`, `CUI [ ]`, `Nr. Reg. Com. [ ]`, `[ADRESA SEDIULUI]`.
+- `company`: `[DENUMIRE FIRMĂ] S.R.L.`, `CUI [ ]`, `Nr. Reg. Com. [ ]`, `[ADRESA SEDIULUI]`. Nu mai apar în footer, doar în paginile legale.
 - Instagram `[URL INSTAGRAM]`, TikTok `[URL TIKTOK]`.
 
 **Pagini legale** (tot textul e DE VERIFICAT, ideal cu un avocat sau consultant GDPR)

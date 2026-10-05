@@ -15,7 +15,7 @@ const linkClasses =
 /**
  * Footer comun (prima pagină + paginile legale), după „footer section" (efferd), adaptat la site:
  * colțuri mari sus, o linie fină pe margine, o lumină moale care cade din mijloc și, sus, o linie care strălucește.
- * Stânga: logo, ©, datele firmei. Dreapta: patru coloane (navigare, contact, legal, social).
+ * Stânga: logo și ©. Dreapta: patru coloane (navigare, contact, legal, social).
  * Fiecare bloc apare cu un fade din blur, unul după altul (FadeIn variant="blur").
  */
 export async function Footer() {
@@ -37,12 +37,9 @@ export async function Footer() {
               <SmartLink href="#top" aria-label={brand.name} className="rounded-pill">
                 <Logo />
               </SmartLink>
-              <div className="flex flex-col gap-2">
-                <p className="text-sm text-muted">
-                  © {brand.name}. {footer.rights} <CurrentYear fallback={new Date().getFullYear()} />.
-                </p>
-                <p className="text-xs text-muted">{footer.companyLine}</p>
-              </div>
+              <p className="text-sm text-muted">
+                © {brand.name}. {footer.rights} <CurrentYear fallback={new Date().getFullYear()} />.
+              </p>
             </FadeIn>
 
             <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4 xl:col-span-2">
@@ -63,11 +60,6 @@ export async function Footer() {
                   <li>
                     <SmartLink href={contact.phone.href} className={linkClasses}>
                       {contact.phone.label}
-                    </SmartLink>
-                  </li>
-                  <li>
-                    <SmartLink href={contact.email.href} className={linkClasses}>
-                      {contact.email.label}
                     </SmartLink>
                   </li>
                   <li>
