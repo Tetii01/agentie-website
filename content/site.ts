@@ -519,11 +519,11 @@ export const company = {
 /* ───────────────────────── Date de contact ───────────────────────── */
 
 export const contact = {
-  phone: { label: "+40 749 312 509", href: "tel:+40749312509" },
+  phone: { label: "+40 750 430 994", href: "tel:+40750430994" },
   email: { label: "[EMAIL]", href: "mailto:[EMAIL]" },
   whatsapp: {
     /** Număr în format internațional, fără + și spații (ex. 40712345678). */
-    number: "[NUMĂR]",
+    number: "40750430994",
     message: "Salut! Aș vrea să aflu mai multe despre implementarea AI în firma mea.",
   },
 };
