@@ -520,7 +520,7 @@ export const company = {
 
 export const contact = {
   phone: { label: "+40 750 430 994", href: "tel:+40750430994" },
-  email: { label: "[EMAIL]", href: "mailto:[EMAIL]" },
+  email: { label: "contact@creos.ro", href: "mailto:contact@creos.ro" },
   whatsapp: {
     /** Număr în format internațional, fără + și spații (ex. 40712345678). */
     number: "40750430994",

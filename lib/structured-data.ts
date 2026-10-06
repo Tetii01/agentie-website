@@ -30,6 +30,7 @@ export function structuredData(locale: Locale, content: SiteContent) {
         image: `${siteUrl}/opengraph-image`,
         description: seo.description,
         telephone: contact.phone.href.replace(/^tel:/, ""),
+        email: contact.email.href.replace(/^mailto:/, ""),
         address: { "@type": "PostalAddress", addressLocality: company.locality, addressCountry: company.countryCode },
         areaServed: { "@type": "Country", name: company.areaServed },
         founder: about.founders
