@@ -48,12 +48,19 @@ export function rootMetadata(locale: Locale): Metadata {
     applicationName: brand.name,
     // Google află că /  și /en sunt aceeași pagină, în limbi diferite.
     alternates: { canonical: url, languages: { ro: homePath.ro, en: homePath.en, "x-default": homePath.ro } },
-    openGraph: { type: "website", locale: ogLocale[locale], siteName: brand.name, url, title: seo.title, description: seo.description, images: [image] },
-    twitter: { card: "summary_large_image", title: seo.title, description: seo.description, images: [image] },
+    // Previzualizarea linkului folosește titlul cu sloganul (shareTitle), Google pe cel cu cuvintele căutate (title).
+    openGraph: { type: "website", locale: ogLocale[locale], siteName: brand.name, url, title: seo.shareTitle, description: seo.description, images: [image] },
+    twitter: { card: "summary_large_image", title: seo.shareTitle, description: seo.description, images: [image] },
     // Moștenit de toate paginile.
     robots: { index: allowIndexing, follow: allowIndexing },
   };
 }
+
+/**
+ * Paginile legale intră în Google (și în sitemap) doar după ce au datele reale ale firmei.
+ * Cât timp `company.placeholder` e true în content/site.ts, au noindex: altfel Google ar afișa „[DENUMIRE FIRMĂ]".
+ */
+export const indexLegalPages = allowIndexing && !ro.company.placeholder;
 
 /**
  * Metadata pentru o pagină separată (ex. paginile legale, care există doar în română).
@@ -70,5 +77,6 @@ export function pageMetadata({ title, description, route }: { title: string; des
     alternates: { canonical: route },
     openGraph: { type: "website", locale: ogLocale.ro, siteName: brand.name, url: route, title: fullTitle, description, images: [image] },
     twitter: { card: "summary_large_image", title: fullTitle, description, images: [image] },
+    robots: { index: indexLegalPages, follow: allowIndexing },
   };
 }

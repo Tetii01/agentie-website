@@ -7,7 +7,8 @@ import { Problems } from "@/components/sections/Problems";
 import { Projects } from "@/components/sections/Projects";
 import { Services } from "@/components/sections/Services";
 import { Testimonials } from "@/components/sections/Testimonials";
-import { getContent } from "@/content";
+import { getContent, getLocale } from "@/content";
+import { jsonLd, structuredData } from "@/lib/structured-data";
 
 /**
  * Ordinea paginii: hero → proiecte (carusel) → testimoniale (cu tool-urile integrate) →
@@ -18,10 +19,13 @@ import { getContent } from "@/content";
  * (`sticky`), iar restul paginii urcă peste el, cu marginea de sus rotunjită (hero-curtain).
  */
 export default async function Home() {
-  const { floatingCta } = await getContent();
+  const content = await getContent();
+  const locale = await getLocale();
 
   return (
     <div className="relative">
+      {/* Date structurate pentru Google (firma și site-ul): lib/structured-data.ts. */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structuredData(locale, content)) }} />
       <Intro />
       <div className="sticky top-0">
         <Hero />
@@ -38,7 +42,7 @@ export default async function Home() {
         <About />
       </div>
 
-      <FloatingCta {...floatingCta} />
+      <FloatingCta {...content.floatingCta} />
     </div>
   );
 }

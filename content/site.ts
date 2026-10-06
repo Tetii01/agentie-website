@@ -89,11 +89,17 @@ export const hero = {
   primaryCta: { label: "Cere analiza gratuită", href: toSection(anchors.offer) } satisfies LinkItem,
 };
 
-/** Titlul și descrierea paginii (tab-ul browserului, Google, share). */
+/**
+ * Titlul și descrierea paginii.
+ * `title`: tab-ul browserului și rezultatul din Google, cu ce caută oamenii (max. ~60 de caractere, altfel Google îl taie).
+ * `shareTitle`: previzualizarea linkului trimis pe WhatsApp, iMessage, Facebook, LinkedIn.
+ * `description`: textul de sub titlu în Google și în previzualizare (max. ~155 de caractere).
+ */
 export const seo = {
-  title: `${brand.name} · ${hero.title} ${hero.highlight}`,
+  title: `Agenție AI în Sibiu: automatizări și agenți AI | ${brand.name}`,
+  shareTitle: `${brand.name} · ${hero.title} ${hero.highlight}`,
   description:
-    "Agenție AI din Sibiu. Construim agenți AI, aplicații la comandă, automatizări și sisteme cu hardware, plus design și video. Începem cu o analiză gratuită.",
+    "Agenție AI din Sibiu. Construim agenți AI care răspund la telefon, pe site și pe WhatsApp, automatizări și aplicații la comandă. Începem cu o analiză gratuită.",
 };
 
 /* ───────────────────────── 5.3 Logo loop ───────────────────────── */
@@ -504,6 +510,10 @@ export const company = {
   regCom: "[ ]",
   address: "[ADRESA SEDIULUI], Sibiu, România",
   city: "Sibiu, România",
+  /** Pentru datele structurate (lib/structured-data.ts): orașul, țara (cod ISO) și zona în care lucrăm. */
+  locality: "Sibiu",
+  countryCode: "RO",
+  areaServed: "România",
 };
 
 /* ───────────────────────── Date de contact ───────────────────────── */

@@ -146,9 +146,10 @@ export const en: SiteContent = {
   hero,
 
   seo: {
-    title: `${brand.name} · ${hero.title} ${hero.highlight}`,
+    title: `AI agency in Sibiu, Romania: automation & AI agents | ${brand.name}`,
+    shareTitle: `${brand.name} · ${hero.title} ${hero.highlight}`,
     description:
-      "AI agency from Sibiu, Romania. We build AI agents, custom apps, automations and hardware-based systems, plus design and video. It all starts with a free analysis.",
+      "AI agency from Sibiu, Romania. We build AI agents for phone, website chat and WhatsApp, plus automations and custom apps. It starts with a free analysis.",
   },
 
   tools: { ...ro.tools, label: "We connect AI to the tools you already use" },
