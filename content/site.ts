@@ -502,7 +502,11 @@ export const offer = {
 
 /* ───────────────────────── Datele firmei ───────────────────────── */
 
-/** Folosite în paginile legale. */
+/**
+ * Folosite în paginile legale. Până ies actele firmei, operatorul din paginile legale e brandul
+ * („Creos, din Sibiu, România"), iar paginile au noindex (lib/seo.ts). Când vin actele:
+ * completezi denumirea, CUI-ul, Nr. Reg. Com. și sediul, apoi ștergi `placeholder: true`.
+ */
 export const company = {
   placeholder: true,
   legalName: "[DENUMIRE FIRMĂ] S.R.L.",
@@ -608,7 +612,7 @@ export const floatingCta = {
    6. PAGINI LEGALE · DE VERIFICAT înainte de lansare
    Draft scris de Claude conform GDPR, pentru un site de prezentare cu
    formular de contact. NU este consultanță juridică: verifică-l (ideal cu
-   un avocat sau un consultant GDPR) și completează placeholder-ele [ ].
+   un avocat sau un consultant GDPR). Datele firmei vin din `company`.
    Blocuri: un string = paragraf, un array = listă cu buline.
    În text: **îngroșat** și [text link](adresă).
    ═══════════════════════════════════════════════════════════════════════ */
@@ -623,7 +627,13 @@ export type LegalDocument = {
   sections: { title: string; body: LegalBlock[] }[];
 };
 
-const operator = `${company.legalName}, cu sediul în ${company.address}, CUI ${company.cui}, Nr. Reg. Com. ${company.regCom}`;
+/** Cine operează site-ul și prelucrează datele. Fără datele firmei (`company.placeholder`), e brandul. */
+const operatorName = company.placeholder ? brand.name : company.legalName;
+const operator = company.placeholder
+  ? `${brand.name}, din ${company.city}`
+  : `${company.legalName}, cu sediul în ${company.address}, CUI ${company.cui}, Nr. Reg. Com. ${company.regCom}`;
+/** Data ultimei actualizări, afișată sus în fiecare pagină legală. */
+const legalUpdated = "7 octombrie 2026";
 const privacyLink = `[Politica de confidențialitate](${routes.privacy})`;
 const cookiesLink = `[Politica de cookies](${routes.cookies})`;
 
@@ -631,7 +641,7 @@ const privacy: LegalDocument = {
   route: routes.privacy,
   title: "Politica de confidențialitate",
   description: `Ce date personale colectăm prin site-ul ${brand.name}, de ce, cât timp le păstrăm și ce drepturi ai.`,
-  updated: "[DATA]",
+  updated: legalUpdated,
   intro: [
     `Această politică explică ce date personale colectăm prin site-ul ${brand.name}, de ce le colectăm, cum le folosim și ce drepturi ai. Prelucrăm datele conform Regulamentului (UE) 2016/679 (GDPR) și legislației române privind protecția datelor.`,
   ],
@@ -673,7 +683,7 @@ const privacy: LegalDocument = {
     {
       title: "Cât timp păstrăm datele",
       body: [
-        "Păstrăm datele trimise prin formular cât timp este nevoie ca să răspundem cererii tale. Dacă nu începem o colaborare, le ștergem după cel mult [12 luni] de la ultima noastră comunicare.",
+        "Păstrăm datele trimise prin formular cât timp este nevoie ca să răspundem cererii tale. Dacă nu începem o colaborare, le ștergem după cel mult 12 luni de la ultima noastră comunicare.",
         "Dacă lucrăm împreună, datele devin parte din relația contractuală și le păstrăm pe durata contractului, apoi pe perioadele cerute de lege (de exemplu pentru documentele financiar-contabile).",
         "Datele tehnice prelucrate de furnizorul de hosting se păstrează pe perioade scurte, conform politicilor acestuia.",
       ],
@@ -685,7 +695,7 @@ const privacy: LegalDocument = {
         [
           "**Vercel Inc.** (SUA): găzduirea site-ului și statisticile de trafic Vercel Web Analytics, fără cookie-uri;",
           "**Resend** (SUA): transmiterea pe email a cererilor trimise prin formular;",
-          "[alte instrumente folosite pentru gestionarea cererilor, de exemplu un CRM sau n8n, dacă e cazul].",
+          "**Google** (Google Workspace): adresa de email pe care primim și gestionăm cererile.",
         ],
         "Putem transmite date autorităților publice doar atunci când legea ne obligă.",
       ],
@@ -693,7 +703,7 @@ const privacy: LegalDocument = {
     {
       title: "Transferuri în afara Spațiului Economic European",
       body: [
-        "Unii furnizori (Vercel și Resend) au sediul în SUA, așa că datele pot fi transferate în afara Spațiului Economic European. În aceste cazuri, transferul se face pe baza garanțiilor prevăzute de GDPR: decizia de adecvare a Comisiei Europene privind cadrul UE-SUA pentru protecția datelor (EU-U.S. Data Privacy Framework), pentru furnizorii certificați, sau clauzele contractuale standard aprobate de Comisia Europeană.",
+        "Unii furnizori (Vercel, Resend și Google) au sediul în SUA, așa că datele pot fi transferate în afara Spațiului Economic European. În aceste cazuri, transferul se face pe baza garanțiilor prevăzute de GDPR: decizia de adecvare a Comisiei Europene privind cadrul UE-SUA pentru protecția datelor (EU-U.S. Data Privacy Framework), pentru furnizorii certificați, sau clauzele contractuale standard aprobate de Comisia Europeană.",
       ],
     },
     {
@@ -737,9 +747,9 @@ const cookies: LegalDocument = {
   route: routes.cookies,
   title: "Politica de cookies",
   description: `Ce cookie-uri folosește (și nu folosește) site-ul ${brand.name}.`,
-  updated: "[DATA]",
+  updated: legalUpdated,
   intro: [
-    `Această politică explică dacă și cum folosește site-ul ${brand.name}, operat de ${company.legalName}, cookie-uri și tehnologii similare.`,
+    `Această politică explică dacă și cum folosește site-ul ${brand.name} cookie-uri și tehnologii similare.`,
   ],
   sections: [
     {
@@ -787,7 +797,7 @@ const terms: LegalDocument = {
   route: routes.terms,
   title: "Termeni și condiții",
   description: `Condițiile de folosire a site-ului ${brand.name}.`,
-  updated: "[DATA]",
+  updated: legalUpdated,
   intro: [
     `Acești termeni se aplică folosirii site-ului ${brand.name}. Folosind site-ul, ești de acord cu ei; dacă nu ești de acord, te rugăm să nu folosești site-ul.`,
   ],
@@ -825,7 +835,7 @@ const terms: LegalDocument = {
     {
       title: "Proprietate intelectuală",
       body: [
-        `Conținutul site-ului (texte, design, elemente grafice, logo) aparține ${company.legalName} sau partenerilor săi și este protejat de legislația privind drepturile de autor. Nu îl poți copia sau folosi în scop comercial fără acordul nostru scris.`,
+        `Conținutul site-ului (texte, design, elemente grafice, logo) aparține ${operatorName} sau partenerilor săi și este protejat de legislația privind drepturile de autor. Nu îl poți copia sau folosi în scop comercial fără acordul nostru scris.`,
         "Numele și logo-urile altor companii afișate pe site (de exemplu ale tool-urilor cu care lucrăm) aparțin proprietarilor lor și sunt folosite doar ca să arate cu ce servicii se pot integra soluțiile noastre.",
       ],
     },

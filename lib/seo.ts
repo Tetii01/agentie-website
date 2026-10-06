@@ -58,7 +58,7 @@ export function rootMetadata(locale: Locale): Metadata {
 
 /**
  * Paginile legale intră în Google (și în sitemap) doar după ce au datele reale ale firmei.
- * Cât timp `company.placeholder` e true în content/site.ts, au noindex: altfel Google ar afișa „[DENUMIRE FIRMĂ]".
+ * Cât timp `company.placeholder` e true în content/site.ts, au noindex: operatorul e doar brandul, fără denumire, CUI și sediu.
  */
 export const indexLegalPages = allowIndexing && !ro.company.placeholder;
 

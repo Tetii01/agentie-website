@@ -140,13 +140,13 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 - Paragraful (`about.text`), pe care urmează să-l rescrieți.
 
 **Footer și datele firmei**
-- `company`: `[DENUMIRE FIRMĂ] S.R.L.`, `CUI [ ]`, `Nr. Reg. Com. [ ]`, `[ADRESA SEDIULUI]`. Nu mai apar în footer, doar în paginile legale.
+- `company`: `[DENUMIRE FIRMĂ] S.R.L.`, `CUI [ ]`, `Nr. Reg. Com. [ ]`, `[ADRESA SEDIULUI]`. Nu apar în footer, doar în paginile legale. Până le completați, paginile legale numesc operatorul „Creos, din Sibiu, România" și au noindex. Când ies actele firmei, completezi câmpurile și ștergi `placeholder: true`: textul trece singur pe denumire, sediu, CUI și Nr. Reg. Com., iar paginile intră în Google.
 - Instagram `[URL INSTAGRAM]`, TikTok `[URL TIKTOK]`.
 
 **Pagini legale** (tot textul e DE VERIFICAT, ideal cu un avocat sau consultant GDPR)
-- `[DATA]`: data ultimei actualizări, la toate cele 3 pagini.
-- `[12 luni]`: cât păstrați datele din formular dacă nu începe o colaborare.
-- `[alte instrumente folosite pentru gestionarea cererilor…]`: CRM-ul sau n8n, dacă îl legați la webhook. Altfel ștergi rândul.
+- `legalUpdated`: data ultimei actualizări, la toate cele 3 pagini. O schimbi când modifici textul.
+- Cât păstrați datele din formular dacă nu începe o colaborare: 12 luni.
+- Furnizorii care primesc datele: Vercel, Resend și Google Workspace. Dacă legați un CRM sau n8n la formular, îl adăugați în listă.
 
 **Texte funcționale**
 - Blocul `ui` (aria-label, mesajele de validare, eroarea cu WhatsApp, emailul cu lead-ul), marcat DE VERIFICAT.
