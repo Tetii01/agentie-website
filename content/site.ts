@@ -523,11 +523,11 @@ export const company = {
 /* ───────────────────────── Date de contact ───────────────────────── */
 
 export const contact = {
-  phone: { label: "+40 750 430 994", href: "tel:+40750430994" },
+  phone: { label: "+40 750 278 885", href: "tel:+40750278885" },
   email: { label: "contact@creos.ro", href: "mailto:contact@creos.ro" },
   whatsapp: {
     /** Număr în format internațional, fără + și spații (ex. 40712345678). */
-    number: "40750430994",
+    number: "40750278885",
     message: "Salut! Aș vrea să aflu mai multe despre implementarea AI în firma mea.",
   },
 };
