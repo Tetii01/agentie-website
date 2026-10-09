@@ -595,7 +595,7 @@ export const footer = {
     { label: "ANPC - SAL", href: "https://anpc.ro/ce-este-sal/" },
   ] satisfies LinkItem[],
   social: [
-    { placeholder: true, name: "Instagram", href: "[URL INSTAGRAM]", icon: siInstagram },
+    { name: "Instagram", href: "https://www.instagram.com/creos.ro/", icon: siInstagram },
     { placeholder: true, name: "TikTok", href: "[URL TIKTOK]", icon: siTiktok },
   ] satisfies { placeholder?: boolean; name: string; href: string; icon: SimpleIcon }[],
 };

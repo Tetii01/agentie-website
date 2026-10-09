@@ -136,12 +136,12 @@ Toate sunt în `content/site.ts`, dacă nu e indicat alt fișier.
 **Despre**
 - Pozele fondatorilor: `photo`. Apar rotunde (136 px), decupate pătrat din centru, deci fața trebuie să fie în mijlocul pozei.
 - Conturile de Instagram ale fondatorilor: `instagram` (`handle` + `url`), iconița de sub rol.
-- Iconița de Instagram a firmei ia linkul din footer (`footer.social`). Cât linkul e placeholder, iconița apare fără link.
+- Iconița de Instagram a firmei ia linkul din footer (`footer.social`), acum `@creos.ro`.
 - Paragraful (`about.text`), pe care urmează să-l rescrieți.
 
 **Footer și datele firmei**
 - `company`: `[DENUMIRE FIRMĂ] S.R.L.`, `CUI [ ]`, `Nr. Reg. Com. [ ]`, `[ADRESA SEDIULUI]`. Nu apar în footer, doar în paginile legale. Până le completați, paginile legale numesc operatorul „Creos, din Sibiu, România" și au noindex. Când ies actele firmei, completezi câmpurile și ștergi `placeholder: true`: textul trece singur pe denumire, sediu, CUI și Nr. Reg. Com., iar paginile intră în Google.
-- Instagram `[URL INSTAGRAM]`, TikTok `[URL TIKTOK]`.
+- TikTok `[URL TIKTOK]`. (Instagram e completat: `https://www.instagram.com/creos.ro/`.)
 
 **Pagini legale** (tot textul e DE VERIFICAT, ideal cu un avocat sau consultant GDPR)
 - `legalUpdated`: data ultimei actualizări, la toate cele 3 pagini. O schimbi când modifici textul.
